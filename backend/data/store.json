@@ -1,0 +1,163 @@
+{
+  "departments": [
+    {
+      "id": "dept-rd",
+      "name": "研发部"
+    },
+    {
+      "id": "dept-ops",
+      "name": "运营部"
+    },
+    {
+      "id": "dept-marketing",
+      "name": "市场部"
+    },
+    {
+      "id": "dept-hr",
+      "name": "综合职能部"
+    }
+  ],
+  "quarterConfigs": [
+    {
+      "id": "hc-2026-q1-rd",
+      "departmentId": "dept-rd",
+      "quarter": "2026-Q1",
+      "headcount": 18
+    },
+    {
+      "id": "hc-2026-q1-ops",
+      "departmentId": "dept-ops",
+      "quarter": "2026-Q1",
+      "headcount": 12
+    },
+    {
+      "id": "hc-2026-q1-marketing",
+      "departmentId": "dept-marketing",
+      "quarter": "2026-Q1",
+      "headcount": 10
+    },
+    {
+      "id": "hc-2026-q1-hr",
+      "departmentId": "dept-hr",
+      "quarter": "2026-Q1",
+      "headcount": 8
+    },
+    {
+      "id": "hc-2026-q2-rd",
+      "departmentId": "dept-rd",
+      "quarter": "2026-Q2",
+      "headcount": 20
+    },
+    {
+      "id": "hc-2026-q2-ops",
+      "departmentId": "dept-ops",
+      "quarter": "2026-Q2",
+      "headcount": 11
+    },
+    {
+      "id": "hc-2026-q2-marketing",
+      "departmentId": "dept-marketing",
+      "quarter": "2026-Q2",
+      "headcount": 9
+    },
+    {
+      "id": "hc-2026-q2-hr",
+      "departmentId": "dept-hr",
+      "quarter": "2026-Q2",
+      "headcount": 8
+    }
+  ],
+  "quarterlyExpenses": [
+    {
+      "id": "qe-001",
+      "departmentId": "dept-rd",
+      "quarter": "2026-Q2",
+      "title": "Q2 团队午餐",
+      "amount": 960,
+      "spentDate": "2026-04-03",
+      "note": "项目冲刺阶段团队聚餐",
+      "createdAt": "2026-04-03T09:10:00.000Z"
+    },
+    {
+      "id": "qe-002",
+      "departmentId": "dept-ops",
+      "quarter": "2026-Q2",
+      "title": "春季户外拓展",
+      "amount": 1280,
+      "spentDate": "2026-04-02",
+      "note": "半日徒步和晚餐",
+      "createdAt": "2026-04-02T06:20:00.000Z"
+    },
+    {
+      "id": "qe-003",
+      "departmentId": "dept-marketing",
+      "quarter": "2026-Q2",
+      "title": "品牌复盘下午茶",
+      "amount": 540,
+      "spentDate": "2026-04-01",
+      "note": "季度 campaign 复盘",
+      "createdAt": "2026-04-01T08:30:00.000Z"
+    },
+    {
+      "id": "qe-004",
+      "departmentId": "dept-rd",
+      "quarter": "2026-Q1",
+      "title": "技术分享晚餐",
+      "amount": 1350,
+      "spentDate": "2026-02-15",
+      "note": "技术月度分享后的晚餐",
+      "createdAt": "2026-02-15T11:10:00.000Z"
+    },
+    {
+      "id": "qe-005",
+      "departmentId": "dept-hr",
+      "quarter": "2026-Q1",
+      "title": "新员工欢迎活动",
+      "amount": 680,
+      "spentDate": "2026-01-20",
+      "note": "欢迎礼包和茶歇",
+      "createdAt": "2026-01-20T03:40:00.000Z"
+    }
+  ],
+  "innovationProjects": [
+    {
+      "id": "ip-001",
+      "departmentId": "dept-rd",
+      "quarter": "2026-Q2",
+      "title": "AI 创新案例专项",
+      "approvedAmount": 3200,
+      "reimbursedAmount": 1800,
+      "status": "进行中",
+      "applyDate": "2026-04-04",
+      "reimburseDate": "2026-04-05",
+      "note": "用于创新案例共创营和专家评审",
+      "createdAt": "2026-04-04T10:00:00.000Z"
+    },
+    {
+      "id": "ip-002",
+      "departmentId": "dept-ops",
+      "quarter": "2026-Q2",
+      "title": "服务流程创新专项",
+      "approvedAmount": 2000,
+      "reimbursedAmount": 800,
+      "status": "进行中",
+      "applyDate": "2026-04-01",
+      "reimburseDate": "2026-04-03",
+      "note": "流程工作坊和用户访谈",
+      "createdAt": "2026-04-01T05:00:00.000Z"
+    },
+    {
+      "id": "ip-003",
+      "departmentId": "dept-marketing",
+      "quarter": "2026-Q1",
+      "title": "品牌创新案例专项",
+      "approvedAmount": 1500,
+      "reimbursedAmount": 1500,
+      "status": "已完成",
+      "applyDate": "2026-02-12",
+      "reimburseDate": "2026-03-10",
+      "note": "案例包装与外部交流活动",
+      "createdAt": "2026-02-12T07:15:00.000Z"
+    }
+  ]
+}

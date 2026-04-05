@@ -1,0 +1,268 @@
+.page-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.hero-panel,
+.filters-panel,
+.panel {
+  background: rgba(255, 250, 243, 0.88);
+  border: 1px solid rgba(118, 73, 32, 0.12);
+  border-radius: 28px;
+  box-shadow: 0 18px 40px rgba(89, 62, 35, 0.08);
+}
+
+.hero-panel {
+  padding: 40px;
+  display: grid;
+  grid-template-columns: 1.4fr 0.9fr;
+  gap: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-panel::before {
+  content: '';
+  position: absolute;
+  inset: auto -80px -120px auto;
+  width: 260px;
+  height: 260px;
+  background: radial-gradient(circle, rgba(222, 148, 63, 0.28), transparent 70%);
+}
+
+.hero-copy h1 {
+  margin: 10px 0 16px;
+}
+
+.hero-copy p,
+.hero-rule span,
+.section-title p,
+.data-card p,
+.type-card p,
+.notice,
+.records-meta span {
+  color: #775f49;
+}
+
+.eyebrow,
+.section-title span,
+.data-card span,
+.type-card span {
+  display: inline-flex;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 12px;
+  color: #ba6c25;
+}
+
+.hero-rule {
+  display: grid;
+  gap: 16px;
+  align-self: end;
+}
+
+.hero-rule div {
+  background: linear-gradient(135deg, rgba(255, 238, 215, 0.95), rgba(250, 246, 239, 0.92));
+  border: 1px solid rgba(186, 108, 37, 0.16);
+  border-radius: 22px;
+  padding: 20px;
+  display: grid;
+  gap: 8px;
+}
+
+.hero-rule strong,
+.section-title h2,
+.data-card strong,
+.type-card strong,
+.entry-form h3 {
+  color: #35281d;
+}
+
+.filters-panel,
+.panel {
+  padding: 28px;
+}
+
+.filters-grid,
+.inline-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.filters-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 20px;
+}
+
+.filters-grid label,
+.entry-form {
+  display: grid;
+  gap: 10px;
+}
+
+.filters-grid span,
+.entry-form h3 {
+  font-size: 14px;
+}
+
+.notice {
+  padding: 14px 18px;
+  border-radius: 18px;
+  border: 1px solid transparent;
+}
+
+.notice.success {
+  background: rgba(86, 142, 84, 0.12);
+  border-color: rgba(86, 142, 84, 0.24);
+}
+
+.notice.error {
+  background: rgba(181, 72, 55, 0.11);
+  border-color: rgba(181, 72, 55, 0.2);
+}
+
+.cards-grid,
+.type-summary-panel {
+  display: grid;
+  gap: 16px;
+}
+
+.cards-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.type-summary-panel {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.data-card,
+.type-card {
+  background: linear-gradient(180deg, rgba(255, 252, 247, 0.98), rgba(246, 238, 228, 0.92));
+  border: 1px solid rgba(118, 73, 32, 0.12);
+  border-radius: 24px;
+  padding: 22px;
+  display: grid;
+  gap: 10px;
+}
+
+.data-card strong,
+.type-card strong {
+  font-size: 32px;
+  line-height: 1.05;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 24px;
+}
+
+.forms-panel {
+  display: grid;
+  gap: 16px;
+}
+
+.entry-form {
+  background: rgba(255, 255, 255, 0.66);
+  border: 1px solid rgba(118, 73, 32, 0.1);
+  border-radius: 22px;
+  padding: 18px;
+}
+
+.inline-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 18px;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 14px 12px;
+  border-bottom: 1px solid rgba(118, 73, 32, 0.1);
+  vertical-align: top;
+}
+
+th {
+  color: #6c5238;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.records-meta {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.tag.quarterly {
+  color: #6a4617;
+  background: rgba(230, 180, 89, 0.18);
+}
+
+.tag.innovation {
+  color: #0f5a56;
+  background: rgba(71, 153, 149, 0.16);
+}
+
+.positive-text {
+  color: #2f6d4f;
+  font-weight: 700;
+}
+
+.danger-text {
+  color: #b54837;
+  font-weight: 700;
+}
+
+@media (max-width: 1100px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .content-grid,
+  .hero-panel,
+  .type-summary-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .hero-panel,
+  .filters-panel,
+  .panel {
+    padding: 20px;
+    border-radius: 22px;
+  }
+
+  .filters-grid,
+  .cards-grid,
+  .inline-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .data-card strong,
+  .type-card strong {
+    font-size: 26px;
+  }
+}

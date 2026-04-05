@@ -29,9 +29,10 @@ function sortQuarterDesc(a, b) {
 function getAvailableQuarters(data) {
   const values = new Set()
 
-  data.quarterConfigs.forEach((item) => values.add(item.quarter))
-  data.quarterlyExpenses.forEach((item) => values.add(item.quarter))
-  data.innovationProjects.forEach((item) => values.add(item.quarter))
+  ;(data.quarterConfigs || []).forEach((item) => values.add(item.quarter))
+  ;(data.quarterlyMembers || []).forEach((item) => values.add(item.quarter))
+  ;(data.quarterlyExpenses || []).forEach((item) => values.add(item.quarter))
+  ;(data.innovationProjects || []).forEach((item) => values.add(item.quarter))
 
   return Array.from(values).sort(sortQuarterDesc)
 }
@@ -40,28 +41,69 @@ function getDepartmentMap(data) {
   return new Map(data.departments.map((department) => [department.id, department]))
 }
 
+function getQuarterlyMembers(data, quarter, departmentId = 'all') {
+  return (data.quarterlyMembers || [])
+    .filter((item) => item.quarter === quarter)
+    .filter((item) => departmentId === 'all' || item.departmentId === departmentId)
+}
+
+function buildQuarterlyMemberStats(data, quarter, departmentId = 'all') {
+  const departmentMap = getDepartmentMap(data)
+  const members = getQuarterlyMembers(data, quarter, departmentId)
+
+  return members
+    .map((member) => {
+      const expenses = (data.quarterlyExpenses || []).filter(
+        (item) => item.quarter === quarter && item.employeeId === member.id,
+      )
+
+      const spent = expenses.reduce((sum, item) => sum + Number(item.amount || 0), 0)
+      const remaining = QUARTERLY_ALLOWANCE - spent
+
+      return {
+        employeeId: member.id,
+        employeeName: member.name,
+        departmentId: member.departmentId,
+        departmentName: departmentMap.get(member.departmentId)?.name || '未知部门',
+        quarter,
+        allowance: QUARTERLY_ALLOWANCE,
+        spent,
+        remaining,
+        expenseCount: expenses.length,
+        status: spent > 0 ? '已使用' : '未使用',
+      }
+    })
+    .sort((left, right) => {
+      if (left.departmentName !== right.departmentName) {
+        return left.departmentName.localeCompare(right.departmentName, 'zh-CN')
+      }
+
+      return left.employeeName.localeCompare(right.employeeName, 'zh-CN')
+    })
+}
+
 function buildDepartmentStats(data, quarter, departmentId = 'all') {
+  const departmentMap = getDepartmentMap(data)
+  const memberStats = buildQuarterlyMemberStats(data, quarter, departmentId)
   const departments = departmentId === 'all'
     ? data.departments
     : data.departments.filter((department) => department.id === departmentId)
 
   return departments.map((department) => {
-    const config = data.quarterConfigs.find(
+    const departmentMembers = memberStats.filter((item) => item.departmentId === department.id)
+    const fallbackConfig = (data.quarterConfigs || []).find(
       (item) => item.departmentId === department.id && item.quarter === quarter,
     )
 
-    const quarterlyExpenses = data.quarterlyExpenses.filter(
-      (item) => item.departmentId === department.id && item.quarter === quarter,
-    )
-
-    const innovationProjects = data.innovationProjects.filter(
-      (item) => item.departmentId === department.id && item.quarter === quarter,
-    )
-
-    const headcount = config?.headcount ?? 0
+    const headcount = departmentMembers.length || fallbackConfig?.headcount || 0
     const quarterlyBudget = headcount * QUARTERLY_ALLOWANCE
-    const quarterlySpent = quarterlyExpenses.reduce((sum, item) => sum + Number(item.amount), 0)
+    const quarterlySpent = departmentMembers.reduce((sum, item) => sum + item.spent, 0)
     const quarterlyRemaining = quarterlyBudget - quarterlySpent
+    const usedMemberCount = departmentMembers.filter((item) => item.spent > 0).length
+    const unusedMemberCount = Math.max(headcount - usedMemberCount, 0)
+    const innovationProjects = (data.innovationProjects || []).filter(
+      (item) => item.departmentId === department.id && item.quarter === quarter,
+    )
     const innovationApproved = innovationProjects.reduce(
       (sum, item) => sum + Number(item.approvedAmount || 0),
       0,
@@ -73,18 +115,41 @@ function buildDepartmentStats(data, quarter, departmentId = 'all') {
 
     return {
       departmentId: department.id,
-      departmentName: department.name,
+      departmentName: departmentMap.get(department.id)?.name || department.name,
       quarter,
       headcount,
       quarterlyBudget,
       quarterlySpent,
       quarterlyRemaining,
+      usedMemberCount,
+      unusedMemberCount,
       innovationApproved,
       innovationReimbursed,
-      quarterlyExpenseCount: quarterlyExpenses.length,
+      quarterlyExpenseCount: departmentMembers.reduce((sum, item) => sum + item.expenseCount, 0),
       innovationProjectCount: innovationProjects.length,
     }
   })
+}
+
+function buildQuarterlyMemberSummary(memberStats) {
+  return memberStats.reduce(
+    (sum, item) => ({
+      totalMembers: sum.totalMembers + 1,
+      usedMembers: sum.usedMembers + (item.spent > 0 ? 1 : 0),
+      unusedMembers: sum.unusedMembers + (item.spent > 0 ? 0 : 1),
+      totalAllowance: sum.totalAllowance + item.allowance,
+      totalSpent: sum.totalSpent + item.spent,
+      totalRemaining: sum.totalRemaining + item.remaining,
+    }),
+    {
+      totalMembers: 0,
+      usedMembers: 0,
+      unusedMembers: 0,
+      totalAllowance: 0,
+      totalSpent: 0,
+      totalRemaining: 0,
+    },
+  )
 }
 
 function buildDashboard(data, requestedQuarter, requestedDepartmentId = 'all') {
@@ -95,6 +160,8 @@ function buildDashboard(data, requestedQuarter, requestedDepartmentId = 'all') {
     : (availableQuarters.includes(currentQuarter) ? currentQuarter : availableQuarters[0] || currentQuarter)
   const selectedDepartmentId = requestedDepartmentId || 'all'
   const departmentStats = buildDepartmentStats(data, selectedQuarter, selectedDepartmentId)
+  const quarterlyMemberStats = buildQuarterlyMemberStats(data, selectedQuarter, selectedDepartmentId)
+  const quarterlyMemberSummary = buildQuarterlyMemberSummary(quarterlyMemberStats)
 
   const overview = departmentStats.reduce(
     (sum, item) => ({
@@ -146,6 +213,15 @@ function buildDashboard(data, requestedQuarter, requestedDepartmentId = 'all') {
       },
     ],
     departmentStats,
+    quarterlyMemberStats,
+    quarterlyMemberSummary,
+    quarterlyEmployeeOptions: quarterlyMemberStats.map((item) => ({
+      id: item.employeeId,
+      name: item.employeeName,
+      departmentId: item.departmentId,
+      departmentName: item.departmentName,
+      remaining: item.remaining,
+    })),
     options: {
       quarters: availableQuarters,
       departments: data.departments,
@@ -155,9 +231,10 @@ function buildDashboard(data, requestedQuarter, requestedDepartmentId = 'all') {
 
 function buildRecordList(data, filters) {
   const departmentMap = getDepartmentMap(data)
+  const memberMap = new Map((data.quarterlyMembers || []).map((item) => [item.id, item]))
   const { quarter, departmentId = 'all', type = 'all' } = filters
 
-  const quarterlyItems = data.quarterlyExpenses
+  const quarterlyItems = (data.quarterlyExpenses || [])
     .filter((item) => (!quarter || item.quarter === quarter))
     .filter((item) => departmentId === 'all' || item.departmentId === departmentId)
     .map((item) => ({
@@ -165,6 +242,7 @@ function buildRecordList(data, filters) {
       quarter: item.quarter,
       departmentId: item.departmentId,
       departmentName: departmentMap.get(item.departmentId)?.name || '未知部门',
+      employeeName: memberMap.get(item.employeeId)?.name || item.employeeName || '-',
       type: 'quarterly',
       typeLabel: '季度团建',
       title: item.title,
@@ -175,7 +253,7 @@ function buildRecordList(data, filters) {
       note: item.note || '',
     }))
 
-  const innovationItems = data.innovationProjects
+  const innovationItems = (data.innovationProjects || [])
     .filter((item) => (!quarter || item.quarter === quarter))
     .filter((item) => departmentId === 'all' || item.departmentId === departmentId)
     .map((item) => ({
@@ -183,6 +261,7 @@ function buildRecordList(data, filters) {
       quarter: item.quarter,
       departmentId: item.departmentId,
       departmentName: departmentMap.get(item.departmentId)?.name || '未知部门',
+      employeeName: '-',
       type: 'innovation',
       typeLabel: '创新专项',
       title: item.title,
@@ -217,5 +296,6 @@ module.exports = {
   QUARTERLY_ALLOWANCE,
   buildDashboard,
   buildRecordList,
+  buildQuarterlyMemberStats,
   isValidQuarter,
 }

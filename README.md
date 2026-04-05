@@ -26,8 +26,8 @@ npm run dev:frontend
 
 默认地址：
 
-- 前端：`http://localhost:5173`
-- 后端：`http://localhost:3001`
+- 前端：`http://localhost:3210`
+- 后端：`http://localhost:3201`
 
 ## 说明
 

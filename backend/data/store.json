@@ -15,108 +15,3582 @@
     {
       "id": "dept-hr",
       "name": "综合职能部"
+    },
+    {
+      "id": "dept-f7d3a699",
+      "name": "技术发展部-北京研发中心-系统应用研发部"
+    },
+    {
+      "id": "dept-6db9b622",
+      "name": "公司管理层"
+    },
+    {
+      "id": "dept-88919e22",
+      "name": "平台商务部-运营商合作部"
+    },
+    {
+      "id": "dept-51d2810b",
+      "name": "技术发展部-武汉研发中心-FunUI及项目开发组"
+    },
+    {
+      "id": "dept-bb153ac5",
+      "name": "小屏业务部-产品组"
+    },
+    {
+      "id": "dept-30c8547c",
+      "name": "技术发展部-北京研发中心-数据传输及运维组"
+    },
+    {
+      "id": "dept-1fe121b8",
+      "name": "综合服务部-行政部（北京）"
+    },
+    {
+      "id": "dept-7e108d17",
+      "name": "小屏业务部"
+    },
+    {
+      "id": "dept-af5440d5",
+      "name": "小屏业务部-融合运营组"
+    },
+    {
+      "id": "dept-19edb8c6",
+      "name": "小屏业务部-小屏商业化运营部"
+    },
+    {
+      "id": "dept-6444b15a",
+      "name": "小屏业务部-内容合作部"
+    },
+    {
+      "id": "dept-e3c4f70d",
+      "name": "大屏业务部-商业化运营组"
+    },
+    {
+      "id": "dept-8bd00abf",
+      "name": "大屏业务部-商务拓展部"
+    },
+    {
+      "id": "dept-78e77826",
+      "name": "技术发展部-武汉研发中心-应用及会员开发组"
+    },
+    {
+      "id": "dept-b9f2849a",
+      "name": "综合服务部-人力资源部"
+    },
+    {
+      "id": "dept-2d714136",
+      "name": "技术发展部-北京研发中心-视频数据组"
+    },
+    {
+      "id": "dept-a8211ea2",
+      "name": "内容发展部-业务支持中心-客服组"
+    },
+    {
+      "id": "dept-02fdaf3b",
+      "name": "技术发展部"
+    },
+    {
+      "id": "dept-d25184d5",
+      "name": "技术发展部-北京研发中心-商业平台组"
+    },
+    {
+      "id": "dept-2e650d10",
+      "name": "小屏业务部-小说项目组"
+    },
+    {
+      "id": "dept-9a29158f",
+      "name": "技术发展部-武汉研发中心-产品组"
+    },
+    {
+      "id": "dept-559c1803",
+      "name": "大屏业务部"
+    },
+    {
+      "id": "dept-9aa4fef3",
+      "name": "内容发展部-业务支持中心-复审组"
+    },
+    {
+      "id": "dept-2c88b708",
+      "name": "平台商务部-版权采购部"
+    },
+    {
+      "id": "dept-fb14858b",
+      "name": "内容发展部-内容技术部"
+    },
+    {
+      "id": "dept-a12ef213",
+      "name": "大屏业务部-视觉设计组"
+    },
+    {
+      "id": "dept-c970e51f",
+      "name": "小屏业务部-垂直创新发展部"
+    },
+    {
+      "id": "dept-a0800f3e",
+      "name": "技术发展部-武汉研发中心-电视ROM及小程序开发"
+    },
+    {
+      "id": "dept-2344a3b4",
+      "name": "小屏业务部-影视内容组"
+    },
+    {
+      "id": "dept-7534e0c1",
+      "name": "达人生态技术部-达人平台组"
+    },
+    {
+      "id": "dept-e9a837de",
+      "name": "内容发展部-业务支持中心-审核项目组"
+    },
+    {
+      "id": "dept-a1fb048d",
+      "name": "技术发展部-武汉研发中心-小屏Android开发组"
+    },
+    {
+      "id": "dept-de37da49",
+      "name": "达人生态技术部-AI产品发展组"
+    },
+    {
+      "id": "dept-e5b0f0bd",
+      "name": "大屏业务部-创新业务组"
+    },
+    {
+      "id": "dept-355b9745",
+      "name": "综合服务部-行政部（武汉）"
+    },
+    {
+      "id": "dept-8e6051b7",
+      "name": "内容发展部-业务支持中心-媒资版权组"
+    },
+    {
+      "id": "dept-3da30144",
+      "name": "技术发展部-武汉研发中心-设计组"
+    },
+    {
+      "id": "dept-e93c1ac2",
+      "name": "大屏业务部-内容运营组"
+    },
+    {
+      "id": "dept-e48b40ff",
+      "name": "内容发展部-业务支持中心-媒资生产组"
+    },
+    {
+      "id": "dept-e80c471a",
+      "name": "技术发展部-武汉研发中心-PHP&Web开发组"
+    },
+    {
+      "id": "dept-8158eef5",
+      "name": "内容发展部-业务支持中心-精细化审核组"
+    },
+    {
+      "id": "dept-82bb3164",
+      "name": "小屏业务部-垂直创新发展部-AI内容与商业化2组"
+    },
+    {
+      "id": "dept-8955b4e3",
+      "name": "财务部"
+    },
+    {
+      "id": "dept-247f2ab4",
+      "name": "达人生态技术部-AI应用创新组"
+    },
+    {
+      "id": "dept-df669ae2",
+      "name": "营销发展部-商业发展部"
+    },
+    {
+      "id": "dept-7ac8209a",
+      "name": "小屏业务部-达人生态产品组"
+    },
+    {
+      "id": "dept-71ccdaec",
+      "name": "小屏业务部-垂直创新发展部-AI内容与商业化1组"
+    },
+    {
+      "id": "dept-8ce0fbe6",
+      "name": "小屏业务部-垂直创新发展部-综合运营和推广组"
+    },
+    {
+      "id": "dept-3b6725fa",
+      "name": "内容发展部-业务支持中心-法务组"
+    },
+    {
+      "id": "dept-f223a309",
+      "name": "小屏业务部-垂直创新发展部-商务组"
+    },
+    {
+      "id": "dept-e5b8d670",
+      "name": "小屏业务部-海外组"
+    },
+    {
+      "id": "dept-25202165",
+      "name": "小屏业务部-商业化投放组"
+    },
+    {
+      "id": "dept-5ae05592",
+      "name": "小屏业务部-垂直创新发展部-渠道与运营组"
+    },
+    {
+      "id": "dept-516fc252",
+      "name": "达人生态技术部"
+    },
+    {
+      "id": "dept-94c8c98d",
+      "name": "内容发展部-业务支持中心-媒资数据组"
+    },
+    {
+      "id": "dept-2ef89fac",
+      "name": "内容发展部-业务支持中心-审计组"
+    },
+    {
+      "id": "dept-b017c126",
+      "name": "综合服务部-内容传播组"
+    },
+    {
+      "id": "dept-fa5a09f5",
+      "name": "技术发展部-武汉研发中心-光联组"
     }
   ],
-  "quarterConfigs": [
+  "quarterConfigs": [],
+  "quarterlyMembers": [
     {
-      "id": "hc-2026-q1-rd",
+      "id": "member-rd-q2-01",
+      "quarter": "2026-Q2",
+      "name": "张晨",
+      "departmentId": "dept-78e77826",
+      "createdAt": "2026-04-01T09:00:00.000Z"
+    },
+    {
+      "id": "member-rd-q2-02",
+      "quarter": "2026-Q2",
+      "name": "李璐",
       "departmentId": "dept-rd",
-      "quarter": "2026-Q1",
-      "headcount": 18
+      "createdAt": "2026-04-01T09:00:00.000Z"
     },
     {
-      "id": "hc-2026-q1-ops",
-      "departmentId": "dept-ops",
-      "quarter": "2026-Q1",
-      "headcount": 12
-    },
-    {
-      "id": "hc-2026-q1-marketing",
-      "departmentId": "dept-marketing",
-      "quarter": "2026-Q1",
-      "headcount": 10
-    },
-    {
-      "id": "hc-2026-q1-hr",
-      "departmentId": "dept-hr",
-      "quarter": "2026-Q1",
-      "headcount": 8
-    },
-    {
-      "id": "hc-2026-q2-rd",
+      "id": "member-rd-q2-03",
+      "quarter": "2026-Q2",
+      "name": "王哲",
       "departmentId": "dept-rd",
-      "quarter": "2026-Q2",
-      "headcount": 20
+      "createdAt": "2026-04-01T09:00:00.000Z"
     },
     {
-      "id": "hc-2026-q2-ops",
+      "id": "member-ops-q2-01",
+      "quarter": "2026-Q2",
+      "name": "周悦",
       "departmentId": "dept-ops",
-      "quarter": "2026-Q2",
-      "headcount": 11
+      "createdAt": "2026-04-01T09:00:00.000Z"
     },
     {
-      "id": "hc-2026-q2-marketing",
+      "id": "member-ops-q2-02",
+      "quarter": "2026-Q2",
+      "name": "陈晴",
+      "departmentId": "dept-ops",
+      "createdAt": "2026-04-01T09:00:00.000Z"
+    },
+    {
+      "id": "member-marketing-q2-01",
+      "quarter": "2026-Q2",
+      "name": "赵宁",
       "departmentId": "dept-marketing",
-      "quarter": "2026-Q2",
-      "headcount": 9
+      "createdAt": "2026-04-01T09:00:00.000Z"
     },
     {
-      "id": "hc-2026-q2-hr",
-      "departmentId": "dept-hr",
+      "id": "member-marketing-q2-02",
       "quarter": "2026-Q2",
-      "headcount": 8
+      "name": "宋颖",
+      "departmentId": "dept-marketing",
+      "createdAt": "2026-04-01T09:00:00.000Z"
+    },
+    {
+      "id": "member-hr-q2-01",
+      "quarter": "2026-Q2",
+      "name": "许婷",
+      "departmentId": "dept-hr",
+      "createdAt": "2026-04-01T09:00:00.000Z"
+    },
+    {
+      "id": "member-hr-q2-02",
+      "quarter": "2026-Q2",
+      "name": "高航",
+      "departmentId": "dept-hr",
+      "createdAt": "2026-04-01T09:00:00.000Z"
+    },
+    {
+      "id": "member-rd-q1-01",
+      "quarter": "2026-Q1",
+      "name": "张晨",
+      "departmentId": "dept-rd",
+      "createdAt": "2026-01-05T09:00:00.000Z"
+    },
+    {
+      "id": "member-rd-q1-02",
+      "quarter": "2026-Q1",
+      "name": "李璐",
+      "departmentId": "dept-rd",
+      "createdAt": "2026-01-05T09:00:00.000Z"
+    },
+    {
+      "id": "member-ops-q1-01",
+      "quarter": "2026-Q1",
+      "name": "周悦",
+      "departmentId": "dept-ops",
+      "createdAt": "2026-01-05T09:00:00.000Z"
+    },
+    {
+      "id": "member-marketing-q1-01",
+      "quarter": "2026-Q1",
+      "name": "赵宁",
+      "departmentId": "dept-marketing",
+      "createdAt": "2026-01-05T09:00:00.000Z"
+    },
+    {
+      "id": "member-b9a7ee1c",
+      "quarter": "2026-Q2",
+      "name": "朱兵兵",
+      "departmentId": "dept-f7d3a699",
+      "createdAt": "2026-04-05T08:59:15.420Z"
+    },
+    {
+      "id": "member-4ca7ce90",
+      "quarter": "2026-Q2",
+      "name": "易正朝",
+      "departmentId": "dept-6db9b622",
+      "createdAt": "2026-04-05T08:59:15.420Z"
+    },
+    {
+      "id": "member-9284a9fb",
+      "quarter": "2026-Q2",
+      "name": "郝哲",
+      "departmentId": "dept-88919e22",
+      "createdAt": "2026-04-05T08:59:15.420Z"
+    },
+    {
+      "id": "member-b62dd347",
+      "quarter": "2026-Q2",
+      "name": "徐华俭",
+      "departmentId": "dept-51d2810b",
+      "createdAt": "2026-04-05T08:59:15.420Z"
+    },
+    {
+      "id": "member-8e43b178",
+      "quarter": "2026-Q2",
+      "name": "焦倩",
+      "departmentId": "dept-bb153ac5",
+      "createdAt": "2026-04-05T08:59:15.420Z"
+    },
+    {
+      "id": "member-9b935320",
+      "quarter": "2026-Q2",
+      "name": "郭江勇",
+      "departmentId": "dept-30c8547c",
+      "createdAt": "2026-04-05T08:59:15.420Z"
+    },
+    {
+      "id": "member-46a6622c",
+      "quarter": "2026-Q2",
+      "name": "李婷",
+      "departmentId": "dept-1fe121b8",
+      "createdAt": "2026-04-05T08:59:15.420Z"
+    },
+    {
+      "id": "member-6c21e55f",
+      "quarter": "2026-Q2",
+      "name": "董晓倩",
+      "departmentId": "dept-7e108d17",
+      "createdAt": "2026-04-05T08:59:15.420Z"
+    },
+    {
+      "id": "member-ea638660",
+      "quarter": "2026-Q2",
+      "name": "孟璐",
+      "departmentId": "dept-af5440d5",
+      "createdAt": "2026-04-05T08:59:15.420Z"
+    },
+    {
+      "id": "member-a75301a8",
+      "quarter": "2026-Q2",
+      "name": "沈永明",
+      "departmentId": "dept-30c8547c",
+      "createdAt": "2026-04-05T08:59:15.420Z"
+    },
+    {
+      "id": "member-617090cc",
+      "quarter": "2026-Q2",
+      "name": "周梦欢",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.420Z"
+    },
+    {
+      "id": "member-3fee5672",
+      "quarter": "2026-Q2",
+      "name": "张培思",
+      "departmentId": "dept-6444b15a",
+      "createdAt": "2026-04-05T08:59:15.420Z"
+    },
+    {
+      "id": "member-f6c68aac",
+      "quarter": "2026-Q2",
+      "name": "邢文宁",
+      "departmentId": "dept-e3c4f70d",
+      "createdAt": "2026-04-05T08:59:15.420Z"
+    },
+    {
+      "id": "member-5d54e1dd",
+      "quarter": "2026-Q2",
+      "name": "许雯倩",
+      "departmentId": "dept-8bd00abf",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-04f92621",
+      "quarter": "2026-Q2",
+      "name": "肖冬林",
+      "departmentId": "dept-78e77826",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-a77002b2",
+      "quarter": "2026-Q2",
+      "name": "康书维",
+      "departmentId": "dept-b9f2849a",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-ca503aa5",
+      "quarter": "2026-Q2",
+      "name": "赵理想",
+      "departmentId": "dept-30c8547c",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-6866e080",
+      "quarter": "2026-Q2",
+      "name": "姜军良",
+      "departmentId": "dept-1fe121b8",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-17694ce9",
+      "quarter": "2026-Q2",
+      "name": "胡凡",
+      "departmentId": "dept-2d714136",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-c574d31e",
+      "quarter": "2026-Q2",
+      "name": "齐少峰",
+      "departmentId": "dept-f7d3a699",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-bf9a140a",
+      "quarter": "2026-Q2",
+      "name": "李芙蓉",
+      "departmentId": "dept-a8211ea2",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-8ddeeb00",
+      "quarter": "2026-Q2",
+      "name": "党永在",
+      "departmentId": "dept-02fdaf3b",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-1f406113",
+      "quarter": "2026-Q2",
+      "name": "周鹏",
+      "departmentId": "dept-d25184d5",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-a3f36e01",
+      "quarter": "2026-Q2",
+      "name": "刘志超",
+      "departmentId": "dept-2d714136",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-44d7cad3",
+      "quarter": "2026-Q2",
+      "name": "张孟东",
+      "departmentId": "dept-78e77826",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-dc99b40c",
+      "quarter": "2026-Q2",
+      "name": "张境楠",
+      "departmentId": "dept-1fe121b8",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-804228a3",
+      "quarter": "2026-Q2",
+      "name": "刘鑫",
+      "departmentId": "dept-2e650d10",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-8574691a",
+      "quarter": "2026-Q2",
+      "name": "高萍",
+      "departmentId": "dept-9a29158f",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-76ec0913",
+      "quarter": "2026-Q2",
+      "name": "司晓朋",
+      "departmentId": "dept-f7d3a699",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-5b2c15df",
+      "quarter": "2026-Q2",
+      "name": "娄燕军",
+      "departmentId": "dept-f7d3a699",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-7a4992f7",
+      "quarter": "2026-Q2",
+      "name": "尹伟",
+      "departmentId": "dept-559c1803",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-4cfac11b",
+      "quarter": "2026-Q2",
+      "name": "吴珍",
+      "departmentId": "dept-9aa4fef3",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-089ca4a0",
+      "quarter": "2026-Q2",
+      "name": "孙媛",
+      "departmentId": "dept-2c88b708",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-44488c11",
+      "quarter": "2026-Q2",
+      "name": "邹维涛",
+      "departmentId": "dept-f7d3a699",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-451d677a",
+      "quarter": "2026-Q2",
+      "name": "王超峰",
+      "departmentId": "dept-fb14858b",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-661f4f7d",
+      "quarter": "2026-Q2",
+      "name": "向晓蕾",
+      "departmentId": "dept-b9f2849a",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-9ea3886c",
+      "quarter": "2026-Q2",
+      "name": "文学",
+      "departmentId": "dept-a12ef213",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-eeeface9",
+      "quarter": "2026-Q2",
+      "name": "代敏",
+      "departmentId": "dept-fb14858b",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-81a6e4fc",
+      "quarter": "2026-Q2",
+      "name": "肖冰",
+      "departmentId": "dept-c970e51f",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-952e14c4",
+      "quarter": "2026-Q2",
+      "name": "彭鹏",
+      "departmentId": "dept-a0800f3e",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-68134500",
+      "quarter": "2026-Q2",
+      "name": "陈海",
+      "departmentId": "dept-a0800f3e",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-d0ca4588",
+      "quarter": "2026-Q2",
+      "name": "郑诚",
+      "departmentId": "dept-a0800f3e",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-5c670279",
+      "quarter": "2026-Q2",
+      "name": "许峥",
+      "departmentId": "dept-f7d3a699",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-d13affe3",
+      "quarter": "2026-Q2",
+      "name": "刘丁丁",
+      "departmentId": "dept-f7d3a699",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-0586cef5",
+      "quarter": "2026-Q2",
+      "name": "阮辉",
+      "departmentId": "dept-a0800f3e",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-f46afd3c",
+      "quarter": "2026-Q2",
+      "name": "刘青",
+      "departmentId": "dept-51d2810b",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-b2859b74",
+      "quarter": "2026-Q2",
+      "name": "许凯",
+      "departmentId": "dept-af5440d5",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-53a0cc73",
+      "quarter": "2026-Q2",
+      "name": "金肖",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-91c6bcd3",
+      "quarter": "2026-Q2",
+      "name": "李娟娟",
+      "departmentId": "dept-a0800f3e",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-86a9938d",
+      "quarter": "2026-Q2",
+      "name": "罗梓玮",
+      "departmentId": "dept-6444b15a",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-c40d23f1",
+      "quarter": "2026-Q2",
+      "name": "严娅",
+      "departmentId": "dept-a0800f3e",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-129612f7",
+      "quarter": "2026-Q2",
+      "name": "杨阳",
+      "departmentId": "dept-a0800f3e",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-4937e1cb",
+      "quarter": "2026-Q2",
+      "name": "胡松",
+      "departmentId": "dept-6444b15a",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-c9e8b2aa",
+      "quarter": "2026-Q2",
+      "name": "刘艺",
+      "departmentId": "dept-b9f2849a",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-2dd5aec2",
+      "quarter": "2026-Q2",
+      "name": "李尚容",
+      "departmentId": "dept-9aa4fef3",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-b5e233a2",
+      "quarter": "2026-Q2",
+      "name": "程倩",
+      "departmentId": "dept-7534e0c1",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-6e728e3a",
+      "quarter": "2026-Q2",
+      "name": "高玉霞",
+      "departmentId": "dept-9aa4fef3",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-e52a5f82",
+      "quarter": "2026-Q2",
+      "name": "昌阳",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-7ba52e22",
+      "quarter": "2026-Q2",
+      "name": "李学平",
+      "departmentId": "dept-a1fb048d",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-e3570b6e",
+      "quarter": "2026-Q2",
+      "name": "韩明",
+      "departmentId": "dept-de37da49",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-b81d4585",
+      "quarter": "2026-Q2",
+      "name": "刘菲",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-b29e3224",
+      "quarter": "2026-Q2",
+      "name": "徐方",
+      "departmentId": "dept-78e77826",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-0bc08840",
+      "quarter": "2026-Q2",
+      "name": "丁国栋",
+      "departmentId": "dept-e5b0f0bd",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-ba555494",
+      "quarter": "2026-Q2",
+      "name": "叶甜",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-128ebeca",
+      "quarter": "2026-Q2",
+      "name": "朱莹",
+      "departmentId": "dept-a12ef213",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-08e90070",
+      "quarter": "2026-Q2",
+      "name": "程晓珺",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-718c44a9",
+      "quarter": "2026-Q2",
+      "name": "陆家佳",
+      "departmentId": "dept-8bd00abf",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-bfd12819",
+      "quarter": "2026-Q2",
+      "name": "陈冬丽",
+      "departmentId": "dept-355b9745",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-b7389422",
+      "quarter": "2026-Q2",
+      "name": "潘亚",
+      "departmentId": "dept-8e6051b7",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-e4393854",
+      "quarter": "2026-Q2",
+      "name": "周瑶",
+      "departmentId": "dept-6444b15a",
+      "createdAt": "2026-04-05T08:59:15.421Z"
+    },
+    {
+      "id": "member-6a81a1b6",
+      "quarter": "2026-Q2",
+      "name": "周桂玲",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-8b500f7c",
+      "quarter": "2026-Q2",
+      "name": "董晓丽",
+      "departmentId": "dept-9aa4fef3",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-2ddc5d79",
+      "quarter": "2026-Q2",
+      "name": "李雪",
+      "departmentId": "dept-9aa4fef3",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-dee15f90",
+      "quarter": "2026-Q2",
+      "name": "邹煜",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-d95dc20d",
+      "quarter": "2026-Q2",
+      "name": "雷练",
+      "departmentId": "dept-9aa4fef3",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-aa73aa66",
+      "quarter": "2026-Q2",
+      "name": "刘慧娟",
+      "departmentId": "dept-3da30144",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-a721a509",
+      "quarter": "2026-Q2",
+      "name": "刘志勇",
+      "departmentId": "dept-30c8547c",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-b3cbfd36",
+      "quarter": "2026-Q2",
+      "name": "陈倩",
+      "departmentId": "dept-8e6051b7",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-32b4be68",
+      "quarter": "2026-Q2",
+      "name": "何殷剑",
+      "departmentId": "dept-e93c1ac2",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-a153d0ec",
+      "quarter": "2026-Q2",
+      "name": "雷素雅",
+      "departmentId": "dept-e48b40ff",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-68670d9c",
+      "quarter": "2026-Q2",
+      "name": "刘薇",
+      "departmentId": "dept-e93c1ac2",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-c3700f1d",
+      "quarter": "2026-Q2",
+      "name": "陈文龙",
+      "departmentId": "dept-e80c471a",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-0f710bf4",
+      "quarter": "2026-Q2",
+      "name": "黄河",
+      "departmentId": "dept-51d2810b",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-0eab0e3b",
+      "quarter": "2026-Q2",
+      "name": "蹇睿",
+      "departmentId": "dept-78e77826",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-e3b9a2fd",
+      "quarter": "2026-Q2",
+      "name": "王冰心",
+      "departmentId": "dept-3da30144",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-18a00131",
+      "quarter": "2026-Q2",
+      "name": "李秦荣",
+      "departmentId": "dept-e93c1ac2",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-0eac748a",
+      "quarter": "2026-Q2",
+      "name": "杨佳玲",
+      "departmentId": "dept-8158eef5",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-fd27013e",
+      "quarter": "2026-Q2",
+      "name": "姜晓波",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-9a68723f",
+      "quarter": "2026-Q2",
+      "name": "王思会",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-711a1079",
+      "quarter": "2026-Q2",
+      "name": "刘森祥",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-f9af5f9d",
+      "quarter": "2026-Q2",
+      "name": "肖喆",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-115f6021",
+      "quarter": "2026-Q2",
+      "name": "肖珊",
+      "departmentId": "dept-6444b15a",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-e7897f13",
+      "quarter": "2026-Q2",
+      "name": "曹芷薇",
+      "departmentId": "dept-b9f2849a",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-4b48ecf1",
+      "quarter": "2026-Q2",
+      "name": "黎盼",
+      "departmentId": "dept-e48b40ff",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-31fb2edd",
+      "quarter": "2026-Q2",
+      "name": "梅欧仁",
+      "departmentId": "dept-e80c471a",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-da66cb06",
+      "quarter": "2026-Q2",
+      "name": "程凯",
+      "departmentId": "dept-78e77826",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-06adb9c3",
+      "quarter": "2026-Q2",
+      "name": "李星雨",
+      "departmentId": "dept-8e6051b7",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-d8bf2f55",
+      "quarter": "2026-Q2",
+      "name": "熊毅",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-212a47b8",
+      "quarter": "2026-Q2",
+      "name": "邵福阳",
+      "departmentId": "dept-30c8547c",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-f5423e76",
+      "quarter": "2026-Q2",
+      "name": "郎敬词",
+      "departmentId": "dept-bb153ac5",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-839351f1",
+      "quarter": "2026-Q2",
+      "name": "石振",
+      "departmentId": "dept-f7d3a699",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-2f5f0937",
+      "quarter": "2026-Q2",
+      "name": "廖云",
+      "departmentId": "dept-e80c471a",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-c294cf62",
+      "quarter": "2026-Q2",
+      "name": "熊佳龙",
+      "departmentId": "dept-78e77826",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-345bc4d5",
+      "quarter": "2026-Q2",
+      "name": "雷韵萍",
+      "departmentId": "dept-3da30144",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-ed16cd09",
+      "quarter": "2026-Q2",
+      "name": "李雷",
+      "departmentId": "dept-30c8547c",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-e89ecfed",
+      "quarter": "2026-Q2",
+      "name": "周娟",
+      "departmentId": "dept-e48b40ff",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-8d7837dc",
+      "quarter": "2026-Q2",
+      "name": "刘雪燕",
+      "departmentId": "dept-e93c1ac2",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-afaff43a",
+      "quarter": "2026-Q2",
+      "name": "张淑雅",
+      "departmentId": "dept-8bd00abf",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-ab2921e6",
+      "quarter": "2026-Q2",
+      "name": "肖敏",
+      "departmentId": "dept-82bb3164",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-e35cffd7",
+      "quarter": "2026-Q2",
+      "name": "段芊",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-4d16d29e",
+      "quarter": "2026-Q2",
+      "name": "汪洋",
+      "departmentId": "dept-e5b0f0bd",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-781a58f8",
+      "quarter": "2026-Q2",
+      "name": "董梦婷",
+      "departmentId": "dept-e93c1ac2",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-7d3b84bc",
+      "quarter": "2026-Q2",
+      "name": "阳立夫",
+      "departmentId": "dept-3da30144",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-11090ca9",
+      "quarter": "2026-Q2",
+      "name": "刘利",
+      "departmentId": "dept-8955b4e3",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-532a2154",
+      "quarter": "2026-Q2",
+      "name": "张婉怡",
+      "departmentId": "dept-3da30144",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-440749fc",
+      "quarter": "2026-Q2",
+      "name": "徐锦屏",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-66d14e33",
+      "quarter": "2026-Q2",
+      "name": "许思雅",
+      "departmentId": "dept-e93c1ac2",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-a5cebfe3",
+      "quarter": "2026-Q2",
+      "name": "刘颖",
+      "departmentId": "dept-e93c1ac2",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-6b790eaa",
+      "quarter": "2026-Q2",
+      "name": "马小玲",
+      "departmentId": "dept-6444b15a",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-7efc4aeb",
+      "quarter": "2026-Q2",
+      "name": "曹畅",
+      "departmentId": "dept-51d2810b",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-abe0c0fd",
+      "quarter": "2026-Q2",
+      "name": "王西程",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-64e04add",
+      "quarter": "2026-Q2",
+      "name": "姜勇辉",
+      "departmentId": "dept-2d714136",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-3e161b66",
+      "quarter": "2026-Q2",
+      "name": "周依",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-1b93c103",
+      "quarter": "2026-Q2",
+      "name": "周友生",
+      "departmentId": "dept-1fe121b8",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-8e8ef3d6",
+      "quarter": "2026-Q2",
+      "name": "钟喜佳",
+      "departmentId": "dept-247f2ab4",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-dfac9891",
+      "quarter": "2026-Q2",
+      "name": "王乐",
+      "departmentId": "dept-8955b4e3",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-968cfdaa",
+      "quarter": "2026-Q2",
+      "name": "丁晖",
+      "departmentId": "dept-6444b15a",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-8a0d9c90",
+      "quarter": "2026-Q2",
+      "name": "周予同",
+      "departmentId": "dept-df669ae2",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-cc08f055",
+      "quarter": "2026-Q2",
+      "name": "万义华",
+      "departmentId": "dept-a1fb048d",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-4b595f12",
+      "quarter": "2026-Q2",
+      "name": "徐瑶",
+      "departmentId": "dept-6444b15a",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-b55b38be",
+      "quarter": "2026-Q2",
+      "name": "尚姣",
+      "departmentId": "dept-a1fb048d",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-6e25d17e",
+      "quarter": "2026-Q2",
+      "name": "李俞玲",
+      "departmentId": "dept-8158eef5",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-fd68c653",
+      "quarter": "2026-Q2",
+      "name": "肖艳丽",
+      "departmentId": "dept-9aa4fef3",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-b7d78a05",
+      "quarter": "2026-Q2",
+      "name": "许梦银",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-978426cf",
+      "quarter": "2026-Q2",
+      "name": "毛召林",
+      "departmentId": "dept-2d714136",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-a9710144",
+      "quarter": "2026-Q2",
+      "name": "汪亮",
+      "departmentId": "dept-51d2810b",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-f686d71b",
+      "quarter": "2026-Q2",
+      "name": "付贵",
+      "departmentId": "dept-7ac8209a",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-1ed7c448",
+      "quarter": "2026-Q2",
+      "name": "梁虹",
+      "departmentId": "dept-e3c4f70d",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-9e1e5042",
+      "quarter": "2026-Q2",
+      "name": "郭峰",
+      "departmentId": "dept-d25184d5",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-6026f9ef",
+      "quarter": "2026-Q2",
+      "name": "张玉强",
+      "departmentId": "dept-f7d3a699",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-394212bd",
+      "quarter": "2026-Q2",
+      "name": "镇蕾",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-b2317b63",
+      "quarter": "2026-Q2",
+      "name": "罗艳权",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-d5bb5b89",
+      "quarter": "2026-Q2",
+      "name": "张振兴",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-edf08ae0",
+      "quarter": "2026-Q2",
+      "name": "高钰涵",
+      "departmentId": "dept-bb153ac5",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-dbce5f92",
+      "quarter": "2026-Q2",
+      "name": "丰维",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-957a966b",
+      "quarter": "2026-Q2",
+      "name": "刘永恒",
+      "departmentId": "dept-30c8547c",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-9bae7962",
+      "quarter": "2026-Q2",
+      "name": "陈庆",
+      "departmentId": "dept-a1fb048d",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-82df48b3",
+      "quarter": "2026-Q2",
+      "name": "刘柳叶",
+      "departmentId": "dept-9aa4fef3",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-f2c8106a",
+      "quarter": "2026-Q2",
+      "name": "叶茂青",
+      "departmentId": "dept-82bb3164",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-70b58cb9",
+      "quarter": "2026-Q2",
+      "name": "常欢",
+      "departmentId": "dept-a8211ea2",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-b2880c84",
+      "quarter": "2026-Q2",
+      "name": "洪茜",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.422Z"
+    },
+    {
+      "id": "member-ade47d1b",
+      "quarter": "2026-Q2",
+      "name": "卢伟帅",
+      "departmentId": "dept-f7d3a699",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-74cf6936",
+      "quarter": "2026-Q2",
+      "name": "周文豪",
+      "departmentId": "dept-f7d3a699",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-6e6fa782",
+      "quarter": "2026-Q2",
+      "name": "周思宇",
+      "departmentId": "dept-71ccdaec",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-b14217d9",
+      "quarter": "2026-Q2",
+      "name": "岳莹琳",
+      "departmentId": "dept-bb153ac5",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-145be20a",
+      "quarter": "2026-Q2",
+      "name": "龚春晓",
+      "departmentId": "dept-30c8547c",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-a73009db",
+      "quarter": "2026-Q2",
+      "name": "武治江",
+      "departmentId": "dept-f7d3a699",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-5c5b4d05",
+      "quarter": "2026-Q2",
+      "name": "喻帆",
+      "departmentId": "dept-e3c4f70d",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-ec651753",
+      "quarter": "2026-Q2",
+      "name": "陈子龙",
+      "departmentId": "dept-e80c471a",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-6ddef547",
+      "quarter": "2026-Q2",
+      "name": "王琛",
+      "departmentId": "dept-a8211ea2",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-b012bf92",
+      "quarter": "2026-Q2",
+      "name": "闫艺凡",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-be4ed6f0",
+      "quarter": "2026-Q2",
+      "name": "张建晨",
+      "departmentId": "dept-df669ae2",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-5019edf7",
+      "quarter": "2026-Q2",
+      "name": "李洋",
+      "departmentId": "dept-e80c471a",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-dd97e729",
+      "quarter": "2026-Q2",
+      "name": "张学栋",
+      "departmentId": "dept-78e77826",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-c1087545",
+      "quarter": "2026-Q2",
+      "name": "王秋云",
+      "departmentId": "dept-d25184d5",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-74b71bed",
+      "quarter": "2026-Q2",
+      "name": "袁凌波",
+      "departmentId": "dept-8ce0fbe6",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-0ec761fc",
+      "quarter": "2026-Q2",
+      "name": "丁滋民",
+      "departmentId": "dept-71ccdaec",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-e3dd788d",
+      "quarter": "2026-Q2",
+      "name": "徐程程",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-a30b4c24",
+      "quarter": "2026-Q2",
+      "name": "黄德才",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-311b8709",
+      "quarter": "2026-Q2",
+      "name": "严红梅",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-dfe813c7",
+      "quarter": "2026-Q2",
+      "name": "程欣悦",
+      "departmentId": "dept-e5b0f0bd",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-05ca11f3",
+      "quarter": "2026-Q2",
+      "name": "曾诗惠",
+      "departmentId": "dept-3b6725fa",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-59de94aa",
+      "quarter": "2026-Q2",
+      "name": "郭艾丽",
+      "departmentId": "dept-a12ef213",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-fc726bc3",
+      "quarter": "2026-Q2",
+      "name": "余叶勤",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-aea4cb81",
+      "quarter": "2026-Q2",
+      "name": "李晓斌",
+      "departmentId": "dept-30c8547c",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-dbd0b62e",
+      "quarter": "2026-Q2",
+      "name": "文一飞",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-142328cb",
+      "quarter": "2026-Q2",
+      "name": "杨宇新",
+      "departmentId": "dept-9a29158f",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-458e8286",
+      "quarter": "2026-Q2",
+      "name": "康海琴",
+      "departmentId": "dept-30c8547c",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-9ebd8f8c",
+      "quarter": "2026-Q2",
+      "name": "潘容",
+      "departmentId": "dept-e93c1ac2",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-3d260ba3",
+      "quarter": "2026-Q2",
+      "name": "周宇阳",
+      "departmentId": "dept-71ccdaec",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-65f3ff4f",
+      "quarter": "2026-Q2",
+      "name": "陈梦莉",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-4ef04227",
+      "quarter": "2026-Q2",
+      "name": "杨志方",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-7ae593a6",
+      "quarter": "2026-Q2",
+      "name": "朱冰",
+      "departmentId": "dept-a0800f3e",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-d50c467f",
+      "quarter": "2026-Q2",
+      "name": "韩超",
+      "departmentId": "dept-51d2810b",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-f363b138",
+      "quarter": "2026-Q2",
+      "name": "陈云",
+      "departmentId": "dept-8158eef5",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-631142bf",
+      "quarter": "2026-Q2",
+      "name": "汪淑雅",
+      "departmentId": "dept-a8211ea2",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-4d1ec265",
+      "quarter": "2026-Q2",
+      "name": "朱佳丽",
+      "departmentId": "dept-a8211ea2",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-badf20a1",
+      "quarter": "2026-Q2",
+      "name": "敖国贝",
+      "departmentId": "dept-a0800f3e",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-b0c3e8c2",
+      "quarter": "2026-Q2",
+      "name": "李小涵",
+      "departmentId": "dept-e93c1ac2",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-8748e45a",
+      "quarter": "2026-Q2",
+      "name": "叶晨雨",
+      "departmentId": "dept-78e77826",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-13c89406",
+      "quarter": "2026-Q2",
+      "name": "邓嫣然",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-64ee612a",
+      "quarter": "2026-Q2",
+      "name": "陈婷洁",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-38077aa8",
+      "quarter": "2026-Q2",
+      "name": "郑嘉蓉",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-fcd19831",
+      "quarter": "2026-Q2",
+      "name": "胡思楚",
+      "departmentId": "dept-e5b0f0bd",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-f6d56392",
+      "quarter": "2026-Q2",
+      "name": "刘晗",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-a939aba5",
+      "quarter": "2026-Q2",
+      "name": "王贤虎",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-647683fe",
+      "quarter": "2026-Q2",
+      "name": "戴玉",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-73e68cbd",
+      "quarter": "2026-Q2",
+      "name": "黄瑶凡",
+      "departmentId": "dept-8158eef5",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-2709d2eb",
+      "quarter": "2026-Q2",
+      "name": "夏雪",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-f11041e2",
+      "quarter": "2026-Q2",
+      "name": "张磊磊",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-5ea24ccd",
+      "quarter": "2026-Q2",
+      "name": "李紫琴",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-0eec304e",
+      "quarter": "2026-Q2",
+      "name": "彭佑成",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-98fdcbba",
+      "quarter": "2026-Q2",
+      "name": "刘书兰",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-797883ef",
+      "quarter": "2026-Q2",
+      "name": "南琳",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-ff3cee91",
+      "quarter": "2026-Q2",
+      "name": "唐敏",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-cb0ec2ce",
+      "quarter": "2026-Q2",
+      "name": "马心怡",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-c926f815",
+      "quarter": "2026-Q2",
+      "name": "陈芳",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-14321b9b",
+      "quarter": "2026-Q2",
+      "name": "覃小曼",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-8ba5c344",
+      "quarter": "2026-Q2",
+      "name": "罗娜",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-6e72466d",
+      "quarter": "2026-Q2",
+      "name": "李貌靓",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-6ed670a6",
+      "quarter": "2026-Q2",
+      "name": "邓芳",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-e48bcc38",
+      "quarter": "2026-Q2",
+      "name": "王茁悦",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-8b19e8ce",
+      "quarter": "2026-Q2",
+      "name": "王璐",
+      "departmentId": "dept-2e650d10",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-f8a2fd6a",
+      "quarter": "2026-Q2",
+      "name": "隗轻盈",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-219baea6",
+      "quarter": "2026-Q2",
+      "name": "苏雅群",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-e7b7881d",
+      "quarter": "2026-Q2",
+      "name": "袁慧军",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-47b54dec",
+      "quarter": "2026-Q2",
+      "name": "褚丽娟",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-da782410",
+      "quarter": "2026-Q2",
+      "name": "王侣全",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-cda3611a",
+      "quarter": "2026-Q2",
+      "name": "李博源",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-58463339",
+      "quarter": "2026-Q2",
+      "name": "张静怡",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-64cb9259",
+      "quarter": "2026-Q2",
+      "name": "李萌",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-d26c274b",
+      "quarter": "2026-Q2",
+      "name": "李新竹",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-73fe45e8",
+      "quarter": "2026-Q2",
+      "name": "白珺琪",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-3837616b",
+      "quarter": "2026-Q2",
+      "name": "彭稳娣",
+      "departmentId": "dept-8ce0fbe6",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-02a13cfa",
+      "quarter": "2026-Q2",
+      "name": "胡欣萍",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-186faf6d",
+      "quarter": "2026-Q2",
+      "name": "孙蕾",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-9700d2af",
+      "quarter": "2026-Q2",
+      "name": "商小林",
+      "departmentId": "dept-a8211ea2",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-854a7930",
+      "quarter": "2026-Q2",
+      "name": "王文军",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-46499401",
+      "quarter": "2026-Q2",
+      "name": "蒋子涵",
+      "departmentId": "dept-a12ef213",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-1d077b19",
+      "quarter": "2026-Q2",
+      "name": "彭昱羲",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-e6f2e6c9",
+      "quarter": "2026-Q2",
+      "name": "董玲玲",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-178417a7",
+      "quarter": "2026-Q2",
+      "name": "陈晓红",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-58686134",
+      "quarter": "2026-Q2",
+      "name": "万成都",
+      "departmentId": "dept-9a29158f",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-de2eb67a",
+      "quarter": "2026-Q2",
+      "name": "张子怡",
+      "departmentId": "dept-e48b40ff",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-40f3bdf1",
+      "quarter": "2026-Q2",
+      "name": "王洁洁",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-1ac19c50",
+      "quarter": "2026-Q2",
+      "name": "徐想",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-ff9ca8bd",
+      "quarter": "2026-Q2",
+      "name": "洪苗",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-f56d2a56",
+      "quarter": "2026-Q2",
+      "name": "肖梦莹",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-65eb9e97",
+      "quarter": "2026-Q2",
+      "name": "雷桐",
+      "departmentId": "dept-2e650d10",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-bdaec7cf",
+      "quarter": "2026-Q2",
+      "name": "吴芳芳",
+      "departmentId": "dept-7ac8209a",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-f6fa6281",
+      "quarter": "2026-Q2",
+      "name": "夏梦",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-36ec6290",
+      "quarter": "2026-Q2",
+      "name": "汤鈺滢",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-6e3c4cca",
+      "quarter": "2026-Q2",
+      "name": "鄢奉习",
+      "departmentId": "dept-e80c471a",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-5980da1a",
+      "quarter": "2026-Q2",
+      "name": "陈万栎",
+      "departmentId": "dept-a0800f3e",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-fe482469",
+      "quarter": "2026-Q2",
+      "name": "李新星",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-6ccfd5c4",
+      "quarter": "2026-Q2",
+      "name": "王豪铂",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.423Z"
+    },
+    {
+      "id": "member-92ff65c8",
+      "quarter": "2026-Q2",
+      "name": "兰欣悦",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-e8c53b5c",
+      "quarter": "2026-Q2",
+      "name": "李凌杰",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-f85c6121",
+      "quarter": "2026-Q2",
+      "name": "吴苗",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-d246ab4e",
+      "quarter": "2026-Q2",
+      "name": "钱烨",
+      "departmentId": "dept-71ccdaec",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-d35b56df",
+      "quarter": "2026-Q2",
+      "name": "杨效瑞",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-7f4716da",
+      "quarter": "2026-Q2",
+      "name": "王逸飞",
+      "departmentId": "dept-2e650d10",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-593e54e1",
+      "quarter": "2026-Q2",
+      "name": "潘文棹",
+      "departmentId": "dept-a1fb048d",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-270248c3",
+      "quarter": "2026-Q2",
+      "name": "李阳",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-c2dda026",
+      "quarter": "2026-Q2",
+      "name": "唐晶晶",
+      "departmentId": "dept-a8211ea2",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-639a0586",
+      "quarter": "2026-Q2",
+      "name": "刘燕",
+      "departmentId": "dept-a8211ea2",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-5b7a3b1c",
+      "quarter": "2026-Q2",
+      "name": "孟昱好",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-265b08a9",
+      "quarter": "2026-Q2",
+      "name": "吴云飞",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-7b44b43f",
+      "quarter": "2026-Q2",
+      "name": "阮秀英",
+      "departmentId": "dept-e48b40ff",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-6cb9550b",
+      "quarter": "2026-Q2",
+      "name": "李沐源",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-021ce9eb",
+      "quarter": "2026-Q2",
+      "name": "曹睿东",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-2a088a45",
+      "quarter": "2026-Q2",
+      "name": "李岩泽",
+      "departmentId": "dept-f223a309",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-67caa122",
+      "quarter": "2026-Q2",
+      "name": "陈苑萍",
+      "departmentId": "dept-a8211ea2",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-4535a3d1",
+      "quarter": "2026-Q2",
+      "name": "胡文舟",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-7aae0610",
+      "quarter": "2026-Q2",
+      "name": "盆慧",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-fdd38f51",
+      "quarter": "2026-Q2",
+      "name": "周璐璐",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-22e31e19",
+      "quarter": "2026-Q2",
+      "name": "刘晴",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-e5724b7e",
+      "quarter": "2026-Q2",
+      "name": "张红玉",
+      "departmentId": "dept-78e77826",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-457f7ad1",
+      "quarter": "2026-Q2",
+      "name": "柳清",
+      "departmentId": "dept-de37da49",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-aadcaf00",
+      "quarter": "2026-Q2",
+      "name": "周仁杰",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-7704bb67",
+      "quarter": "2026-Q2",
+      "name": "由东朔",
+      "departmentId": "dept-30c8547c",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-1c51602d",
+      "quarter": "2026-Q2",
+      "name": "胡金香",
+      "departmentId": "dept-a8211ea2",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-dc7911ff",
+      "quarter": "2026-Q2",
+      "name": "褚雯雯",
+      "departmentId": "dept-bb153ac5",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-730cc46c",
+      "quarter": "2026-Q2",
+      "name": "李静",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-7da019bb",
+      "quarter": "2026-Q2",
+      "name": "邓梦婷",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-c18fd4b2",
+      "quarter": "2026-Q2",
+      "name": "张岩",
+      "departmentId": "dept-e5b8d670",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-8a7da762",
+      "quarter": "2026-Q2",
+      "name": "隋婷婷",
+      "departmentId": "dept-df669ae2",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-88de82c6",
+      "quarter": "2026-Q2",
+      "name": "王娜",
+      "departmentId": "dept-bb153ac5",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-9710fd9a",
+      "quarter": "2026-Q2",
+      "name": "张成林",
+      "departmentId": "dept-f7d3a699",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-c84ff147",
+      "quarter": "2026-Q2",
+      "name": "王彦博",
+      "departmentId": "dept-f223a309",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-4939381c",
+      "quarter": "2026-Q2",
+      "name": "袁玉冰",
+      "departmentId": "dept-3b6725fa",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-d3e42f2f",
+      "quarter": "2026-Q2",
+      "name": "包聪",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-6c58ffe9",
+      "quarter": "2026-Q2",
+      "name": "解子涵",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-58ad9bc3",
+      "quarter": "2026-Q2",
+      "name": "李菲",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-64ee08f0",
+      "quarter": "2026-Q2",
+      "name": "徐宏达",
+      "departmentId": "dept-8bd00abf",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-9ea8d9c2",
+      "quarter": "2026-Q2",
+      "name": "周滔",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-037a24e5",
+      "quarter": "2026-Q2",
+      "name": "姚常坤",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-43ae003a",
+      "quarter": "2026-Q2",
+      "name": "熊江涛",
+      "departmentId": "dept-8158eef5",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-da0e7514",
+      "quarter": "2026-Q2",
+      "name": "刘安玲",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-dbe184bf",
+      "quarter": "2026-Q2",
+      "name": "牛梦洁",
+      "departmentId": "dept-bb153ac5",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-5e8c84da",
+      "quarter": "2026-Q2",
+      "name": "谭爱昆",
+      "departmentId": "dept-8955b4e3",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-3a79843b",
+      "quarter": "2026-Q2",
+      "name": "薛枫",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-cdef6d8b",
+      "quarter": "2026-Q2",
+      "name": "陈阳",
+      "departmentId": "dept-6444b15a",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-4bb58394",
+      "quarter": "2026-Q2",
+      "name": "蒋翩",
+      "departmentId": "dept-8955b4e3",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-70366901",
+      "quarter": "2026-Q2",
+      "name": "殷晨宇",
+      "departmentId": "dept-71ccdaec",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-b9b54334",
+      "quarter": "2026-Q2",
+      "name": "李欣",
+      "departmentId": "dept-78e77826",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-a9a4f74a",
+      "quarter": "2026-Q2",
+      "name": "张晓兵",
+      "departmentId": "dept-25202165",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-3a27f4fc",
+      "quarter": "2026-Q2",
+      "name": "余秭怡",
+      "departmentId": "dept-6444b15a",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-31420762",
+      "quarter": "2026-Q2",
+      "name": "王朋飞",
+      "departmentId": "dept-6444b15a",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-01841a49",
+      "quarter": "2026-Q2",
+      "name": "代心悦",
+      "departmentId": "dept-a8211ea2",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-bf7cefcc",
+      "quarter": "2026-Q2",
+      "name": "刘腾",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-585afc9f",
+      "quarter": "2026-Q2",
+      "name": "孙荣",
+      "departmentId": "dept-5ae05592",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-6ad49e07",
+      "quarter": "2026-Q2",
+      "name": "方敏",
+      "departmentId": "dept-5ae05592",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-8adc4e4f",
+      "quarter": "2026-Q2",
+      "name": "牛博",
+      "departmentId": "dept-2e650d10",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-5055e7c2",
+      "quarter": "2026-Q2",
+      "name": "王莹",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-b91cecbb",
+      "quarter": "2026-Q2",
+      "name": "刘梦琴",
+      "departmentId": "dept-2e650d10",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-5aa5619c",
+      "quarter": "2026-Q2",
+      "name": "王奕航",
+      "departmentId": "dept-2e650d10",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-9cb90fe2",
+      "quarter": "2026-Q2",
+      "name": "潘晗",
+      "departmentId": "dept-2e650d10",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-ff9e04cc",
+      "quarter": "2026-Q2",
+      "name": "曾璐璐",
+      "departmentId": "dept-5ae05592",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-e2c85284",
+      "quarter": "2026-Q2",
+      "name": "刘窑龙",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-bed5ad91",
+      "quarter": "2026-Q2",
+      "name": "唐志晏",
+      "departmentId": "dept-2e650d10",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-bfc8549c",
+      "quarter": "2026-Q2",
+      "name": "滕雨均",
+      "departmentId": "dept-51d2810b",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-519ac9f9",
+      "quarter": "2026-Q2",
+      "name": "刘玉婷",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-e7149c51",
+      "quarter": "2026-Q2",
+      "name": "王佳睿",
+      "departmentId": "dept-bb153ac5",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-c630c752",
+      "quarter": "2026-Q2",
+      "name": "魏小航",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-402312c8",
+      "quarter": "2026-Q2",
+      "name": "张莲",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-61f0865f",
+      "quarter": "2026-Q2",
+      "name": "肖丁晟",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-67012910",
+      "quarter": "2026-Q2",
+      "name": "刘敬",
+      "departmentId": "dept-516fc252",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-d5818060",
+      "quarter": "2026-Q2",
+      "name": "骆曲",
+      "departmentId": "dept-7534e0c1",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-aaa1d9d7",
+      "quarter": "2026-Q2",
+      "name": "冷大报",
+      "departmentId": "dept-7534e0c1",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-ad157621",
+      "quarter": "2026-Q2",
+      "name": "吴召琼",
+      "departmentId": "dept-7534e0c1",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-8e2dbd65",
+      "quarter": "2026-Q2",
+      "name": "肖志文",
+      "departmentId": "dept-7534e0c1",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-400bd67a",
+      "quarter": "2026-Q2",
+      "name": "聂梦秋",
+      "departmentId": "dept-7534e0c1",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-d307f7a0",
+      "quarter": "2026-Q2",
+      "name": "尹行",
+      "departmentId": "dept-7534e0c1",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-64c6c8bd",
+      "quarter": "2026-Q2",
+      "name": "谭颖迪",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-f9bc5fb1",
+      "quarter": "2026-Q2",
+      "name": "方婷",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-ac5ac217",
+      "quarter": "2026-Q2",
+      "name": "陈楚睿",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-b310ac92",
+      "quarter": "2026-Q2",
+      "name": "梅文强",
+      "departmentId": "dept-7534e0c1",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-533c7c96",
+      "quarter": "2026-Q2",
+      "name": "赵明珠",
+      "departmentId": "dept-2e650d10",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-ee1e63f1",
+      "quarter": "2026-Q2",
+      "name": "龚丽荷",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.424Z"
+    },
+    {
+      "id": "member-946d7e47",
+      "quarter": "2026-Q2",
+      "name": "曾丽君",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-ccadfb27",
+      "quarter": "2026-Q2",
+      "name": "欧阳兴",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-c8f99629",
+      "quarter": "2026-Q2",
+      "name": "韦文强",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-51098914",
+      "quarter": "2026-Q2",
+      "name": "鲁颖",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-4e673803",
+      "quarter": "2026-Q2",
+      "name": "王婵婵",
+      "departmentId": "dept-e3c4f70d",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-afe8de1d",
+      "quarter": "2026-Q2",
+      "name": "王钰",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-a5d58dbf",
+      "quarter": "2026-Q2",
+      "name": "王一晗",
+      "departmentId": "dept-6444b15a",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-67726c3d",
+      "quarter": "2026-Q2",
+      "name": "祁梅",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-0f58a941",
+      "quarter": "2026-Q2",
+      "name": "张黎",
+      "departmentId": "dept-de37da49",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-a7377b00",
+      "quarter": "2026-Q2",
+      "name": "胡清清",
+      "departmentId": "dept-a8211ea2",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-92b7e60f",
+      "quarter": "2026-Q2",
+      "name": "陈佳",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-1b056997",
+      "quarter": "2026-Q2",
+      "name": "周银",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-802a54c3",
+      "quarter": "2026-Q2",
+      "name": "王奕程",
+      "departmentId": "dept-355b9745",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-ffa1ddc4",
+      "quarter": "2026-Q2",
+      "name": "王可",
+      "departmentId": "dept-2e650d10",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-5cf976f8",
+      "quarter": "2026-Q2",
+      "name": "袁欣",
+      "departmentId": "dept-2e650d10",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-fa9abbd3",
+      "quarter": "2026-Q2",
+      "name": "余芙",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-5c601a4d",
+      "quarter": "2026-Q2",
+      "name": "王福和",
+      "departmentId": "dept-e80c471a",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-d8d397f1",
+      "quarter": "2026-Q2",
+      "name": "薛安琪",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-757ba116",
+      "quarter": "2026-Q2",
+      "name": "胡思敏",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-b830afd5",
+      "quarter": "2026-Q2",
+      "name": "朱林枫",
+      "departmentId": "dept-e3c4f70d",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-2a0e07f9",
+      "quarter": "2026-Q2",
+      "name": "唐道谭",
+      "departmentId": "dept-7534e0c1",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-ee7edd51",
+      "quarter": "2026-Q2",
+      "name": "李佳欣",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-2a799565",
+      "quarter": "2026-Q2",
+      "name": "马裕鹏",
+      "departmentId": "dept-78e77826",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-b3a31614",
+      "quarter": "2026-Q2",
+      "name": "史颖新",
+      "departmentId": "dept-e3c4f70d",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-f171edd3",
+      "quarter": "2026-Q2",
+      "name": "段承玮",
+      "departmentId": "dept-a8211ea2",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-4fdc9ea4",
+      "quarter": "2026-Q2",
+      "name": "陈欢",
+      "departmentId": "dept-a8211ea2",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-1380948c",
+      "quarter": "2026-Q2",
+      "name": "张雨晴",
+      "departmentId": "dept-a8211ea2",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-9cbe10da",
+      "quarter": "2026-Q2",
+      "name": "罗研",
+      "departmentId": "dept-a8211ea2",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-0286f6e4",
+      "quarter": "2026-Q2",
+      "name": "桑忠浩",
+      "departmentId": "dept-25202165",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-4cc38289",
+      "quarter": "2026-Q2",
+      "name": "黄熙",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-1486a276",
+      "quarter": "2026-Q2",
+      "name": "罗焯",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-87d455d2",
+      "quarter": "2026-Q2",
+      "name": "胡怡梦",
+      "departmentId": "dept-8e6051b7",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-951312fd",
+      "quarter": "2026-Q2",
+      "name": "王飘红",
+      "departmentId": "dept-a8211ea2",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-00dc877f",
+      "quarter": "2026-Q2",
+      "name": "张俊豪",
+      "departmentId": "dept-94c8c98d",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-7011f474",
+      "quarter": "2026-Q2",
+      "name": "张畅",
+      "departmentId": "dept-2ef89fac",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-109e5cae",
+      "quarter": "2026-Q2",
+      "name": "黄蕊婷",
+      "departmentId": "dept-2e650d10",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-9bb1fe1e",
+      "quarter": "2026-Q2",
+      "name": "王智聪",
+      "departmentId": "dept-25202165",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-fc4a5eb1",
+      "quarter": "2026-Q2",
+      "name": "杜帆",
+      "departmentId": "dept-25202165",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-fc8bd3e2",
+      "quarter": "2026-Q2",
+      "name": "黄婉婷",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-7c60d3e0",
+      "quarter": "2026-Q2",
+      "name": "陈波",
+      "departmentId": "dept-7534e0c1",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-8b7f09cc",
+      "quarter": "2026-Q2",
+      "name": "张印",
+      "departmentId": "dept-af5440d5",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-49fbe381",
+      "quarter": "2026-Q2",
+      "name": "季旭",
+      "departmentId": "dept-25202165",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-04bd8b91",
+      "quarter": "2026-Q2",
+      "name": "张杨帆",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-d6012a71",
+      "quarter": "2026-Q2",
+      "name": "刘智涛",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-e0ee9b48",
+      "quarter": "2026-Q2",
+      "name": "甘颖",
+      "departmentId": "dept-a8211ea2",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-d6e2f599",
+      "quarter": "2026-Q2",
+      "name": "杨张梦然",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-71cc115f",
+      "quarter": "2026-Q2",
+      "name": "王豪杰",
+      "departmentId": "dept-f7d3a699",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-e5c32d0c",
+      "quarter": "2026-Q2",
+      "name": "李敬彪",
+      "departmentId": "dept-25202165",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-2c32adb9",
+      "quarter": "2026-Q2",
+      "name": "文敏",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-a31952a1",
+      "quarter": "2026-Q2",
+      "name": "李振宇",
+      "departmentId": "dept-94c8c98d",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-3c051a22",
+      "quarter": "2026-Q2",
+      "name": "吴蕴思",
+      "departmentId": "dept-2e650d10",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-f8cc984e",
+      "quarter": "2026-Q2",
+      "name": "曹紫阳",
+      "departmentId": "dept-94c8c98d",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-aa289ed4",
+      "quarter": "2026-Q2",
+      "name": "吴双玲",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-2656ca8c",
+      "quarter": "2026-Q2",
+      "name": "鄢佳龙",
+      "departmentId": "dept-de37da49",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-347cc733",
+      "quarter": "2026-Q2",
+      "name": "陈文琦",
+      "departmentId": "dept-b017c126",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-809dba3e",
+      "quarter": "2026-Q2",
+      "name": "张天明",
+      "departmentId": "dept-fa5a09f5",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-adbfd45b",
+      "quarter": "2026-Q2",
+      "name": "李基源",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-74c1840c",
+      "quarter": "2026-Q2",
+      "name": "陈森",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-42af0bcf",
+      "quarter": "2026-Q2",
+      "name": "李博",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-e2cd8e53",
+      "quarter": "2026-Q2",
+      "name": "季永娥",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-007ab5bd",
+      "quarter": "2026-Q2",
+      "name": "廖帅",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-d5a99606",
+      "quarter": "2026-Q2",
+      "name": "刘世萍",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-b28ce6b5",
+      "quarter": "2026-Q2",
+      "name": "王冰",
+      "departmentId": "dept-8158eef5",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-fa61eb57",
+      "quarter": "2026-Q2",
+      "name": "杜慧",
+      "departmentId": "dept-8e6051b7",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-e7b3245e",
+      "quarter": "2026-Q2",
+      "name": "朱佳慧",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-3dbcbf0b",
+      "quarter": "2026-Q2",
+      "name": "魏文琪",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-dc4c6972",
+      "quarter": "2026-Q2",
+      "name": "杨娟",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-0dbf6eae",
+      "quarter": "2026-Q2",
+      "name": "曹辉",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-16ad0f3e",
+      "quarter": "2026-Q2",
+      "name": "朗意雄",
+      "departmentId": "dept-78e77826",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-8f42c534",
+      "quarter": "2026-Q2",
+      "name": "周成",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-bea5bf39",
+      "quarter": "2026-Q2",
+      "name": "李文彪",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-f2bd00b5",
+      "quarter": "2026-Q2",
+      "name": "李婉",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-2a23fc7b",
+      "quarter": "2026-Q2",
+      "name": "曹政",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-dd9ceae4",
+      "quarter": "2026-Q2",
+      "name": "刘洋",
+      "departmentId": "dept-a8211ea2",
+      "createdAt": "2026-04-05T08:59:15.425Z"
+    },
+    {
+      "id": "member-3a89be0e",
+      "quarter": "2026-Q2",
+      "name": "张雯婧",
+      "departmentId": "dept-e5b8d670",
+      "createdAt": "2026-04-05T08:59:15.426Z"
+    },
+    {
+      "id": "member-28ab374b",
+      "quarter": "2026-Q2",
+      "name": "尹志强",
+      "departmentId": "dept-78e77826",
+      "createdAt": "2026-04-05T08:59:15.426Z"
+    },
+    {
+      "id": "member-5f3e5751",
+      "quarter": "2026-Q2",
+      "name": "刘啸",
+      "departmentId": "dept-e3c4f70d",
+      "createdAt": "2026-04-05T08:59:15.426Z"
+    },
+    {
+      "id": "member-dd693d1d",
+      "quarter": "2026-Q2",
+      "name": "潘小玉",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.426Z"
+    },
+    {
+      "id": "member-6ece47dd",
+      "quarter": "2026-Q2",
+      "name": "余圳咸",
+      "departmentId": "dept-30c8547c",
+      "createdAt": "2026-04-05T08:59:15.426Z"
+    },
+    {
+      "id": "member-d3cb00be",
+      "quarter": "2026-Q2",
+      "name": "邢晶辉",
+      "departmentId": "dept-94c8c98d",
+      "createdAt": "2026-04-05T08:59:15.426Z"
+    },
+    {
+      "id": "member-687d7a5d",
+      "quarter": "2026-Q2",
+      "name": "THEN JEAN YI（邓凊伊）",
+      "departmentId": "dept-af5440d5",
+      "createdAt": "2026-04-05T08:59:15.426Z"
+    },
+    {
+      "id": "member-24b64adf",
+      "quarter": "2026-Q2",
+      "name": "黄美玉",
+      "departmentId": "dept-e9a837de",
+      "createdAt": "2026-04-05T08:59:15.426Z"
+    },
+    {
+      "id": "member-23be6374",
+      "quarter": "2026-Q2",
+      "name": "张瑶",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.426Z"
+    },
+    {
+      "id": "member-902e7b62",
+      "quarter": "2026-Q2",
+      "name": "朱翼芳",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.426Z"
+    },
+    {
+      "id": "member-127d4941",
+      "quarter": "2026-Q2",
+      "name": "姚兰航",
+      "departmentId": "dept-94c8c98d",
+      "createdAt": "2026-04-05T08:59:15.426Z"
+    },
+    {
+      "id": "member-a9da72bb",
+      "quarter": "2026-Q2",
+      "name": "宁晨亮",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.426Z"
+    },
+    {
+      "id": "member-a997a1df",
+      "quarter": "2026-Q2",
+      "name": "孟维林",
+      "departmentId": "dept-a8211ea2",
+      "createdAt": "2026-04-05T08:59:15.426Z"
+    },
+    {
+      "id": "member-befe7812",
+      "quarter": "2026-Q2",
+      "name": "黄欣",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.426Z"
+    },
+    {
+      "id": "member-a5cedbbc",
+      "quarter": "2026-Q2",
+      "name": "傅正龙",
+      "departmentId": "dept-8158eef5",
+      "createdAt": "2026-04-05T08:59:15.426Z"
+    },
+    {
+      "id": "member-dbd6d26d",
+      "quarter": "2026-Q2",
+      "name": "王杰",
+      "departmentId": "dept-a8211ea2",
+      "createdAt": "2026-04-05T08:59:15.426Z"
+    },
+    {
+      "id": "member-72477bb7",
+      "quarter": "2026-Q2",
+      "name": "陈牙",
+      "departmentId": "dept-a8211ea2",
+      "createdAt": "2026-04-05T08:59:15.426Z"
+    },
+    {
+      "id": "member-f41bf1cf",
+      "quarter": "2026-Q2",
+      "name": "樊张",
+      "departmentId": "dept-a8211ea2",
+      "createdAt": "2026-04-05T08:59:15.426Z"
+    },
+    {
+      "id": "member-fa624a7a",
+      "quarter": "2026-Q2",
+      "name": "夏环宇",
+      "departmentId": "dept-7534e0c1",
+      "createdAt": "2026-04-05T08:59:15.426Z"
+    },
+    {
+      "id": "member-4e96cafc",
+      "quarter": "2026-Q2",
+      "name": "刘锦誉",
+      "departmentId": "dept-2344a3b4",
+      "createdAt": "2026-04-05T08:59:15.426Z"
+    },
+    {
+      "id": "member-0a6d9483",
+      "quarter": "2026-Q2",
+      "name": "李梦",
+      "departmentId": "dept-a8211ea2",
+      "createdAt": "2026-04-05T08:59:15.426Z"
+    },
+    {
+      "id": "member-ced85efa",
+      "quarter": "2026-Q2",
+      "name": "梁袁",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.426Z"
+    },
+    {
+      "id": "member-14c3d9c9",
+      "quarter": "2026-Q2",
+      "name": "张航",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.426Z"
+    },
+    {
+      "id": "member-101bd4c4",
+      "quarter": "2026-Q2",
+      "name": "李子翔",
+      "departmentId": "dept-19edb8c6",
+      "createdAt": "2026-04-05T08:59:15.426Z"
     }
   ],
   "quarterlyExpenses": [
     {
       "id": "qe-001",
+      "employeeId": "member-rd-q2-01",
+      "employeeName": "张晨",
       "departmentId": "dept-rd",
       "quarter": "2026-Q2",
-      "title": "Q2 团队午餐",
-      "amount": 960,
+      "title": "团队午餐",
+      "amount": 120,
       "spentDate": "2026-04-03",
-      "note": "项目冲刺阶段团队聚餐",
+      "note": "项目冲刺阶段午餐",
       "createdAt": "2026-04-03T09:10:00.000Z"
     },
     {
       "id": "qe-002",
-      "departmentId": "dept-ops",
+      "employeeId": "member-rd-q2-02",
+      "employeeName": "李璐",
+      "departmentId": "dept-rd",
       "quarter": "2026-Q2",
-      "title": "春季户外拓展",
-      "amount": 1280,
-      "spentDate": "2026-04-02",
-      "note": "半日徒步和晚餐",
-      "createdAt": "2026-04-02T06:20:00.000Z"
+      "title": "桌游活动",
+      "amount": 80,
+      "spentDate": "2026-04-04",
+      "note": "部门团建桌游",
+      "createdAt": "2026-04-04T10:20:00.000Z"
     },
     {
       "id": "qe-003",
-      "departmentId": "dept-marketing",
+      "employeeId": "member-ops-q2-01",
+      "employeeName": "周悦",
+      "departmentId": "dept-ops",
       "quarter": "2026-Q2",
-      "title": "品牌复盘下午茶",
-      "amount": 540,
-      "spentDate": "2026-04-01",
-      "note": "季度 campaign 复盘",
-      "createdAt": "2026-04-01T08:30:00.000Z"
+      "title": "徒步团建",
+      "amount": 150,
+      "spentDate": "2026-04-02",
+      "note": "季度户外活动",
+      "createdAt": "2026-04-02T06:20:00.000Z"
     },
     {
       "id": "qe-004",
+      "employeeId": "member-marketing-q2-01",
+      "employeeName": "赵宁",
+      "departmentId": "dept-marketing",
+      "quarter": "2026-Q2",
+      "title": "下午茶",
+      "amount": 60,
+      "spentDate": "2026-04-01",
+      "note": "季度复盘下午茶",
+      "createdAt": "2026-04-01T08:30:00.000Z"
+    },
+    {
+      "id": "qe-005",
+      "employeeId": "member-rd-q1-01",
+      "employeeName": "张晨",
       "departmentId": "dept-rd",
       "quarter": "2026-Q1",
       "title": "技术分享晚餐",
-      "amount": 1350,
+      "amount": 100,
       "spentDate": "2026-02-15",
       "note": "技术月度分享后的晚餐",
       "createdAt": "2026-02-15T11:10:00.000Z"
     },
     {
-      "id": "qe-005",
-      "departmentId": "dept-hr",
-      "quarter": "2026-Q1",
-      "title": "新员工欢迎活动",
-      "amount": 680,
-      "spentDate": "2026-01-20",
-      "note": "欢迎礼包和茶歇",
-      "createdAt": "2026-01-20T03:40:00.000Z"
+      "id": "qe-c8f28306",
+      "employeeId": "member-16ad0f3e",
+      "employeeName": "朗意雄",
+      "departmentId": "dept-78e77826",
+      "quarter": "2026-Q2",
+      "title": "11",
+      "amount": 150,
+      "spentDate": "2026-04-05",
+      "note": "11",
+      "createdAt": "2026-04-05T09:30:18.680Z"
+    },
+    {
+      "id": "qe-4226c680",
+      "employeeId": "member-8f42c534",
+      "employeeName": "周成",
+      "departmentId": "dept-2344a3b4",
+      "quarter": "2026-Q2",
+      "title": "11",
+      "amount": 150,
+      "spentDate": "2026-04-05",
+      "note": "11",
+      "createdAt": "2026-04-05T09:30:18.680Z"
+    },
+    {
+      "id": "qe-b634f12d",
+      "employeeId": "member-bea5bf39",
+      "employeeName": "李文彪",
+      "departmentId": "dept-19edb8c6",
+      "quarter": "2026-Q2",
+      "title": "11",
+      "amount": 150,
+      "spentDate": "2026-04-05",
+      "note": "11",
+      "createdAt": "2026-04-05T09:30:18.680Z"
+    },
+    {
+      "id": "qe-8e056f4e",
+      "employeeId": "member-f2bd00b5",
+      "employeeName": "李婉",
+      "departmentId": "dept-2344a3b4",
+      "quarter": "2026-Q2",
+      "title": "11",
+      "amount": 150,
+      "spentDate": "2026-04-05",
+      "note": "11",
+      "createdAt": "2026-04-05T09:30:18.680Z"
+    },
+    {
+      "id": "qe-00b7eb37",
+      "employeeId": "member-2a23fc7b",
+      "employeeName": "曹政",
+      "departmentId": "dept-2344a3b4",
+      "quarter": "2026-Q2",
+      "title": "11",
+      "amount": 150,
+      "spentDate": "2026-04-05",
+      "note": "11",
+      "createdAt": "2026-04-05T09:30:18.680Z"
+    },
+    {
+      "id": "qe-b7e31687",
+      "employeeId": "member-dd9ceae4",
+      "employeeName": "刘洋",
+      "departmentId": "dept-a8211ea2",
+      "quarter": "2026-Q2",
+      "title": "11",
+      "amount": 150,
+      "spentDate": "2026-04-05",
+      "note": "11",
+      "createdAt": "2026-04-05T09:30:18.680Z"
+    },
+    {
+      "id": "qe-6eccb526",
+      "employeeId": "member-3a89be0e",
+      "employeeName": "张雯婧",
+      "departmentId": "dept-e5b8d670",
+      "quarter": "2026-Q2",
+      "title": "11",
+      "amount": 150,
+      "spentDate": "2026-04-05",
+      "note": "11",
+      "createdAt": "2026-04-05T09:30:18.680Z"
+    },
+    {
+      "id": "qe-bfad235d",
+      "employeeId": "member-28ab374b",
+      "employeeName": "尹志强",
+      "departmentId": "dept-78e77826",
+      "quarter": "2026-Q2",
+      "title": "11",
+      "amount": 150,
+      "spentDate": "2026-04-05",
+      "note": "11",
+      "createdAt": "2026-04-05T09:30:18.680Z"
+    },
+    {
+      "id": "qe-64023a90",
+      "employeeId": "member-5f3e5751",
+      "employeeName": "刘啸",
+      "departmentId": "dept-e3c4f70d",
+      "quarter": "2026-Q2",
+      "title": "11",
+      "amount": 150,
+      "spentDate": "2026-04-05",
+      "note": "11",
+      "createdAt": "2026-04-05T09:30:18.680Z"
+    },
+    {
+      "id": "qe-fbd1c151",
+      "employeeId": "member-dd693d1d",
+      "employeeName": "潘小玉",
+      "departmentId": "dept-e9a837de",
+      "quarter": "2026-Q2",
+      "title": "11",
+      "amount": 150,
+      "spentDate": "2026-04-05",
+      "note": "11",
+      "createdAt": "2026-04-05T09:30:18.681Z"
+    },
+    {
+      "id": "qe-3bcb88ff",
+      "employeeId": "member-6ece47dd",
+      "employeeName": "余圳咸",
+      "departmentId": "dept-30c8547c",
+      "quarter": "2026-Q2",
+      "title": "11",
+      "amount": 150,
+      "spentDate": "2026-04-05",
+      "note": "11",
+      "createdAt": "2026-04-05T09:30:18.681Z"
+    },
+    {
+      "id": "qe-84c39af9",
+      "employeeId": "member-d3cb00be",
+      "employeeName": "邢晶辉",
+      "departmentId": "dept-94c8c98d",
+      "quarter": "2026-Q2",
+      "title": "11",
+      "amount": 150,
+      "spentDate": "2026-04-05",
+      "note": "11",
+      "createdAt": "2026-04-05T09:30:18.681Z"
+    },
+    {
+      "id": "qe-9e16b181",
+      "employeeId": "member-c18fd4b2",
+      "employeeName": "张岩",
+      "departmentId": "dept-e5b8d670",
+      "quarter": "2026-Q2",
+      "title": "11",
+      "amount": 150,
+      "spentDate": "2026-04-05",
+      "note": "11",
+      "createdAt": "2026-04-05T09:30:18.681Z"
+    },
+    {
+      "id": "qe-b0d1d9f8",
+      "employeeId": "member-24b64adf",
+      "employeeName": "黄美玉",
+      "departmentId": "dept-e9a837de",
+      "quarter": "2026-Q2",
+      "title": "11",
+      "amount": 150,
+      "spentDate": "2026-04-05",
+      "note": "11",
+      "createdAt": "2026-04-05T09:30:18.681Z"
+    },
+    {
+      "id": "qe-d400e1da",
+      "employeeId": "member-23be6374",
+      "employeeName": "张瑶",
+      "departmentId": "dept-2344a3b4",
+      "quarter": "2026-Q2",
+      "title": "11",
+      "amount": 150,
+      "spentDate": "2026-04-05",
+      "note": "11",
+      "createdAt": "2026-04-05T09:30:18.681Z"
+    },
+    {
+      "id": "qe-e464946e",
+      "employeeId": "member-902e7b62",
+      "employeeName": "朱翼芳",
+      "departmentId": "dept-19edb8c6",
+      "quarter": "2026-Q2",
+      "title": "11",
+      "amount": 150,
+      "spentDate": "2026-04-05",
+      "note": "11",
+      "createdAt": "2026-04-05T09:30:18.681Z"
     }
   ],
   "innovationProjects": [

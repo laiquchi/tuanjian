@@ -61,6 +61,108 @@ function getEmployeeByNameOrThrow(data, employeeName, quarter) {
   return matchedEmployees[0]
 }
 
+function getQuarterlyMemberByIdOrThrow(data, memberId) {
+  const member = (data.quarterlyMembers || []).find((item) => item.id === memberId)
+
+  if (!member) {
+    const error = new Error('员工不存在')
+    error.statusCode = 404
+    throw error
+  }
+
+  return member
+}
+
+function collectExpenseDepartments(data, employees) {
+  const departmentIds = Array.from(
+    new Set(
+      employees
+        .map((item) => item.departmentId)
+        .filter(Boolean),
+    ),
+  )
+
+  if (departmentIds.length === 0) {
+    const error = new Error('未识别到员工所属部门')
+    error.statusCode = 400
+    throw error
+  }
+
+  const departments = departmentIds.map((departmentId) => getDepartmentOrThrow(data, departmentId))
+
+  return {
+    departmentIds,
+    departmentNames: departments.map((item) => item.name),
+  }
+}
+
+function getExpenseParticipantIds(expense) {
+  if (Array.isArray(expense.employeeIds) && expense.employeeIds.length > 0) {
+    return expense.employeeIds
+  }
+
+  return expense.employeeId ? [expense.employeeId] : []
+}
+
+function getExpenseParticipantNames(expense) {
+  if (Array.isArray(expense.employeeNames) && expense.employeeNames.length > 0) {
+    return expense.employeeNames
+  }
+
+  return expense.employeeName ? [expense.employeeName] : []
+}
+
+function rebuildExpenseDepartments(data, expense) {
+  const memberMap = new Map((data.quarterlyMembers || []).map((item) => [item.id, item]))
+  const participantIds = getExpenseParticipantIds(expense)
+  const departmentIds = Array.from(
+    new Set(
+      participantIds
+        .map((id) => memberMap.get(id)?.departmentId)
+        .filter(Boolean),
+    ),
+  )
+
+  const departmentNames = departmentIds
+    .map((departmentId) => data.departments.find((item) => item.id === departmentId)?.name)
+    .filter(Boolean)
+
+  expense.employeeIds = participantIds
+  expense.employeeNames = getExpenseParticipantNames(expense)
+  expense.departmentIds = departmentIds
+  expense.departmentNames = departmentNames
+  expense.departmentId = departmentIds[0] || ''
+  expense.departmentName = departmentNames.join('、')
+}
+
+function deleteQuarterlyMember(data, memberId) {
+  const member = getQuarterlyMemberByIdOrThrow(data, memberId)
+
+  data.quarterlyMembers = (data.quarterlyMembers || []).filter((item) => item.id !== memberId)
+  data.quarterlyExpenses = (data.quarterlyExpenses || []).filter((expense) => {
+    const nextParticipantIds = getExpenseParticipantIds(expense).filter((id) => id !== member.id)
+    const nextParticipantNames = getExpenseParticipantNames(expense).filter((name) => name !== member.name)
+    const changed =
+      nextParticipantIds.length !== getExpenseParticipantIds(expense).length ||
+      nextParticipantNames.length !== getExpenseParticipantNames(expense).length
+
+    if (!changed) {
+      return true
+    }
+
+    if (nextParticipantIds.length === 0 && nextParticipantNames.length === 0) {
+      return false
+    }
+
+    expense.employeeIds = nextParticipantIds
+    expense.employeeNames = nextParticipantNames
+    rebuildExpenseDepartments(data, expense)
+    return true
+  })
+
+  return member
+}
+
 function requirePositiveNumber(value, fieldName) {
   const numericValue = Number(value)
 
@@ -141,6 +243,38 @@ function parseEmployeeNamesInput(value) {
   )
 }
 
+function removeRecordByTypeAndId(data, type, id) {
+  if (type === 'quarterly') {
+    const beforeCount = (data.quarterlyExpenses || []).length
+    data.quarterlyExpenses = (data.quarterlyExpenses || []).filter((item) => item.id !== id)
+
+    if (data.quarterlyExpenses.length === beforeCount) {
+      const error = new Error('季度团建记录不存在')
+      error.statusCode = 404
+      throw error
+    }
+
+    return
+  }
+
+  if (type === 'innovation') {
+    const beforeCount = (data.innovationProjects || []).length
+    data.innovationProjects = (data.innovationProjects || []).filter((item) => item.id !== id)
+
+    if (data.innovationProjects.length === beforeCount) {
+      const error = new Error('创新专项记录不存在')
+      error.statusCode = 404
+      throw error
+    }
+
+    return
+  }
+
+  const error = new Error('不支持的记录类型')
+  error.statusCode = 400
+  throw error
+}
+
 app.get('/api/health', (_req, res) => {
   res.json({ ok: true })
 })
@@ -165,6 +299,47 @@ app.get('/api/records', (req, res) => {
     type: req.query.type || 'all',
   })
   res.json(payload)
+})
+
+app.delete('/api/records/:type/:id', (req, res, next) => {
+  try {
+    const { type, id } = req.params
+    const data = readStore()
+
+    removeRecordByTypeAndId(data, type, id)
+    writeStore(data)
+
+    res.json({
+      message: '记录已删除',
+    })
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.post('/api/records/batch-delete', (req, res, next) => {
+  try {
+    const { records } = req.body
+    const data = readStore()
+
+    if (!Array.isArray(records) || records.length === 0) {
+      const error = new Error('请先选择要删除的记录')
+      error.statusCode = 400
+      throw error
+    }
+
+    records.forEach((item) => {
+      removeRecordByTypeAndId(data, normalizeText(item.type), normalizeText(item.id))
+    })
+
+    writeStore(data)
+
+    res.json({
+      message: `已批量删除 ${records.length} 条记录`,
+    })
+  } catch (error) {
+    next(error)
+  }
 })
 
 app.post('/api/quarterly-members/import', (req, res, next) => {
@@ -264,17 +439,11 @@ app.post('/api/quarter-configs', (req, res, next) => {
 
 app.post('/api/quarterly-expenses', (req, res, next) => {
   try {
-    const { employeeId, employeeNamesText, quarter, title, amount, spentDate, note } = req.body
+    const { employeeNamesText, quarter, title, amount, spentDate, note } = req.body
     const data = readStore()
 
     if (!isValidQuarter(quarter)) {
       const error = new Error('季度格式必须为 YYYY-QN，例如 2026-Q2')
-      error.statusCode = 400
-      throw error
-    }
-
-    if (!normalizeText(title)) {
-      const error = new Error('请填写支出事项')
       error.statusCode = 400
       throw error
     }
@@ -287,43 +456,100 @@ app.post('/api/quarterly-expenses', (req, res, next) => {
 
     const safeAmount = requirePositiveNumber(amount, '核销金额')
     const employeeNames = parseEmployeeNamesInput(employeeNamesText)
-    const employees = employeeNames.length > 0
-      ? employeeNames.map((name) => getEmployeeByNameOrThrow(data, name, quarter))
-      : [getEmployeeOrThrow(data, employeeId, quarter)]
+    if (employeeNames.length === 0) {
+      const error = new Error('请粘贴员工姓名后再登记')
+      error.statusCode = 400
+      throw error
+    }
 
-    employees.forEach((employee) => {
-      const spentBefore = (data.quarterlyExpenses || [])
-        .filter((item) => item.quarter === quarter && item.employeeId === employee.id)
-        .reduce((sum, item) => sum + Number(item.amount || 0), 0)
+    const employees = employeeNames.map((name) => getEmployeeByNameOrThrow(data, name, quarter))
+    const { departmentIds, departmentNames } = collectExpenseDepartments(data, employees)
 
-      if (spentBefore + safeAmount > QUARTERLY_ALLOWANCE) {
-        const remaining = QUARTERLY_ALLOWANCE - spentBefore
-        const error = new Error(`员工 ${employee.name} 本季度剩余额度不足，当前仅剩 ${remaining} 元`)
-        error.statusCode = 400
-        throw error
-      }
-    })
-
-    employees.forEach((employee) => {
-      data.quarterlyExpenses.push({
-        id: createId('qe'),
-        employeeId: employee.id,
-        employeeName: employee.name,
-        departmentId: employee.departmentId,
-        quarter,
-        title: normalizeText(title),
-        amount: safeAmount,
-        spentDate,
-        note: normalizeText(note),
-        createdAt: new Date().toISOString(),
-      })
+    data.quarterlyExpenses.push({
+      id: createId('qe'),
+      quarter,
+      title: normalizeText(title) || '季度团建',
+      amount: safeAmount,
+      spentDate,
+      note: normalizeText(note),
+      departmentId: departmentIds[0],
+      departmentName: departmentNames.join('、'),
+      departmentIds,
+      departmentNames,
+      employeeIds: employees.map((item) => item.id),
+      employeeNames: employees.map((item) => item.name),
+      createdAt: new Date().toISOString(),
     })
 
     writeStore(data)
     res.status(201).json({
-      message: employees.length > 1
-        ? `已为 ${employees.length} 位员工批量登记使用`
-        : '季度团建支出已录入',
+      message: `已登记 1 条季度团建记录，覆盖 ${employees.length} 位员工`,
+    })
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.patch('/api/quarterly-members/:memberId/status', (req, res, next) => {
+  try {
+    const { memberId } = req.params
+    const { status } = req.body
+    const data = readStore()
+    const member = getQuarterlyMemberByIdOrThrow(data, memberId)
+    const normalizedStatus = normalizeText(status)
+
+    if (!['已使用', '未使用'].includes(normalizedStatus)) {
+      const error = new Error('状态仅支持“已使用”或“未使用”')
+      error.statusCode = 400
+      throw error
+    }
+
+    member.statusOverride = normalizedStatus
+    writeStore(data)
+
+    res.json({
+      message: `已更新 ${member.name} 的状态为${normalizedStatus}`,
+    })
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.post('/api/quarterly-members/batch-delete', (req, res, next) => {
+  try {
+    const { memberIds } = req.body
+    const data = readStore()
+
+    if (!Array.isArray(memberIds) || memberIds.length === 0) {
+      const error = new Error('请先选择要删除的员工')
+      error.statusCode = 400
+      throw error
+    }
+
+    memberIds.forEach((memberId) => {
+      deleteQuarterlyMember(data, normalizeText(memberId))
+    })
+
+    writeStore(data)
+
+    res.json({
+      message: `已批量删除 ${memberIds.length} 位员工`,
+    })
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.delete('/api/quarterly-members/:memberId', (req, res, next) => {
+  try {
+    const { memberId } = req.params
+    const data = readStore()
+    const member = deleteQuarterlyMember(data, memberId)
+
+    writeStore(data)
+
+    res.json({
+      message: `已删除员工 ${member.name}`,
     })
   } catch (error) {
     next(error)

@@ -47,18 +47,89 @@ function getQuarterlyMembers(data, quarter, departmentId = 'all') {
     .filter((item) => departmentId === 'all' || item.departmentId === departmentId)
 }
 
+function getQuarterlyExpenses(data, quarter, departmentId = 'all') {
+  return (data.quarterlyExpenses || [])
+    .filter((item) => item.quarter === quarter)
+    .filter((item) => {
+      if (departmentId === 'all') {
+        return true
+      }
+
+      const departmentIds = getExpenseDepartmentIds(item)
+      return departmentIds.includes(departmentId)
+    })
+}
+
+function getExpenseParticipantIds(expense) {
+  if (Array.isArray(expense.employeeIds) && expense.employeeIds.length > 0) {
+    return expense.employeeIds
+  }
+
+  return expense.employeeId ? [expense.employeeId] : []
+}
+
+function getExpenseParticipantNames(expense, memberMap) {
+  if (Array.isArray(expense.employeeNames) && expense.employeeNames.length > 0) {
+    return expense.employeeNames
+  }
+
+  const participantIds = getExpenseParticipantIds(expense)
+
+  if (participantIds.length > 0) {
+    return participantIds
+      .map((id) => memberMap.get(id)?.name)
+      .filter(Boolean)
+  }
+
+  return expense.employeeName ? [expense.employeeName] : []
+}
+
+function getExpenseDepartmentIds(expense) {
+  if (Array.isArray(expense.departmentIds) && expense.departmentIds.length > 0) {
+    return expense.departmentIds
+  }
+
+  return expense.departmentId ? [expense.departmentId] : []
+}
+
+function getExpenseDepartmentNames(expense, departmentMap) {
+  if (Array.isArray(expense.departmentNames) && expense.departmentNames.length > 0) {
+    return expense.departmentNames
+  }
+
+  const departmentIds = getExpenseDepartmentIds(expense)
+
+  if (departmentIds.length > 0) {
+    return departmentIds
+      .map((id) => departmentMap.get(id)?.name)
+      .filter(Boolean)
+  }
+
+  return expense.departmentName ? [expense.departmentName] : []
+}
+
 function buildQuarterlyMemberStats(data, quarter, departmentId = 'all') {
   const departmentMap = getDepartmentMap(data)
   const members = getQuarterlyMembers(data, quarter, departmentId)
+  const memberMap = new Map((data.quarterlyMembers || []).map((item) => [item.id, item]))
+  const quarterlyExpenses = getQuarterlyExpenses(data, quarter)
 
   return members
     .map((member) => {
-      const expenses = (data.quarterlyExpenses || []).filter(
-        (item) => item.quarter === quarter && item.employeeId === member.id,
-      )
+      const expenses = quarterlyExpenses.filter((item) => {
+        const participantIds = getExpenseParticipantIds(item)
+        const participantNames = getExpenseParticipantNames(item, memberMap)
 
-      const spent = expenses.reduce((sum, item) => sum + Number(item.amount || 0), 0)
-      const remaining = QUARTERLY_ALLOWANCE - spent
+        return participantIds.includes(member.id) || participantNames.includes(member.name)
+      })
+
+      const derivedUsed = expenses.length > 0
+      const statusOverride = member.statusOverride === '已使用' || member.statusOverride === '未使用'
+        ? member.statusOverride
+        : ''
+      const used = statusOverride ? statusOverride === '已使用' : derivedUsed
+      const spent = used ? QUARTERLY_ALLOWANCE : 0
+      const remaining = used ? 0 : QUARTERLY_ALLOWANCE
 
       return {
         employeeId: member.id,
@@ -70,7 +141,10 @@ function buildQuarterlyMemberStats(data, quarter, departmentId = 'all') {
         spent,
         remaining,
         expenseCount: expenses.length,
-        status: spent > 0 ? '已使用' : '未使用',
+        used,
+        statusValue: used ? '已使用' : '未使用',
+        statusOverride,
+        status: used ? '已使用' : '未使用',
       }
     })
     .sort((left, right) => {
@@ -91,15 +165,28 @@ function buildDepartmentStats(data, quarter, departmentId = 'all') {
 
   return departments.map((department) => {
     const departmentMembers = memberStats.filter((item) => item.departmentId === department.id)
+    const quarterlyExpenses = getQuarterlyExpenses(data, quarter, department.id)
     const fallbackConfig = (data.quarterConfigs || []).find(
       (item) => item.departmentId === department.id && item.quarter === quarter,
     )
 
     const headcount = departmentMembers.length || fallbackConfig?.headcount || 0
     const quarterlyBudget = headcount * QUARTERLY_ALLOWANCE
-    const quarterlySpent = departmentMembers.reduce((sum, item) => sum + item.spent, 0)
+    const quarterlySpent = quarterlyExpenses.reduce((sum, item) => {
+      const participantIds = getExpenseParticipantIds(item)
+      const participantCount = participantIds.length || 1
+      const departmentParticipantCount = departmentMembers.filter((member) =>
+        participantIds.includes(member.employeeId || member.id),
+      ).length
+
+      if (departmentParticipantCount === 0) {
+        return sum
+      }
+
+      return sum + (Number(item.amount || 0) * departmentParticipantCount) / participantCount
+    }, 0)
     const quarterlyRemaining = quarterlyBudget - quarterlySpent
-    const usedMemberCount = departmentMembers.filter((item) => item.spent > 0).length
+    const usedMemberCount = departmentMembers.filter((item) => item.used).length
     const unusedMemberCount = Math.max(headcount - usedMemberCount, 0)
     const innovationProjects = (data.innovationProjects || []).filter(
       (item) => item.departmentId === department.id && item.quarter === quarter,
@@ -125,31 +212,26 @@ function buildDepartmentStats(data, quarter, departmentId = 'all') {
       unusedMemberCount,
       innovationApproved,
       innovationReimbursed,
-      quarterlyExpenseCount: departmentMembers.reduce((sum, item) => sum + item.expenseCount, 0),
+      quarterlyExpenseCount: quarterlyExpenses.length,
       innovationProjectCount: innovationProjects.length,
     }
   })
 }
 
 function buildQuarterlyMemberSummary(memberStats) {
-  return memberStats.reduce(
-    (sum, item) => ({
-      totalMembers: sum.totalMembers + 1,
-      usedMembers: sum.usedMembers + (item.spent > 0 ? 1 : 0),
-      unusedMembers: sum.unusedMembers + (item.spent > 0 ? 0 : 1),
-      totalAllowance: sum.totalAllowance + item.allowance,
-      totalSpent: sum.totalSpent + item.spent,
-      totalRemaining: sum.totalRemaining + item.remaining,
-    }),
-    {
-      totalMembers: 0,
-      usedMembers: 0,
-      unusedMembers: 0,
-      totalAllowance: 0,
-      totalSpent: 0,
-      totalRemaining: 0,
-    },
-  )
+  const usedMembers = memberStats.filter((item) => item.used).length
+  const totalMembers = memberStats.length
+  const totalAllowance = totalMembers * QUARTERLY_ALLOWANCE
+  const totalRemaining = (totalMembers - usedMembers) * QUARTERLY_ALLOWANCE
+
+  return {
+    totalMembers,
+    usedMembers,
+    unusedMembers: Math.max(totalMembers - usedMembers, 0),
+    totalAllowance,
+    totalSpent: totalAllowance - totalRemaining,
+    totalRemaining,
+  }
 }
 
 function buildDashboard(data, requestedQuarter, requestedDepartmentId = 'all') {
@@ -236,17 +318,23 @@ function buildRecordList(data, filters) {
 
   const quarterlyItems = (data.quarterlyExpenses || [])
     .filter((item) => (!quarter || item.quarter === quarter))
-    .filter((item) => departmentId === 'all' || item.departmentId === departmentId)
+    .filter((item) => {
+      if (departmentId === 'all') {
+        return true
+      }
+
+      return getExpenseDepartmentIds(item).includes(departmentId)
+    })
     .map((item) => ({
       id: item.id,
       quarter: item.quarter,
       departmentId: item.departmentId,
-      departmentName: departmentMap.get(item.departmentId)?.name || '未知部门',
-      employeeName: memberMap.get(item.employeeId)?.name || item.employeeName || '-',
+      departmentName: getExpenseDepartmentNames(item, departmentMap).join('、') || '未知部门',
+      employeeName: getExpenseParticipantNames(item, memberMap).join('、') || '-',
       type: 'quarterly',
       typeLabel: '季度团建',
-      title: item.title,
-      status: '已核销',
+      title: item.title || '季度团建',
+      status: '已登记',
       approvedAmount: Number(item.amount || 0),
       reimbursedAmount: Number(item.amount || 0),
       date: item.spentDate,

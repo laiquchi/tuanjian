@@ -226,7 +226,7 @@
 }
 
 .quarterly-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .innovation-grid {
@@ -342,6 +342,10 @@ th {
   margin-top: 12px;
 }
 
+.member-board-tools {
+  margin-top: 18px;
+}
+
 .tag {
   display: inline-flex;
   align-items: center;
@@ -369,6 +373,42 @@ th {
 .danger-text {
   color: #b54837;
   font-weight: 700;
+}
+
+.table-select {
+  min-width: 120px;
+  padding: 10px 12px;
+  border: 1px solid rgba(118, 73, 32, 0.16);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #35281d;
+}
+
+.table-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.table-button {
+  border: 1px solid rgba(118, 73, 32, 0.16);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #35281d;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+.table-button.danger {
+  border-color: rgba(181, 72, 55, 0.26);
+  color: #b54837;
+  background: rgba(255, 243, 241, 0.92);
+}
+
+.table-button:disabled,
+.table-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
 }
 
 @media (max-width: 1180px) {

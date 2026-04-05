@@ -14,7 +14,6 @@ const initialQuarterlyImportForm = {
 }
 
 const initialQuarterlyForm = {
-  employeeId: '',
   employeeNamesText: '',
   quarter: '',
   title: '',
@@ -33,6 +32,11 @@ const initialInnovationForm = {
   applyDate: '',
   reimburseDate: '',
   note: '',
+}
+
+const initialMemberBoardFilters = {
+  keyword: '',
+  departmentId: 'all',
 }
 
 const viewOptions = [
@@ -78,6 +82,10 @@ function fetchJson(url, options) {
 
     return data
   })
+}
+
+function createRecordKey(item) {
+  return `${item.type}:${item.id}`
 }
 
 function normalizeImportCell(value) {
@@ -145,7 +153,20 @@ function MetricCard({ label, value, help }) {
   )
 }
 
-function RecordsPanel({ records, loading }) {
+function RecordsPanel({
+  records,
+  loading,
+  submitting,
+  selectedRecordKeys,
+  onToggleRecord,
+  onToggleAllRecords,
+  onDeleteRecord,
+  onDeleteSelected,
+}) {
+  const allRecordKeys = records.items.map((item) => createRecordKey(item))
+  const selectedCount = allRecordKeys.filter((key) => selectedRecordKeys.includes(key)).length
+  const allSelected = allRecordKeys.length > 0 && selectedCount === allRecordKeys.length
+
   return (
     <section className="panel">
       <SectionTitle
@@ -157,12 +178,28 @@ function RecordsPanel({ records, loading }) {
         <span>记录数 {records.summary.total || 0}</span>
         <span>申请合计 {formatMoney(records.summary.totalApproved || 0)}</span>
         <span>核销合计 {formatMoney(records.summary.totalReimbursed || 0)}</span>
+        <button
+          className="table-button danger"
+          type="button"
+          disabled={submitting || selectedCount === 0}
+          onClick={onDeleteSelected}
+        >
+          批量删除{selectedCount > 0 ? `（${selectedCount}）` : ''}
+        </button>
         {loading && <span>刷新中...</span>}
       </div>
       <div className="table-wrap">
         <table>
           <thead>
             <tr>
+              <th>
+                <input
+                  type="checkbox"
+                  checked={allSelected}
+                  disabled={allRecordKeys.length === 0 || submitting}
+                  onChange={(event) => onToggleAllRecords(event.target.checked)}
+                />
+              </th>
               <th>日期</th>
               <th>季度</th>
               <th>部门</th>
@@ -173,11 +210,20 @@ function RecordsPanel({ records, loading }) {
               <th>申请金额</th>
               <th>核销金额</th>
               <th>备注</th>
+              <th>操作</th>
             </tr>
           </thead>
           <tbody>
             {records.items.map((item) => (
-              <tr key={item.id}>
+              <tr key={createRecordKey(item)}>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={selectedRecordKeys.includes(createRecordKey(item))}
+                    disabled={submitting}
+                    onChange={(event) => onToggleRecord(item, event.target.checked)}
+                  />
+                </td>
                 <td>{item.date || '-'}</td>
                 <td>{item.quarter}</td>
                 <td>{item.departmentName}</td>
@@ -190,6 +236,16 @@ function RecordsPanel({ records, loading }) {
                 <td>{formatMoney(item.approvedAmount)}</td>
                 <td>{formatMoney(item.reimbursedAmount)}</td>
                 <td>{item.note || '-'}</td>
+                <td>
+                  <button
+                    className="table-button danger"
+                    type="button"
+                    disabled={submitting}
+                    onClick={() => onDeleteRecord(item)}
+                  >
+                    删除
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -204,6 +260,7 @@ function App() {
   const [filters, setFilters] = useState(initialFilters)
   const [dashboard, setDashboard] = useState(null)
   const [records, setRecords] = useState({ items: [], summary: {} })
+  const [selectedRecordKeys, setSelectedRecordKeys] = useState([])
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
   const [message, setMessage] = useState('')
@@ -211,6 +268,7 @@ function App() {
   const [quarterlyImportForm, setQuarterlyImportForm] = useState(initialQuarterlyImportForm)
   const [quarterlyForm, setQuarterlyForm] = useState(initialQuarterlyForm)
   const [innovationForm, setInnovationForm] = useState(initialInnovationForm)
+  const [memberBoardFilters, setMemberBoardFilters] = useState(initialMemberBoardFilters)
   const { quarter, departmentId, type } = filters
 
   const loadDashboard = useCallback(async (nextFilters) => {
@@ -267,7 +325,6 @@ function App() {
       await loadRecords(effectiveFilters)
 
       const defaultDepartmentId = dashboardData.options.departments[0]?.id || ''
-      const defaultEmployeeId = dashboardData.quarterlyEmployeeOptions?.[0]?.id || ''
 
       setQuarterlyImportForm((current) => ({
         ...current,
@@ -275,9 +332,6 @@ function App() {
       }))
       setQuarterlyForm((current) => ({
         ...current,
-        employeeId: dashboardData.quarterlyEmployeeOptions?.some((item) => item.id === current.employeeId)
-          ? current.employeeId
-          : defaultEmployeeId,
         quarter: current.quarter || effectiveQuarter,
       }))
       setInnovationForm((current) => ({
@@ -296,13 +350,28 @@ function App() {
     refresh({ quarter, departmentId, type })
   }, [quarter, departmentId, type, refresh])
 
+  useEffect(() => {
+    const validKeys = new Set(records.items.map((item) => createRecordKey(item)))
+    setSelectedRecordKeys((current) => current.filter((key) => validKeys.has(key)))
+  }, [records])
+
   const departmentOptions = dashboard?.options?.departments || []
   const quarterOptions = dashboard?.options?.quarters || []
   const quarterlySummary = dashboard?.typeSummary?.find((item) => item.key === 'quarterly')
   const innovationSummary = dashboard?.typeSummary?.find((item) => item.key === 'innovation')
-  const quarterlyEmployeeOptions = dashboard?.quarterlyEmployeeOptions || []
-  const quarterlyMemberStats = dashboard?.quarterlyMemberStats || []
+  const quarterlyMemberStats = useMemo(() => dashboard?.quarterlyMemberStats || [], [dashboard])
   const quarterlyMemberSummary = dashboard?.quarterlyMemberSummary || emptyQuarterlyMemberSummary
+  const filteredQuarterlyMemberStats = useMemo(() => {
+    const keyword = memberBoardFilters.keyword.trim().toLowerCase()
+
+    return quarterlyMemberStats.filter((item) => {
+      const matchKeyword = !keyword || item.employeeName.toLowerCase().includes(keyword)
+      const matchDepartment =
+        memberBoardFilters.departmentId === 'all' || item.departmentId === memberBoardFilters.departmentId
+
+      return matchKeyword && matchDepartment
+    })
+  }, [memberBoardFilters.departmentId, memberBoardFilters.keyword, quarterlyMemberStats])
 
   const quarterlyCards = useMemo(() => {
     if (!dashboard) {
@@ -314,6 +383,11 @@ function App() {
         label: '季度团建总预算',
         value: formatMoney(dashboard.overview.quarterlyBudget),
         help: `${dashboard.overview.totalHeadcount} 人 x 150 元`,
+      },
+      {
+        label: '本季度已使用经费',
+        value: formatMoney(dashboard.overview.quarterlySpent),
+        help: `${dashboard.overview.quarterlyExpenseCount} 条团建记录`,
       },
       {
         label: '已使用人数',
@@ -349,7 +423,6 @@ function App() {
 
   const selectedDepartmentName =
     departmentOptions.find((item) => item.id === departmentId)?.name || '全部部门'
-  const selectedEmployee = quarterlyEmployeeOptions.find((item) => item.id === quarterlyForm.employeeId)
   const hasBatchEmployeeNames = quarterlyForm.employeeNamesText.trim().length > 0
   const selectedQuarterLabel = quarter || dashboard?.filters?.selectedQuarter || '-'
 
@@ -391,6 +464,184 @@ function App() {
 
       setMessage(result.message)
       resetCallback()
+      await refresh(filters)
+    } catch (requestError) {
+      setError(requestError.message)
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  const handleQuarterlyMemberStatusChange = async (memberId, nextStatus) => {
+    setSubmitting(true)
+    setMessage('')
+    setError('')
+
+    try {
+      const result = await fetchJson(`/api/quarterly-members/${memberId}/status`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: nextStatus }),
+      })
+
+      setMessage(result.message)
+      await refresh(filters)
+    } catch (requestError) {
+      setError(requestError.message)
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  const handleQuarterlyMemberDelete = async (memberId, employeeName) => {
+    const shouldDelete = window.confirm(`确认删除员工“${employeeName}”吗？相关团建记录中的该员工也会被移除。`)
+
+    if (!shouldDelete) {
+      return
+    }
+
+    setSubmitting(true)
+    setMessage('')
+    setError('')
+
+    try {
+      const result = await fetchJson(`/api/quarterly-members/${memberId}`, {
+        method: 'DELETE',
+      })
+
+      setMessage(result.message)
+      await refresh(filters)
+    } catch (requestError) {
+      setError(requestError.message)
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  const handleMemberBoardFilterChange = (event) => {
+    const { name, value } = event.target
+    setMemberBoardFilters((current) => ({ ...current, [name]: value }))
+  }
+
+  const handleQuarterlyMembersBatchDelete = async () => {
+    if (filteredQuarterlyMemberStats.length === 0) {
+      return
+    }
+
+    const filterLabel = [
+      memberBoardFilters.keyword ? `姓名包含“${memberBoardFilters.keyword}”` : '',
+      memberBoardFilters.departmentId !== 'all'
+        ? `部门为“${departmentOptions.find((item) => item.id === memberBoardFilters.departmentId)?.name || ''}”`
+        : '',
+    ]
+      .filter(Boolean)
+      .join('，')
+
+    const shouldDelete = window.confirm(
+      `确认批量删除当前筛选到的 ${filteredQuarterlyMemberStats.length} 位员工吗？${filterLabel ? `\n筛选条件：${filterLabel}` : ''}`,
+    )
+
+    if (!shouldDelete) {
+      return
+    }
+
+    setSubmitting(true)
+    setMessage('')
+    setError('')
+
+    try {
+      const result = await fetchJson('/api/quarterly-members/batch-delete', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          memberIds: filteredQuarterlyMemberStats.map((item) => item.employeeId),
+        }),
+      })
+
+      setMessage(result.message)
+      await refresh(filters)
+    } catch (requestError) {
+      setError(requestError.message)
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  const handleRecordToggle = (record, checked) => {
+    const recordKey = createRecordKey(record)
+
+    setSelectedRecordKeys((current) => (
+      checked ? Array.from(new Set([...current, recordKey])) : current.filter((key) => key !== recordKey)
+    ))
+  }
+
+  const handleToggleAllRecords = (checked) => {
+    setSelectedRecordKeys(checked ? records.items.map((item) => createRecordKey(item)) : [])
+  }
+
+  const handleDeleteRecord = async (record) => {
+    const shouldDelete = window.confirm(`确认删除这条${record.typeLabel}记录吗？`)
+
+    if (!shouldDelete) {
+      return
+    }
+
+    setSubmitting(true)
+    setMessage('')
+    setError('')
+
+    try {
+      const result = await fetchJson(`/api/records/${record.type}/${record.id}`, {
+        method: 'DELETE',
+      })
+
+      setMessage(result.message)
+      setSelectedRecordKeys((current) => current.filter((key) => key !== createRecordKey(record)))
+      await refresh(filters)
+    } catch (requestError) {
+      setError(requestError.message)
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  const handleDeleteSelectedRecords = async () => {
+    const selectedRecords = records.items.filter((item) => selectedRecordKeys.includes(createRecordKey(item)))
+
+    if (selectedRecords.length === 0) {
+      return
+    }
+
+    const shouldDelete = window.confirm(`确认批量删除已选中的 ${selectedRecords.length} 条记录吗？`)
+
+    if (!shouldDelete) {
+      return
+    }
+
+    setSubmitting(true)
+    setMessage('')
+    setError('')
+
+    try {
+      const result = await fetchJson('/api/records/batch-delete', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          records: selectedRecords.map((item) => ({
+            id: item.id,
+            type: item.type,
+          })),
+        }),
+      })
+
+      setMessage(result.message)
+      setSelectedRecordKeys([])
       await refresh(filters)
     } catch (requestError) {
       setError(requestError.message)
@@ -506,31 +757,21 @@ function App() {
         {message && <div className="notice success">{message}</div>}
         {error && <div className="notice error">{error}</div>}
 
-        {activeView === 'home' && <RecordsPanel records={records} loading={loading} />}
+        {activeView === 'home' && (
+          <RecordsPanel
+            records={records}
+            loading={loading}
+            submitting={submitting}
+            selectedRecordKeys={selectedRecordKeys}
+            onToggleRecord={handleRecordToggle}
+            onToggleAllRecords={handleToggleAllRecords}
+            onDeleteRecord={handleDeleteRecord}
+            onDeleteSelected={handleDeleteSelectedRecords}
+          />
+        )}
 
         {activeView === 'quarterly' && (
           <div className="section-stack">
-            <section className="hero-panel">
-              <div className="hero-copy">
-                <span className="eyebrow">Quarterly Team Building</span>
-                <h1>季度团建</h1>
-                <p>
-                  先导入季度人员名单，再按员工记录团建使用情况。
-                  系统会自动按人扣减 150 元额度，并区分谁已使用、谁未使用。
-                </p>
-              </div>
-              <div className="hero-rule">
-                <div>
-                  <strong>导入口径</strong>
-                  <span>导入格式为“姓名,部门”，导入后自动折算季度预算。</span>
-                </div>
-                <div>
-                  <strong>按人扣减</strong>
-                  <span>每位员工每季度默认额度 150 元，登记支出后自动扣减剩余额度。</span>
-                </div>
-              </div>
-            </section>
-
             <section className="panel">
               <SectionTitle
                 eyebrow="季度团建"
@@ -596,7 +837,7 @@ function App() {
                 <SectionTitle
                   eyebrow="季度团建"
                   title="按人登记团建使用"
-                  description="支持单人选择或批量粘贴姓名登记，系统会按人校验本季度剩余额度。"
+                  description="只需粘贴员工姓名登记，支持不同部门员工一起提交，系统会自动汇总部门并生成一条团建记录。"
                 />
                 <form
                   className="entry-form"
@@ -625,31 +866,12 @@ function App() {
                     }
                   />
                   <p className="entry-help">
-                    填写批量姓名后，本次登记的事项、金额、日期和备注会同时应用到这些员工。
+                    可以一次粘贴多个部门的员工姓名，登记后会生成 1 条记录，并自动汇总部门和人员名单。
                   </p>
-                  <select
-                    value={quarterlyForm.employeeId}
-                    onChange={(event) =>
-                      setQuarterlyForm((current) => ({ ...current, employeeId: event.target.value }))
-                    }
-                  >
-                    {quarterlyEmployeeOptions.length === 0 && <option value="">请先导入人员名单</option>}
-                    {quarterlyEmployeeOptions.map((item) => (
-                      <option key={item.id} value={item.id}>
-                        {item.name} / {item.departmentName}
-                      </option>
-                    ))}
-                  </select>
-                  {!hasBatchEmployeeNames && selectedEmployee && (
-                    <div className="hint-box">
-                      <span>当前剩余额度</span>
-                      <strong>{formatMoney(selectedEmployee.remaining)}</strong>
-                    </div>
-                  )}
                   {hasBatchEmployeeNames && (
                     <div className="hint-box">
                       <span>批量登记</span>
-                      <strong>将按姓名逐人登记并扣减额度</strong>
+                      <strong>将生成 1 条记录，部门处会自动显示多个部门</strong>
                     </div>
                   )}
                   <input
@@ -661,7 +883,7 @@ function App() {
                   />
                   <input
                     value={quarterlyForm.title}
-                    placeholder="支出事项"
+                    placeholder="团建事项（可选）"
                     onChange={(event) =>
                       setQuarterlyForm((current) => ({ ...current, title: event.target.value }))
                     }
@@ -693,8 +915,8 @@ function App() {
                   <button
                     disabled={
                       submitting ||
-                      quarterlyEmployeeOptions.length === 0 ||
-                      (!quarterlyForm.employeeId && !hasBatchEmployeeNames)
+                      quarterlyMemberStats.length === 0 ||
+                      !hasBatchEmployeeNames
                     }
                   >
                     登记使用
@@ -707,8 +929,45 @@ function App() {
               <SectionTitle
                 eyebrow="季度团建"
                 title="员工额度看板"
-                description="只保留人员、部门、季度和状态，方便快速查看本季度使用情况。"
+                description="支持按姓名、部门筛选后批量删除，也可以单独修改状态或删除员工。"
               />
+              <div className="filters-grid compact member-board-tools">
+                <label>
+                  <span>姓名筛选</span>
+                  <input
+                    name="keyword"
+                    value={memberBoardFilters.keyword}
+                    placeholder="输入员工姓名关键词"
+                    onChange={handleMemberBoardFilterChange}
+                  />
+                </label>
+                <label>
+                  <span>部门筛选</span>
+                  <select
+                    name="departmentId"
+                    value={memberBoardFilters.departmentId}
+                    onChange={handleMemberBoardFilterChange}
+                  >
+                    <option value="all">全部部门</option>
+                    {departmentOptions.map((item) => (
+                      <option key={item.id} value={item.id}>
+                        {item.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+              <div className="records-meta">
+                <span>筛选结果 {filteredQuarterlyMemberStats.length} 人</span>
+                <button
+                  className="table-button danger"
+                  type="button"
+                  disabled={submitting || filteredQuarterlyMemberStats.length === 0}
+                  onClick={handleQuarterlyMembersBatchDelete}
+                >
+                  批量删除筛选结果
+                </button>
+              </div>
               <div className="table-wrap">
                 <table>
                   <thead>
@@ -717,15 +976,40 @@ function App() {
                       <th>部门</th>
                       <th>季度</th>
                       <th>状态</th>
+                      <th>操作</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {quarterlyMemberStats.map((item) => (
+                    {filteredQuarterlyMemberStats.map((item) => (
                       <tr key={item.employeeId}>
                         <td>{item.employeeName}</td>
                         <td>{item.departmentName}</td>
                         <td>{selectedQuarterLabel}</td>
-                        <td>{item.status}</td>
+                        <td>
+                          <select
+                            className="table-select"
+                            disabled={submitting}
+                            value={item.statusValue || item.status}
+                            onChange={(event) =>
+                              handleQuarterlyMemberStatusChange(item.employeeId, event.target.value)
+                            }
+                          >
+                            <option value="未使用">未使用</option>
+                            <option value="已使用">已使用</option>
+                          </select>
+                        </td>
+                        <td>
+                          <div className="table-actions">
+                            <button
+                              className="table-button danger"
+                              type="button"
+                              disabled={submitting}
+                              onClick={() => handleQuarterlyMemberDelete(item.employeeId, item.employeeName)}
+                            >
+                              删除员工
+                            </button>
+                          </div>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -771,33 +1055,21 @@ function App() {
               </div>
             </section>
 
-            <RecordsPanel records={records} loading={loading} />
+            <RecordsPanel
+              records={records}
+              loading={loading}
+              submitting={submitting}
+              selectedRecordKeys={selectedRecordKeys}
+              onToggleRecord={handleRecordToggle}
+              onToggleAllRecords={handleToggleAllRecords}
+              onDeleteRecord={handleDeleteRecord}
+              onDeleteSelected={handleDeleteSelectedRecords}
+            />
           </div>
         )}
 
         {activeView === 'innovation' && (
           <div className="section-stack">
-            <section className="hero-panel">
-              <div className="hero-copy">
-                <span className="eyebrow">Innovation Funding</span>
-                <h1>创新专项</h1>
-                <p>
-                  这里只展示创新专项相关内容，包括专项概览、申请与核销录入，
-                  以及当前分组下的专项明细。
-                </p>
-              </div>
-              <div className="hero-rule">
-                <div>
-                  <strong>独立申请</strong>
-                  <span>创新案例专项经费单独申请，不占用季度团建预算。</span>
-                </div>
-                <div>
-                  <strong>独立核销</strong>
-                  <span>专项核销与季度团建分开统计，便于单独追踪专项进度。</span>
-                </div>
-              </div>
-            </section>
-
             <section className="panel">
               <SectionTitle
                 eyebrow="创新专项"
@@ -928,7 +1200,16 @@ function App() {
               </form>
             </section>
 
-            <RecordsPanel records={records} loading={loading} />
+            <RecordsPanel
+              records={records}
+              loading={loading}
+              submitting={submitting}
+              selectedRecordKeys={selectedRecordKeys}
+              onToggleRecord={handleRecordToggle}
+              onToggleAllRecords={handleToggleAllRecords}
+              onDeleteRecord={handleDeleteRecord}
+              onDeleteSelected={handleDeleteSelectedRecords}
+            />
           </div>
         )}
       </main>

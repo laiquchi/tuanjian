@@ -361,11 +361,19 @@ function App() {
     setSelectedRecordKeys((current) => current.filter((key) => validKeys.has(key)))
   }, [records])
 
-  const departmentOptions = dashboard?.options?.departments || []
+  const departmentOptions = useMemo(() => dashboard?.options?.departments || [], [dashboard])
   const quarterOptions = dashboard?.options?.quarters || []
   const quarterlySummary = dashboard?.typeSummary?.find((item) => item.key === 'quarterly')
   const innovationSummary = dashboard?.typeSummary?.find((item) => item.key === 'innovation')
   const quarterlyMemberStats = useMemo(() => dashboard?.quarterlyMemberStats || [], [dashboard])
+  const visibleDepartmentStats = useMemo(
+    () => (dashboard?.departmentStats || []).filter((item) => Number(item.headcount || 0) > 0),
+    [dashboard],
+  )
+  const visibleDepartmentOptions = useMemo(() => {
+    const visibleIds = new Set(visibleDepartmentStats.map((item) => item.departmentId))
+    return departmentOptions.filter((item) => visibleIds.has(item.id))
+  }, [departmentOptions, visibleDepartmentStats])
   const quarterlyMemberSummary = dashboard?.quarterlyMemberSummary || emptyQuarterlyMemberSummary
   const hasActiveMemberBoardFilter =
     memberBoardFilters.keyword.trim().length > 0 || memberBoardFilters.departmentId !== ''
@@ -763,7 +771,7 @@ function App() {
               <span>部门</span>
               <select name="departmentId" value={filters.departmentId} onChange={handleFilterChange}>
                 <option value="all">全部部门</option>
-                {departmentOptions.map((item) => (
+                {visibleDepartmentOptions.map((item) => (
                   <option key={item.id} value={item.id}>
                     {item.name}
                   </option>
@@ -991,7 +999,7 @@ function App() {
                   >
                     <option value="">请选择</option>
                     <option value="all">ALL</option>
-                    {departmentOptions.map((item) => (
+                    {visibleDepartmentOptions.map((item) => (
                       <option key={item.id} value={item.id}>
                         {item.name}
                       </option>
@@ -1097,7 +1105,7 @@ function App() {
                     </tr>
                   </thead>
                   <tbody>
-                    {dashboard?.departmentStats?.map((item) => (
+                    {visibleDepartmentStats.map((item) => (
                       <tr key={item.departmentId}>
                         <td>{item.departmentName}</td>
                         <td>{item.headcount}</td>

@@ -36,7 +36,7 @@ const initialInnovationForm = {
 
 const initialMemberBoardFilters = {
   keyword: '',
-  departmentId: 'all',
+  departmentId: '',
 }
 
 const initialQuarterlyPanelOpen = {
@@ -367,7 +367,13 @@ function App() {
   const innovationSummary = dashboard?.typeSummary?.find((item) => item.key === 'innovation')
   const quarterlyMemberStats = useMemo(() => dashboard?.quarterlyMemberStats || [], [dashboard])
   const quarterlyMemberSummary = dashboard?.quarterlyMemberSummary || emptyQuarterlyMemberSummary
+  const hasActiveMemberBoardFilter =
+    memberBoardFilters.keyword.trim().length > 0 || memberBoardFilters.departmentId !== ''
   const filteredQuarterlyMemberStats = useMemo(() => {
+    if (!hasActiveMemberBoardFilter) {
+      return []
+    }
+
     const keyword = memberBoardFilters.keyword.trim().toLowerCase()
 
     return quarterlyMemberStats.filter((item) => {
@@ -377,7 +383,7 @@ function App() {
 
       return matchKeyword && matchDepartment
     })
-  }, [memberBoardFilters.departmentId, memberBoardFilters.keyword, quarterlyMemberStats])
+  }, [hasActiveMemberBoardFilter, memberBoardFilters.departmentId, memberBoardFilters.keyword, quarterlyMemberStats])
 
   const quarterlyCards = useMemo(() => {
     if (!dashboard) {
@@ -983,7 +989,8 @@ function App() {
                     value={memberBoardFilters.departmentId}
                     onChange={handleMemberBoardFilterChange}
                   >
-                    <option value="all">全部部门</option>
+                    <option value="">请选择</option>
+                    <option value="all">ALL</option>
                     {departmentOptions.map((item) => (
                       <option key={item.id} value={item.id}>
                         {item.name}
@@ -992,64 +999,82 @@ function App() {
                   </select>
                 </label>
               </div>
-              <div className="records-meta">
-                <span>筛选结果 {filteredQuarterlyMemberStats.length} 人</span>
-                <button
-                  className="table-button danger"
-                  type="button"
-                  disabled={submitting || filteredQuarterlyMemberStats.length === 0}
-                  onClick={handleQuarterlyMembersBatchDelete}
-                >
-                  批量删除筛选结果
-                </button>
-              </div>
-              <div className="table-wrap">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>人员</th>
-                      <th>部门</th>
-                      <th>季度</th>
-                      <th>状态</th>
-                      <th>操作</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredQuarterlyMemberStats.map((item) => (
-                      <tr key={item.employeeId}>
-                        <td>{item.employeeName}</td>
-                        <td>{item.departmentName}</td>
-                        <td>{selectedQuarterLabel}</td>
-                        <td>
-                          <select
-                            className="table-select"
-                            disabled={submitting}
-                            value={item.statusValue || item.status}
-                            onChange={(event) =>
-                              handleQuarterlyMemberStatusChange(item.employeeId, event.target.value)
-                            }
-                          >
-                            <option value="未使用">未使用</option>
-                            <option value="已使用">已使用</option>
-                          </select>
-                        </td>
-                        <td>
-                          <div className="table-actions">
-                            <button
-                              className="table-button danger"
-                              type="button"
-                              disabled={submitting}
-                              onClick={() => handleQuarterlyMemberDelete(item.employeeId, item.employeeName)}
-                            >
-                              删除员工
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              {!hasActiveMemberBoardFilter && (
+                <div className="hint-box member-board-empty">
+                  <span>筛选提示</span>
+                  <strong>请输入姓名或选择部门后再查看结果</strong>
+                  <p>如果需要查看全部员工，请在部门筛选中选择 `ALL`。</p>
+                </div>
+              )}
+              {hasActiveMemberBoardFilter && (
+                <>
+                  <div className="records-meta">
+                    <span>筛选结果 {filteredQuarterlyMemberStats.length} 人</span>
+                    <button
+                      className="table-button danger"
+                      type="button"
+                      disabled={submitting || filteredQuarterlyMemberStats.length === 0}
+                      onClick={handleQuarterlyMembersBatchDelete}
+                    >
+                      批量删除筛选结果
+                    </button>
+                  </div>
+                  {filteredQuarterlyMemberStats.length === 0 ? (
+                    <div className="hint-box member-board-empty">
+                      <span>暂无结果</span>
+                      <strong>当前筛选条件下没有匹配员工</strong>
+                    </div>
+                  ) : (
+                    <div className="table-wrap">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>人员</th>
+                            <th>部门</th>
+                            <th>季度</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {filteredQuarterlyMemberStats.map((item) => (
+                            <tr key={item.employeeId}>
+                              <td>{item.employeeName}</td>
+                              <td>{item.departmentName}</td>
+                              <td>{selectedQuarterLabel}</td>
+                              <td>
+                                <select
+                                  className="table-select"
+                                  disabled={submitting}
+                                  value={item.statusValue || item.status}
+                                  onChange={(event) =>
+                                    handleQuarterlyMemberStatusChange(item.employeeId, event.target.value)
+                                  }
+                                >
+                                  <option value="未使用">未使用</option>
+                                  <option value="已使用">已使用</option>
+                                </select>
+                              </td>
+                              <td>
+                                <div className="table-actions">
+                                  <button
+                                    className="table-button danger"
+                                    type="button"
+                                    disabled={submitting}
+                                    onClick={() => handleQuarterlyMemberDelete(item.employeeId, item.employeeName)}
+                                  >
+                                    删除员工
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </>
+              )}
             </section>
 
             <section className="panel">

@@ -259,20 +259,6 @@
       "createdAt": "2026-04-01T09:00:00.000Z"
     },
     {
-      "id": "member-rd-q1-01",
-      "quarter": "2026-Q1",
-      "name": "张晨",
-      "departmentId": "dept-rd",
-      "createdAt": "2026-01-05T09:00:00.000Z"
-    },
-    {
-      "id": "member-rd-q1-02",
-      "quarter": "2026-Q1",
-      "name": "李璐",
-      "departmentId": "dept-rd",
-      "createdAt": "2026-01-05T09:00:00.000Z"
-    },
-    {
       "id": "member-ops-q1-01",
       "quarter": "2026-Q1",
       "name": "周悦",
@@ -3284,20 +3270,7 @@
       "createdAt": "2026-04-05T08:59:15.426Z"
     }
   ],
-  "quarterlyExpenses": [
-    {
-      "id": "qe-005",
-      "employeeId": "member-rd-q1-01",
-      "employeeName": "张晨",
-      "departmentId": "dept-rd",
-      "quarter": "2026-Q1",
-      "title": "技术分享晚餐",
-      "amount": 100,
-      "spentDate": "2026-02-15",
-      "note": "技术月度分享后的晚餐",
-      "createdAt": "2026-02-15T11:10:00.000Z"
-    }
-  ],
+  "quarterlyExpenses": [],
   "innovationProjects": [
     {
       "id": "ip-001",

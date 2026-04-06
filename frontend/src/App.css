@@ -439,6 +439,17 @@ th {
   margin-top: 18px;
 }
 
+.member-board-empty {
+  margin-top: 16px;
+}
+
+.member-board-empty p {
+  margin: 0;
+  color: #775f49;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
 .tag {
   display: inline-flex;
   align-items: center;

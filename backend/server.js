@@ -175,6 +175,14 @@ function requirePositiveNumber(value, fieldName) {
   return numericValue
 }
 
+function isValidInnovationYear(value) {
+  return /^\d{4}$/.test(String(value || ''))
+}
+
+function isValidInnovationPeriod(value) {
+  return ['1', '2'].includes(String(value || ''))
+}
+
 function findOrCreateDepartment(data, departmentName) {
   const normalizedName = normalizeText(departmentName)
 
@@ -287,7 +295,13 @@ app.get('/api/options', (_req, res) => {
 
 app.get('/api/dashboard', (req, res) => {
   const data = readStore()
-  const payload = buildDashboard(data, req.query.quarter, req.query.departmentId)
+  const payload = buildDashboard(
+    data,
+    req.query.quarter,
+    req.query.departmentId,
+    req.query.innovationYear,
+    req.query.innovationPeriod,
+  )
   res.json(payload)
 })
 
@@ -297,6 +311,8 @@ app.get('/api/records', (req, res) => {
     quarter: req.query.quarter,
     departmentId: req.query.departmentId || 'all',
     type: req.query.type || 'all',
+    innovationYear: req.query.innovationYear || '',
+    innovationPeriod: req.query.innovationPeriod || 'all',
   })
   res.json(payload)
 })
@@ -560,7 +576,8 @@ app.post('/api/innovation-projects', (req, res, next) => {
   try {
     const {
       departmentId,
-      quarter,
+      year,
+      period,
       title,
       approvedAmount,
       reimbursedAmount,
@@ -573,8 +590,14 @@ app.post('/api/innovation-projects', (req, res, next) => {
 
     getDepartmentOrThrow(data, departmentId)
 
-    if (!isValidQuarter(quarter)) {
-      const error = new Error('季度格式必须为 YYYY-QN，例如 2026-Q2')
+    if (!isValidInnovationYear(year)) {
+      const error = new Error('请选择 4 位年度，例如 2026')
+      error.statusCode = 400
+      throw error
+    }
+
+    if (!isValidInnovationPeriod(period)) {
+      const error = new Error('期数仅支持第1期或第2期')
       error.statusCode = 400
       throw error
     }
@@ -594,7 +617,8 @@ app.post('/api/innovation-projects', (req, res, next) => {
     data.innovationProjects.push({
       id: createId('ip'),
       departmentId,
-      quarter,
+      year: String(year),
+      period: String(period),
       title: normalizeText(title),
       approvedAmount: requirePositiveNumber(approvedAmount, '申请金额'),
       reimbursedAmount: requirePositiveNumber(reimbursedAmount, '已核销金额'),

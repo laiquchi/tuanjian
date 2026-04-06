@@ -26,6 +26,59 @@ function sortQuarterDesc(a, b) {
   return right.quarter - left.quarter
 }
 
+function getInnovationMeta(project) {
+  if (project.year && project.period) {
+    return {
+      year: String(project.year),
+      period: String(project.period),
+    }
+  }
+
+  if (project.quarter && /^\d{4}-Q[1-4]$/.test(project.quarter)) {
+    const { year, quarter } = parseQuarter(project.quarter)
+    return {
+      year: String(year),
+      period: quarter <= 2 ? '1' : '2',
+    }
+  }
+
+  return {
+    year: '',
+    period: '',
+  }
+}
+
+function formatInnovationPeriodLabel(period) {
+  return `第${period}期`
+}
+
+function getInnovationYearOptions(data) {
+  const currentYear = new Date().getFullYear()
+  const values = new Set([String(currentYear - 1), String(currentYear)])
+
+  ;(data.innovationProjects || []).forEach((item) => {
+    const meta = getInnovationMeta(item)
+
+    if (meta.year) {
+      values.add(meta.year)
+    }
+  })
+
+  return Array.from(values).sort((a, b) => Number(b) - Number(a))
+}
+
+function getInnovationProjects(data, departmentId = 'all', innovationYear = '', innovationPeriod = 'all') {
+  return (data.innovationProjects || [])
+    .filter((item) => departmentId === 'all' || item.departmentId === departmentId)
+    .filter((item) => {
+      const meta = getInnovationMeta(item)
+      const matchYear = !innovationYear || meta.year === innovationYear
+      const matchPeriod = innovationPeriod === 'all' || meta.period === innovationPeriod
+
+      return matchYear && matchPeriod
+    })
+}
+
 function getAvailableQuarters(data) {
   const values = new Set()
 
@@ -156,7 +209,13 @@ function buildQuarterlyMemberStats(data, quarter, departmentId = 'all') {
     })
 }
 
-function buildDepartmentStats(data, quarter, departmentId = 'all') {
+function buildDepartmentStats(
+  data,
+  quarter,
+  departmentId = 'all',
+  innovationYear = '',
+  innovationPeriod = 'all',
+) {
   const departmentMap = getDepartmentMap(data)
   const memberStats = buildQuarterlyMemberStats(data, quarter, departmentId)
   const departments = departmentId === 'all'
@@ -188,8 +247,11 @@ function buildDepartmentStats(data, quarter, departmentId = 'all') {
     const quarterlyRemaining = quarterlyBudget - quarterlySpent
     const usedMemberCount = departmentMembers.filter((item) => item.used).length
     const unusedMemberCount = Math.max(headcount - usedMemberCount, 0)
-    const innovationProjects = (data.innovationProjects || []).filter(
-      (item) => item.departmentId === department.id && item.quarter === quarter,
+    const innovationProjects = getInnovationProjects(
+      data,
+      department.id,
+      innovationYear,
+      innovationPeriod,
     )
     const innovationApproved = innovationProjects.reduce(
       (sum, item) => sum + Number(item.approvedAmount || 0),
@@ -234,14 +296,34 @@ function buildQuarterlyMemberSummary(memberStats) {
   }
 }
 
-function buildDashboard(data, requestedQuarter, requestedDepartmentId = 'all') {
+function buildDashboard(
+  data,
+  requestedQuarter,
+  requestedDepartmentId = 'all',
+  requestedInnovationYear = '',
+  requestedInnovationPeriod = 'all',
+) {
   const availableQuarters = getAvailableQuarters(data)
+  const availableInnovationYears = getInnovationYearOptions(data)
   const currentQuarter = getQuarterFromDate()
+  const currentYear = String(new Date().getFullYear())
   const selectedQuarter = availableQuarters.includes(requestedQuarter)
     ? requestedQuarter
     : (availableQuarters.includes(currentQuarter) ? currentQuarter : availableQuarters[0] || currentQuarter)
   const selectedDepartmentId = requestedDepartmentId || 'all'
-  const departmentStats = buildDepartmentStats(data, selectedQuarter, selectedDepartmentId)
+  const selectedInnovationYear = availableInnovationYears.includes(requestedInnovationYear)
+    ? requestedInnovationYear
+    : (availableInnovationYears.includes(currentYear) ? currentYear : availableInnovationYears[0] || currentYear)
+  const selectedInnovationPeriod = ['1', '2', 'all'].includes(requestedInnovationPeriod)
+    ? requestedInnovationPeriod
+    : 'all'
+  const departmentStats = buildDepartmentStats(
+    data,
+    selectedQuarter,
+    selectedDepartmentId,
+    selectedInnovationYear,
+    selectedInnovationPeriod,
+  )
   const quarterlyMemberStats = buildQuarterlyMemberStats(data, selectedQuarter, selectedDepartmentId)
   const quarterlyMemberSummary = buildQuarterlyMemberSummary(quarterlyMemberStats)
 
@@ -275,6 +357,8 @@ function buildDashboard(data, requestedQuarter, requestedDepartmentId = 'all') {
       selectedQuarter,
       selectedDepartmentId,
       currentQuarter,
+      selectedInnovationYear,
+      selectedInnovationPeriod,
     },
     overview,
     typeSummary: [
@@ -306,6 +390,11 @@ function buildDashboard(data, requestedQuarter, requestedDepartmentId = 'all') {
     })),
     options: {
       quarters: availableQuarters,
+      innovationYears: availableInnovationYears,
+      innovationPeriods: [
+        { value: '1', label: formatInnovationPeriodLabel('1') },
+        { value: '2', label: formatInnovationPeriodLabel('2') },
+      ],
       departments: data.departments,
     },
   }
@@ -314,7 +403,13 @@ function buildDashboard(data, requestedQuarter, requestedDepartmentId = 'all') {
 function buildRecordList(data, filters) {
   const departmentMap = getDepartmentMap(data)
   const memberMap = new Map((data.quarterlyMembers || []).map((item) => [item.id, item]))
-  const { quarter, departmentId = 'all', type = 'all' } = filters
+  const {
+    quarter,
+    departmentId = 'all',
+    type = 'all',
+    innovationYear = '',
+    innovationPeriod = 'all',
+  } = filters
 
   const quarterlyItems = (data.quarterlyExpenses || [])
     .filter((item) => (!quarter || item.quarter === quarter))
@@ -341,24 +436,28 @@ function buildRecordList(data, filters) {
       note: item.note || '',
     }))
 
-  const innovationItems = (data.innovationProjects || [])
-    .filter((item) => (!quarter || item.quarter === quarter))
-    .filter((item) => departmentId === 'all' || item.departmentId === departmentId)
-    .map((item) => ({
-      id: item.id,
-      quarter: item.quarter,
-      departmentId: item.departmentId,
-      departmentName: departmentMap.get(item.departmentId)?.name || '未知部门',
-      employeeName: '-',
-      type: 'innovation',
-      typeLabel: '创新专项',
-      title: item.title,
-      status: item.status,
-      approvedAmount: Number(item.approvedAmount || 0),
-      reimbursedAmount: Number(item.reimbursedAmount || 0),
-      date: item.reimburseDate || item.applyDate,
-      note: item.note || '',
-    }))
+  const innovationItems = getInnovationProjects(data, departmentId, innovationYear, innovationPeriod)
+    .map((item) => {
+      const meta = getInnovationMeta(item)
+
+      return {
+        id: item.id,
+        quarter: meta.year && meta.period
+          ? `${meta.year} / ${formatInnovationPeriodLabel(meta.period)}`
+          : (item.quarter || '-'),
+        departmentId: item.departmentId,
+        departmentName: departmentMap.get(item.departmentId)?.name || '未知部门',
+        employeeName: '-',
+        type: 'innovation',
+        typeLabel: '创新专项',
+        title: item.title,
+        status: item.status,
+        approvedAmount: Number(item.approvedAmount || 0),
+        reimbursedAmount: Number(item.reimbursedAmount || 0),
+        date: item.reimburseDate || item.applyDate,
+        note: item.note || '',
+      }
+    })
 
   const combined = [...quarterlyItems, ...innovationItems]
     .filter((item) => type === 'all' || item.type === type)

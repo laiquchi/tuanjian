@@ -6,6 +6,8 @@ const initialFilters = {
   quarter: '',
   departmentId: 'all',
   type: 'all',
+  innovationYear: '',
+  innovationPeriod: 'all',
 }
 
 const initialQuarterlyImportForm = {
@@ -24,7 +26,8 @@ const initialQuarterlyForm = {
 
 const initialInnovationForm = {
   departmentId: '',
-  quarter: '',
+  year: '',
+  period: '1',
   title: '',
   approvedAmount: '',
   reimbursedAmount: '',
@@ -275,7 +278,7 @@ function App() {
   const [innovationForm, setInnovationForm] = useState(initialInnovationForm)
   const [memberBoardFilters, setMemberBoardFilters] = useState(initialMemberBoardFilters)
   const [quarterlyPanelOpen, setQuarterlyPanelOpen] = useState(initialQuarterlyPanelOpen)
-  const { quarter, departmentId, type } = filters
+  const { quarter, departmentId, type, innovationYear, innovationPeriod } = filters
 
   const loadDashboard = useCallback(async (nextFilters) => {
     const params = new URLSearchParams()
@@ -286,6 +289,14 @@ function App() {
 
     if (nextFilters.departmentId) {
       params.set('departmentId', nextFilters.departmentId)
+    }
+
+    if (nextFilters.innovationYear) {
+      params.set('innovationYear', nextFilters.innovationYear)
+    }
+
+    if (nextFilters.innovationPeriod) {
+      params.set('innovationPeriod', nextFilters.innovationPeriod)
     }
 
     const data = await fetchJson(`/api/dashboard?${params.toString()}`)
@@ -306,6 +317,14 @@ function App() {
 
     if (nextFilters.type) {
       params.set('type', nextFilters.type)
+    }
+
+    if (nextFilters.innovationYear) {
+      params.set('innovationYear', nextFilters.innovationYear)
+    }
+
+    if (nextFilters.innovationPeriod) {
+      params.set('innovationPeriod', nextFilters.innovationPeriod)
     }
 
     const data = await fetchJson(`/api/records?${params.toString()}`)
@@ -343,7 +362,8 @@ function App() {
       setInnovationForm((current) => ({
         ...current,
         departmentId: current.departmentId || defaultDepartmentId,
-        quarter: current.quarter || effectiveQuarter,
+        year: current.year || dashboardData.filters.selectedInnovationYear || '',
+        period: current.period || dashboardData.filters.selectedInnovationPeriod || '1',
       }))
     } catch (requestError) {
       setError(requestError.message)
@@ -353,8 +373,8 @@ function App() {
   }, [filters.quarter, loadDashboard, loadRecords])
 
   useEffect(() => {
-    refresh({ quarter, departmentId, type })
-  }, [quarter, departmentId, type, refresh])
+    refresh({ quarter, departmentId, type, innovationYear, innovationPeriod })
+  }, [quarter, departmentId, type, innovationYear, innovationPeriod, refresh])
 
   useEffect(() => {
     const validKeys = new Set(records.items.map((item) => createRecordKey(item)))
@@ -363,6 +383,8 @@ function App() {
 
   const departmentOptions = useMemo(() => dashboard?.options?.departments || [], [dashboard])
   const quarterOptions = dashboard?.options?.quarters || []
+  const innovationYearOptions = dashboard?.options?.innovationYears || []
+  const innovationPeriodOptions = dashboard?.options?.innovationPeriods || []
   const quarterlySummary = dashboard?.typeSummary?.find((item) => item.key === 'quarterly')
   const innovationSummary = dashboard?.typeSummary?.find((item) => item.key === 'innovation')
   const quarterlyMemberStats = useMemo(() => dashboard?.quarterlyMemberStats || [], [dashboard])
@@ -445,6 +467,13 @@ function App() {
     departmentOptions.find((item) => item.id === departmentId)?.name || '全部部门'
   const hasBatchEmployeeNames = quarterlyForm.employeeNamesText.trim().length > 0
   const selectedQuarterLabel = quarter || dashboard?.filters?.selectedQuarter || '-'
+  const selectedInnovationYearLabel = innovationYear || dashboard?.filters?.selectedInnovationYear || '-'
+  const selectedInnovationPeriodLabel =
+    innovationPeriod === 'all'
+      ? 'ALL'
+      : (innovationPeriodOptions.find((item) => item.value === innovationPeriod)?.label
+        || dashboard?.filters?.selectedInnovationPeriod
+        || '-')
 
   const handleFilterChange = (event) => {
     const { name, value } = event.target
@@ -724,12 +753,12 @@ function App() {
 
           <div className="side-summary">
             <div>
-              <span>当前季度</span>
-              <strong>{quarter || dashboard?.filters?.selectedQuarter || '-'}</strong>
+              <span>{activeView === 'innovation' ? '年度' : '当前季度'}</span>
+              <strong>{activeView === 'innovation' ? selectedInnovationYearLabel : selectedQuarterLabel}</strong>
             </div>
             <div>
-              <span>当前部门</span>
-              <strong>{selectedDepartmentName}</strong>
+              <span>{activeView === 'innovation' ? '期数' : '当前部门'}</span>
+              <strong>{activeView === 'innovation' ? selectedInnovationPeriodLabel : selectedDepartmentName}</strong>
             </div>
           </div>
 
@@ -753,25 +782,55 @@ function App() {
         <section className="filters-panel">
           <SectionTitle
             eyebrow="筛选视图"
-            title="按季度、部门查看"
-            description="分组切换决定显示哪个业务区，筛选条件决定当前业务区的数据范围。"
+            title={activeView === 'innovation' ? '按年度、期数、部门查看' : '按季度、部门查看'}
+            description={
+              activeView === 'innovation'
+                ? '创新专项按年度、期数、部门进行查看，与季度团建逻辑独立。'
+                : '分组切换决定显示哪个业务区，筛选条件决定当前业务区的数据范围。'
+            }
           />
           <div className="filters-grid compact">
-            <label>
-              <span>季度</span>
-              <select name="quarter" value={filters.quarter} onChange={handleFilterChange}>
-                {quarterOptions.map((item) => (
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
-            </label>
+            {activeView === 'innovation' ? (
+              <>
+                <label>
+                  <span>年度</span>
+                  <select name="innovationYear" value={filters.innovationYear} onChange={handleFilterChange}>
+                    {innovationYearOptions.map((item) => (
+                      <option key={item} value={item}>
+                        {item}年
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label>
+                  <span>期数</span>
+                  <select name="innovationPeriod" value={filters.innovationPeriod} onChange={handleFilterChange}>
+                    <option value="all">ALL</option>
+                    {innovationPeriodOptions.map((item) => (
+                      <option key={item.value} value={item.value}>
+                        {item.label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </>
+            ) : (
+              <label>
+                <span>季度</span>
+                <select name="quarter" value={filters.quarter} onChange={handleFilterChange}>
+                  {quarterOptions.map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
             <label>
               <span>部门</span>
               <select name="departmentId" value={filters.departmentId} onChange={handleFilterChange}>
                 <option value="all">全部部门</option>
-                {visibleDepartmentOptions.map((item) => (
+                {(activeView === 'innovation' ? departmentOptions : visibleDepartmentOptions).map((item) => (
                   <option key={item.id} value={item.id}>
                     {item.name}
                   </option>
@@ -1196,13 +1255,32 @@ function App() {
                       </option>
                     ))}
                   </select>
-                  <input
-                    value={innovationForm.quarter}
-                    placeholder="2026-Q2"
+                  <select
+                    value={innovationForm.year}
                     onChange={(event) =>
-                      setInnovationForm((current) => ({ ...current, quarter: event.target.value }))
+                      setInnovationForm((current) => ({ ...current, year: event.target.value }))
                     }
-                  />
+                  >
+                    {innovationYearOptions.map((item) => (
+                      <option key={item} value={item}>
+                        {item}年
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    value={innovationForm.period}
+                    onChange={(event) =>
+                      setInnovationForm((current) => ({ ...current, period: event.target.value }))
+                    }
+                  >
+                    {innovationPeriodOptions.map((item) => (
+                      <option key={item.value} value={item.value}>
+                        {item.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="inline-grid">
                   <select
                     value={innovationForm.status}
                     onChange={(event) =>

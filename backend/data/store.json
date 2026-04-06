@@ -259,62 +259,6 @@
       "createdAt": "2026-04-01T09:00:00.000Z"
     },
     {
-      "id": "member-rd-q2-02",
-      "quarter": "2026-Q2",
-      "name": "李璐",
-      "departmentId": "dept-rd",
-      "createdAt": "2026-04-01T09:00:00.000Z"
-    },
-    {
-      "id": "member-rd-q2-03",
-      "quarter": "2026-Q2",
-      "name": "王哲",
-      "departmentId": "dept-rd",
-      "createdAt": "2026-04-01T09:00:00.000Z"
-    },
-    {
-      "id": "member-ops-q2-01",
-      "quarter": "2026-Q2",
-      "name": "周悦",
-      "departmentId": "dept-ops",
-      "createdAt": "2026-04-01T09:00:00.000Z"
-    },
-    {
-      "id": "member-ops-q2-02",
-      "quarter": "2026-Q2",
-      "name": "陈晴",
-      "departmentId": "dept-ops",
-      "createdAt": "2026-04-01T09:00:00.000Z"
-    },
-    {
-      "id": "member-marketing-q2-01",
-      "quarter": "2026-Q2",
-      "name": "赵宁",
-      "departmentId": "dept-marketing",
-      "createdAt": "2026-04-01T09:00:00.000Z"
-    },
-    {
-      "id": "member-marketing-q2-02",
-      "quarter": "2026-Q2",
-      "name": "宋颖",
-      "departmentId": "dept-marketing",
-      "createdAt": "2026-04-01T09:00:00.000Z"
-    },
-    {
-      "id": "member-hr-q2-01",
-      "quarter": "2026-Q2",
-      "name": "许婷",
-      "departmentId": "dept-hr",
-      "createdAt": "2026-04-01T09:00:00.000Z"
-    },
-    {
-      "id": "member-hr-q2-02",
-      "quarter": "2026-Q2",
-      "name": "高航",
-      "departmentId": "dept-hr",
-      "createdAt": "2026-04-01T09:00:00.000Z"
-    },
-    {
       "id": "member-rd-q1-01",
       "quarter": "2026-Q1",
       "name": "张晨",

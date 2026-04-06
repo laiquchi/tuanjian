@@ -39,6 +39,11 @@ const initialMemberBoardFilters = {
   departmentId: 'all',
 }
 
+const initialQuarterlyPanelOpen = {
+  import: false,
+  expense: false,
+}
+
 const viewOptions = [
   {
     key: 'quarterly',
@@ -269,6 +274,7 @@ function App() {
   const [quarterlyForm, setQuarterlyForm] = useState(initialQuarterlyForm)
   const [innovationForm, setInnovationForm] = useState(initialInnovationForm)
   const [memberBoardFilters, setMemberBoardFilters] = useState(initialMemberBoardFilters)
+  const [quarterlyPanelOpen, setQuarterlyPanelOpen] = useState(initialQuarterlyPanelOpen)
   const { quarter, departmentId, type } = filters
 
   const loadDashboard = useCallback(async (nextFilters) => {
@@ -523,6 +529,13 @@ function App() {
   const handleMemberBoardFilterChange = (event) => {
     const { name, value } = event.target
     setMemberBoardFilters((current) => ({ ...current, [name]: value }))
+  }
+
+  const handleQuarterlyPanelToggle = (panelKey) => {
+    setQuarterlyPanelOpen((current) => ({
+      ...current,
+      [panelKey]: !current[panelKey],
+    }))
   }
 
   const handleQuarterlyMembersBatchDelete = async () => {
@@ -794,134 +807,156 @@ function App() {
             </section>
 
             <section className="forms-grid">
-              <div className="panel">
-                <SectionTitle
-                  eyebrow="季度团建"
-                  title="导入人员名单"
-                  description="支持粘贴或上传 CSV/TXT，格式为“姓名,部门”，一行一条。"
-                />
-                <form
-                  className="entry-form"
-                  onSubmit={(event) =>
-                    handleSubmit(
-                      event,
-                      '/api/quarterly-members/import',
-                      quarterlyImportForm,
-                      () => setQuarterlyImportForm((current) => ({ ...current, content: '' })),
-                    )}
-                >
-                  <input
-                    value={quarterlyImportForm.quarter}
-                    placeholder="2026-Q2"
-                    onChange={(event) =>
-                      setQuarterlyImportForm((current) => ({ ...current, quarter: event.target.value }))
-                    }
-                  />
-                  <label className="upload-box">
-                    <span>上传名单文件</span>
-                    <input type="file" accept=".csv,.txt,.xls,.xlsx" onChange={handleImportFile} />
-                  </label>
-                  <textarea
-                    rows="8"
-                    value={quarterlyImportForm.content}
-                    placeholder={'支持 TXT / CSV / XLS / XLSX\n张三,研发部\n李四,运营部'}
-                    onChange={(event) =>
-                      setQuarterlyImportForm((current) => ({ ...current, content: event.target.value }))
-                    }
-                  />
-                  <button disabled={submitting}>导入人员</button>
-                </form>
-              </div>
-
-              <div className="panel">
-                <SectionTitle
-                  eyebrow="季度团建"
-                  title="按人登记团建使用"
-                  description="只需粘贴员工姓名登记，支持不同部门员工一起提交，系统会自动汇总部门并生成一条团建记录。"
-                />
-                <form
-                  className="entry-form"
-                  onSubmit={(event) =>
-                    handleSubmit(
-                      event,
-                      '/api/quarterly-expenses',
-                      quarterlyForm,
-                      () =>
-                        setQuarterlyForm((current) => ({
-                          ...current,
-                          employeeNamesText: '',
-                          title: '',
-                          amount: '',
-                          spentDate: '',
-                          note: '',
-                        })),
-                    )}
-                >
-                  <textarea
-                    rows="4"
-                    value={quarterlyForm.employeeNamesText}
-                    placeholder={'批量员工姓名，支持换行、逗号分隔\n张晨\n李璐\n王哲'}
-                    onChange={(event) =>
-                      setQuarterlyForm((current) => ({ ...current, employeeNamesText: event.target.value }))
-                    }
-                  />
-                  <p className="entry-help">
-                    可以一次粘贴多个部门的员工姓名，登记后会生成 1 条记录，并自动汇总部门和人员名单。
-                  </p>
-                  {hasBatchEmployeeNames && (
-                    <div className="hint-box">
-                      <span>批量登记</span>
-                      <strong>将生成 1 条记录，部门处会自动显示多个部门</strong>
-                    </div>
-                  )}
-                  <input
-                    value={quarterlyForm.quarter}
-                    placeholder="2026-Q2"
-                    onChange={(event) =>
-                      setQuarterlyForm((current) => ({ ...current, quarter: event.target.value }))
-                    }
-                  />
-                  <input
-                    value={quarterlyForm.title}
-                    placeholder="团建事项（可选）"
-                    onChange={(event) =>
-                      setQuarterlyForm((current) => ({ ...current, title: event.target.value }))
-                    }
-                  />
-                  <input
-                    type="number"
-                    min="0"
-                    value={quarterlyForm.amount}
-                    placeholder="核销金额"
-                    onChange={(event) =>
-                      setQuarterlyForm((current) => ({ ...current, amount: event.target.value }))
-                    }
-                  />
-                  <input
-                    type="date"
-                    value={quarterlyForm.spentDate}
-                    onChange={(event) =>
-                      setQuarterlyForm((current) => ({ ...current, spentDate: event.target.value }))
-                    }
-                  />
-                  <textarea
-                    rows="3"
-                    value={quarterlyForm.note}
-                    placeholder="备注"
-                    onChange={(event) =>
-                      setQuarterlyForm((current) => ({ ...current, note: event.target.value }))
-                    }
+              <div className={`panel collapsible-panel ${quarterlyPanelOpen.import ? 'expanded' : 'collapsed'}`}>
+                <div className="collapsible-head">
+                  <SectionTitle
+                    eyebrow="季度团建"
+                    title="导入人员名单"
+                    description="支持粘贴或上传 CSV/TXT，格式为“姓名,部门”，一行一条。"
                   />
                   <button
-                    disabled={
-                      submitting ||
-                      quarterlyMemberStats.length === 0 ||
-                      !hasBatchEmployeeNames
-                    }
+                    className="panel-toggle"
+                    type="button"
+                    onClick={() => handleQuarterlyPanelToggle('import')}
                   >
-                    登记使用
+                    {quarterlyPanelOpen.import ? '收起' : '展开'}
                   </button>
-                </form>
+                </div>
+                {quarterlyPanelOpen.import && (
+                  <form
+                    className="entry-form"
+                    onSubmit={(event) =>
+                      handleSubmit(
+                        event,
+                        '/api/quarterly-members/import',
+                        quarterlyImportForm,
+                        () => setQuarterlyImportForm((current) => ({ ...current, content: '' })),
+                      )}
+                  >
+                    <input
+                      value={quarterlyImportForm.quarter}
+                      placeholder="2026-Q2"
+                      onChange={(event) =>
+                        setQuarterlyImportForm((current) => ({ ...current, quarter: event.target.value }))
+                      }
+                    />
+                    <label className="upload-box">
+                      <span>上传名单文件</span>
+                      <input type="file" accept=".csv,.txt,.xls,.xlsx" onChange={handleImportFile} />
+                    </label>
+                    <textarea
+                      rows="8"
+                      value={quarterlyImportForm.content}
+                      placeholder={'支持 TXT / CSV / XLS / XLSX\n张三,研发部\n李四,运营部'}
+                      onChange={(event) =>
+                        setQuarterlyImportForm((current) => ({ ...current, content: event.target.value }))
+                      }
+                    />
+                    <button disabled={submitting}>导入人员</button>
+                  </form>
+                )}
+              </div>
+
+              <div className={`panel collapsible-panel ${quarterlyPanelOpen.expense ? 'expanded' : 'collapsed'}`}>
+                <div className="collapsible-head">
+                  <SectionTitle
+                    eyebrow="季度团建"
+                    title="按人登记团建使用"
+                    description="只需粘贴员工姓名登记，支持不同部门员工一起提交，系统会自动汇总部门并生成一条团建记录。"
+                  />
+                  <button
+                    className="panel-toggle"
+                    type="button"
+                    onClick={() => handleQuarterlyPanelToggle('expense')}
+                  >
+                    {quarterlyPanelOpen.expense ? '收起' : '展开'}
+                  </button>
+                </div>
+                {quarterlyPanelOpen.expense && (
+                  <form
+                    className="entry-form"
+                    onSubmit={(event) =>
+                      handleSubmit(
+                        event,
+                        '/api/quarterly-expenses',
+                        quarterlyForm,
+                        () =>
+                          setQuarterlyForm((current) => ({
+                            ...current,
+                            employeeNamesText: '',
+                            title: '',
+                            amount: '',
+                            spentDate: '',
+                            note: '',
+                          })),
+                      )}
+                  >
+                    <textarea
+                      rows="4"
+                      value={quarterlyForm.employeeNamesText}
+                      placeholder={'批量员工姓名，支持换行、逗号分隔\n张晨\n李璐\n王哲'}
+                      onChange={(event) =>
+                        setQuarterlyForm((current) => ({ ...current, employeeNamesText: event.target.value }))
+                      }
+                    />
+                    <p className="entry-help">
+                      可以一次粘贴多个部门的员工姓名，登记后会生成 1 条记录，并自动汇总部门和人员名单。
+                    </p>
+                    {hasBatchEmployeeNames && (
+                      <div className="hint-box">
+                        <span>批量登记</span>
+                        <strong>将生成 1 条记录，部门处会自动显示多个部门</strong>
+                      </div>
+                    )}
+                    <input
+                      value={quarterlyForm.quarter}
+                      placeholder="2026-Q2"
+                      onChange={(event) =>
+                        setQuarterlyForm((current) => ({ ...current, quarter: event.target.value }))
+                      }
+                    />
+                    <input
+                      value={quarterlyForm.title}
+                      placeholder="团建事项（可选）"
+                      onChange={(event) =>
+                        setQuarterlyForm((current) => ({ ...current, title: event.target.value }))
+                      }
+                    />
+                    <input
+                      type="number"
+                      min="0"
+                      value={quarterlyForm.amount}
+                      placeholder="核销金额"
+                      onChange={(event) =>
+                        setQuarterlyForm((current) => ({ ...current, amount: event.target.value }))
+                      }
+                    />
+                    <input
+                      type="date"
+                      value={quarterlyForm.spentDate}
+                      onChange={(event) =>
+                        setQuarterlyForm((current) => ({ ...current, spentDate: event.target.value }))
+                      }
+                    />
+                    <textarea
+                      rows="3"
+                      value={quarterlyForm.note}
+                      placeholder="备注"
+                      onChange={(event) =>
+                        setQuarterlyForm((current) => ({ ...current, note: event.target.value }))
+                      }
+                    />
+                    <button
+                      disabled={
+                        submitting ||
+                        quarterlyMemberStats.length === 0 ||
+                        !hasBatchEmployeeNames
+                      }
+                    >
+                      登记使用
+                    </button>
+                  </form>
+                )}
               </div>
             </section>
 

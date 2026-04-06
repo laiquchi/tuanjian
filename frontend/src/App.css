@@ -184,6 +184,7 @@
 
 .forms-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
 }
 
 .inline-grid {
@@ -278,6 +279,98 @@
   border: 1px solid rgba(118, 73, 32, 0.1);
   border-radius: 22px;
   padding: 18px;
+}
+
+.forms-grid .panel {
+  padding: 18px;
+}
+
+.collapsible-panel {
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.collapsible-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.collapsible-head .section-title {
+  min-width: 0;
+  flex: 1;
+}
+
+.panel-toggle {
+  border: 1px solid rgba(118, 73, 32, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #6a4617;
+  padding: 10px 16px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.collapsible-panel.collapsed {
+  padding-bottom: 16px;
+}
+
+.collapsible-panel.collapsed .section-title p {
+  margin-bottom: 0;
+}
+
+.forms-grid .entry-form {
+  margin-top: 14px;
+  padding: 14px;
+  gap: 8px;
+}
+
+.forms-grid .section-title h2 {
+  font-size: 24px;
+  margin: 6px 0 8px;
+}
+
+.forms-grid .section-title p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.forms-grid input,
+.forms-grid select,
+.forms-grid textarea,
+.forms-grid .table-button,
+.forms-grid button {
+  font-size: 14px;
+}
+
+.forms-grid input,
+.forms-grid select,
+.forms-grid textarea {
+  padding: 12px 14px;
+  border-radius: 16px;
+}
+
+.forms-grid textarea[rows='8'] {
+  min-height: 180px;
+}
+
+.forms-grid textarea[rows='4'] {
+  min-height: 110px;
+}
+
+.forms-grid textarea[rows='3'] {
+  min-height: 96px;
+}
+
+.forms-grid .upload-box,
+.forms-grid .hint-box {
+  padding: 12px 14px;
+  border-radius: 16px;
+}
+
+.forms-grid button {
+  padding: 12px 16px;
+  border-radius: 16px;
 }
 
 .upload-box,
@@ -439,6 +532,15 @@ th {
 
   .hero-copy h1 {
     font-size: 40px;
+  }
+
+  .collapsible-head {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .panel-toggle {
+    width: 100%;
   }
 }
 

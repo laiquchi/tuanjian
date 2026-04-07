@@ -273,19 +273,6 @@
   "quarterlyExpenses": [],
   "innovationProjects": [
     {
-      "id": "ip-001",
-      "departmentId": "dept-rd",
-      "quarter": "2026-Q2",
-      "title": "AI 创新案例专项",
-      "approvedAmount": 3200,
-      "reimbursedAmount": 1800,
-      "status": "进行中",
-      "applyDate": "2026-04-04",
-      "reimburseDate": "2026-04-05",
-      "note": "用于创新案例共创营和专家评审",
-      "createdAt": "2026-04-04T10:00:00.000Z"
-    },
-    {
       "id": "ip-d7dc2f3a",
       "departmentId": "dept-7e108d17",
       "year": "2026",

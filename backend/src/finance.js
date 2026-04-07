@@ -472,11 +472,19 @@ function buildRecordList(data, filters) {
         type: 'innovation',
         typeLabel: '\u521b\u65b0\u4e13\u9879',
         title: item.category ? `[${item.category}] ${item.title}` : item.title,
+        category: item.category || '',
+        innovationTitle: item.title || '',
+        proposer: item.proposer || '',
+        owner: item.owner || '',
+        teamBuildingOwner: item.teamBuildingOwner || '',
+        teamBuildingAmount: amount,
+        rewardProposer: item.rewardProposer || '',
         status: item.status || '\u5df2\u5f55\u5165',
         approvedAmount: amount,
         reimbursedAmount: amount,
         date: item.reimburseDate || item.applyDate || item.createdAt,
-        note: detailParts.join('\uff1b'),
+        note: item.note || '',
+        detailNote: detailParts.join('\uff1b'),
       }
     })
 

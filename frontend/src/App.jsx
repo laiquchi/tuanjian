@@ -189,6 +189,7 @@ function MetricCard({ label, value, help }) {
 }
 
 function RecordsPanel({
+  activeView,
   records,
   loading,
   submitting,
@@ -201,6 +202,7 @@ function RecordsPanel({
   const allRecordKeys = records.items.map((item) => createRecordKey(item))
   const selectedCount = allRecordKeys.filter((key) => selectedRecordKeys.includes(key)).length
   const allSelected = allRecordKeys.length > 0 && selectedCount === allRecordKeys.length
+  const isInnovationView = activeView === 'innovation'
 
   return (
     <section className="panel">
@@ -224,7 +226,7 @@ function RecordsPanel({
         {loading && <span>刷新中...</span>}
       </div>
       <div className="table-wrap">
-        <table>
+        <table className={isInnovationView ? 'innovation-records-table' : ''}>
           <thead>
             <tr>
               <th>
@@ -235,16 +237,31 @@ function RecordsPanel({
                   onChange={(event) => onToggleAllRecords(event.target.checked)}
                 />
               </th>
-              <th>日期</th>
-              <th>季度 / 期数</th>
-              <th>部门</th>
-              <th>人员</th>
-              <th>类型</th>
-              <th>事项</th>
-              <th>状态</th>
-              <th>申请金额</th>
-              <th>核销金额</th>
-              <th>备注</th>
+              {isInnovationView ? (
+                <>
+                  <th>类别</th>
+                  <th>题目</th>
+                  <th>提报人</th>
+                  <th>负责人</th>
+                  <th>团建负责人</th>
+                  <th>团队金额</th>
+                  <th>备注</th>
+                  <th>大部门</th>
+                </>
+              ) : (
+                <>
+                  <th>日期</th>
+                  <th>季度 / 期数</th>
+                  <th>部门</th>
+                  <th>人员</th>
+                  <th>类型</th>
+                  <th>事项</th>
+                  <th>状态</th>
+                  <th>申请金额</th>
+                  <th>核销金额</th>
+                  <th>备注</th>
+                </>
+              )}
               <th>操作</th>
             </tr>
           </thead>
@@ -259,21 +276,36 @@ function RecordsPanel({
                     onChange={(event) => onToggleRecord(item, event.target.checked)}
                   />
                 </td>
-                <td>{item.date || '-'}</td>
-                <td>{item.quarter}</td>
-                <td>{item.departmentName}</td>
-                <td>{item.employeeName || '-'}</td>
-                <td>
-                  <span className={`tag ${item.type}`}>{item.typeLabel}</span>
-                </td>
-                <td>{item.title}</td>
-                <td>{item.status}</td>
-                <td>{formatMoney(item.approvedAmount)}</td>
-                <td>{formatMoney(item.reimbursedAmount)}</td>
-                <td>{item.note || '-'}</td>
+                {isInnovationView ? (
+                  <>
+                    <td>{item.category || '-'}</td>
+                    <td>{item.innovationTitle || item.title || '-'}</td>
+                    <td>{item.proposer || '-'}</td>
+                    <td>{item.owner || '-'}</td>
+                    <td>{item.teamBuildingOwner || '-'}</td>
+                    <td>{formatMoney(item.teamBuildingAmount ?? item.approvedAmount)}</td>
+                    <td>{item.note || '-'}</td>
+                    <td>{item.departmentName || '-'}</td>
+                  </>
+                ) : (
+                  <>
+                    <td>{item.date || '-'}</td>
+                    <td>{item.quarter}</td>
+                    <td>{item.departmentName}</td>
+                    <td>{item.employeeName || '-'}</td>
+                    <td>
+                      <span className={`tag ${item.type}`}>{item.typeLabel}</span>
+                    </td>
+                    <td>{item.title}</td>
+                    <td>{item.status}</td>
+                    <td>{formatMoney(item.approvedAmount)}</td>
+                    <td>{formatMoney(item.reimbursedAmount)}</td>
+                    <td>{item.note || '-'}</td>
+                  </>
+                )}
                 <td>
                   <button
-                    className="table-button danger"
+                    className={`table-button danger ${isInnovationView ? 'compact' : ''}`}
                     type="button"
                     disabled={submitting}
                     onClick={() => onDeleteRecord(item)}
@@ -925,6 +957,7 @@ function App() {
 
         {activeView === 'home' && (
           <RecordsPanel
+            activeView={activeView}
             records={records}
             loading={loading}
             submitting={submitting}
@@ -1263,6 +1296,7 @@ function App() {
             </section>
 
             <RecordsPanel
+              activeView={activeView}
               records={records}
               loading={loading}
               submitting={submitting}
@@ -1519,6 +1553,7 @@ function App() {
             </section>
 
             <RecordsPanel
+              activeView={activeView}
               records={records}
               loading={loading}
               submitting={submitting}

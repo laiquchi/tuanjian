@@ -1,4 +1,4 @@
-import { startTransition, useCallback, useEffect, useMemo, useState } from 'react'
+﻿import { startTransition, useCallback, useEffect, useMemo, useState } from 'react'
 import * as XLSX from 'xlsx'
 import './App.css'
 
@@ -24,16 +24,23 @@ const initialQuarterlyForm = {
   note: '',
 }
 
+const initialInnovationImportForm = {
+  year: '',
+  period: '1',
+  content: '',
+}
+
 const initialInnovationForm = {
   departmentId: '',
   year: '',
   period: '1',
+  category: '',
   title: '',
-  approvedAmount: '',
-  reimbursedAmount: '',
-  status: '进行中',
-  applyDate: '',
-  reimburseDate: '',
+  proposer: '',
+  owner: '',
+  teamBuildingOwner: '',
+  teamBuildingAmount: '',
+  rewardProposer: '',
   note: '',
 }
 
@@ -57,7 +64,7 @@ const viewOptions = [
   {
     key: 'innovation',
     label: '创新专项',
-    description: '专项概览、申请与核销录入',
+    description: '专项概览、单条录入、批量导入',
     type: 'innovation',
   },
 ]
@@ -100,7 +107,7 @@ function normalizeImportCell(value) {
   return String(value ?? '').trim()
 }
 
-function workbookToImportText(workbook) {
+function workbookToRows(workbook) {
   const sheetName = workbook.SheetNames[0]
 
   if (!sheetName) {
@@ -122,6 +129,12 @@ function workbookToImportText(workbook) {
     throw new Error('Excel 文件内容为空')
   }
 
+  return normalizedRows
+}
+
+function workbookToImportText(workbook) {
+  const normalizedRows = workbookToRows(workbook)
+
   const [firstRow, ...dataRows] = normalizedRows
   const hasHeader = firstRow.includes('姓名') && firstRow.includes('部门')
   const effectiveRows = hasHeader ? dataRows : normalizedRows
@@ -139,6 +152,11 @@ function workbookToImportText(workbook) {
   }
 
   return lines.join('\n')
+}
+
+function workbookToInnovationImportText(workbook) {
+  const normalizedRows = workbookToRows(workbook)
+  return normalizedRows.map((row) => row.join('\t')).join('\n')
 }
 
 function SectionTitle({ eyebrow, title, description }) {
@@ -180,7 +198,7 @@ function RecordsPanel({
       <SectionTitle
         eyebrow="汇总明细"
         title="当前视图记录"
-        description="首页只展示汇总明细；切换到分组后，会自动只显示当前分组的记录。"
+        description="首页只显示汇总明细；切换到分组后，只显示当前分组的记录。"
       />
       <div className="records-meta">
         <span>记录数 {records.summary.total || 0}</span>
@@ -209,7 +227,7 @@ function RecordsPanel({
                 />
               </th>
               <th>日期</th>
-              <th>季度</th>
+              <th>季度 / 期数</th>
               <th>部门</th>
               <th>人员</th>
               <th>类型</th>
@@ -275,6 +293,7 @@ function App() {
   const [error, setError] = useState('')
   const [quarterlyImportForm, setQuarterlyImportForm] = useState(initialQuarterlyImportForm)
   const [quarterlyForm, setQuarterlyForm] = useState(initialQuarterlyForm)
+  const [innovationImportForm, setInnovationImportForm] = useState(initialInnovationImportForm)
   const [innovationForm, setInnovationForm] = useState(initialInnovationForm)
   const [memberBoardFilters, setMemberBoardFilters] = useState(initialMemberBoardFilters)
   const [quarterlyPanelOpen, setQuarterlyPanelOpen] = useState(initialQuarterlyPanelOpen)
@@ -365,6 +384,11 @@ function App() {
         year: current.year || dashboardData.filters.selectedInnovationYear || '',
         period: current.period || dashboardData.filters.selectedInnovationPeriod || '1',
       }))
+      setInnovationImportForm((current) => ({
+        ...current,
+        year: current.year || dashboardData.filters.selectedInnovationYear || '',
+        period: current.period || dashboardData.filters.selectedInnovationPeriod || '1',
+      }))
     } catch (requestError) {
       setError(requestError.message)
     } finally {
@@ -451,14 +475,14 @@ function App() {
 
     return [
       {
-        label: '创新专项已申请',
+        label: '创新专项金额',
         value: formatMoney(dashboard.overview.innovationApproved),
         help: `${dashboard.overview.innovationProjectCount} 个专项`,
       },
       {
-        label: '创新专项已核销',
-        value: formatMoney(dashboard.overview.innovationReimbursed),
-        help: '与季度团建独立核算',
+        label: '创新专项数量',
+        value: `${dashboard.overview.innovationProjectCount} 个`,
+        help: '按年度、期数独立统计',
       },
     ]
   }, [dashboard])
@@ -706,7 +730,7 @@ function App() {
     }
   }
 
-  const handleImportFile = async (event) => {
+  const handleQuarterlyImportFile = async (event) => {
     const file = event.target.files?.[0]
 
     if (!file) {
@@ -726,6 +750,37 @@ function App() {
       }
 
       setQuarterlyImportForm((current) => ({
+        ...current,
+        content: text,
+      }))
+      setError('')
+    } catch (fileError) {
+      setError(fileError.message || '文件解析失败')
+    } finally {
+      event.target.value = ''
+    }
+  }
+
+  const handleInnovationImportFile = async (event) => {
+    const file = event.target.files?.[0]
+
+    if (!file) {
+      return
+    }
+
+    try {
+      const extension = file.name.split('.').pop()?.toLowerCase()
+      let text = ''
+
+      if (extension === 'xls' || extension === 'xlsx') {
+        const buffer = await file.arrayBuffer()
+        const workbook = XLSX.read(buffer, { type: 'array' })
+        text = workbookToInnovationImportText(workbook)
+      } else {
+        text = await file.text()
+      }
+
+      setInnovationImportForm((current) => ({
         ...current,
         content: text,
       }))
@@ -785,7 +840,7 @@ function App() {
             title={activeView === 'innovation' ? '按年度、期数、部门查看' : '按季度、部门查看'}
             description={
               activeView === 'innovation'
-                ? '创新专项按年度、期数、部门进行查看，与季度团建逻辑独立。'
+                ? '创新专项按年度、期数、部门进行查看，与季度团建独立统计。'
                 : '分组切换决定显示哪个业务区，筛选条件决定当前业务区的数据范围。'
             }
           />
@@ -885,7 +940,7 @@ function App() {
                   <SectionTitle
                     eyebrow="季度团建"
                     title="导入人员名单"
-                    description="支持粘贴或上传 CSV/TXT，格式为“姓名,部门”，一行一条。"
+                    description="支持粘贴或上传 CSV/TXT/XLS/XLSX，格式为“姓名、部门”，一行一条。"
                   />
                   <button
                     className="panel-toggle"
@@ -915,7 +970,7 @@ function App() {
                     />
                     <label className="upload-box">
                       <span>上传名单文件</span>
-                      <input type="file" accept=".csv,.txt,.xls,.xlsx" onChange={handleImportFile} />
+                      <input type="file" accept=".csv,.txt,.xls,.xlsx" onChange={handleQuarterlyImportFile} />
                     </label>
                     <textarea
                       rows="8"
@@ -935,7 +990,7 @@ function App() {
                   <SectionTitle
                     eyebrow="季度团建"
                     title="按人登记团建使用"
-                    description="只需粘贴员工姓名登记，支持不同部门员工一起提交，系统会自动汇总部门并生成一条团建记录。"
+                    description="粘贴员工姓名即可登记，支持不同部门员工一起提交，系统会自动汇总部门并生成一条记录。"
                   />
                   <button
                     className="panel-toggle"
@@ -1201,7 +1256,7 @@ function App() {
               <SectionTitle
                 eyebrow="创新专项"
                 title="专项概览"
-                description="查看创新专项已申请金额、已核销金额和专项数量。"
+                description="查看创新专项的项目数量和团建金额。"
               />
               <div className="cards-grid innovation-grid">
                 {innovationCards.map((item) => (
@@ -1210,9 +1265,8 @@ function App() {
               </div>
               {innovationSummary && (
                 <div className="summary-band innovation-band">
-                  <span>专项数量 {innovationSummary.count}</span>
-                  <span>已申请 {formatMoney(innovationSummary.approved)}</span>
-                  <span>已核销 {formatMoney(innovationSummary.reimbursed)}</span>
+                  <span>{'\u4e13\u9879\u6570\u91cf'} {innovationSummary.count}</span>
+                  <span>{'\u4e13\u9879\u91d1\u989d'} {formatMoney(innovationSummary.approved)}</span>
                 </div>
               )}
             </section>
@@ -1220,8 +1274,72 @@ function App() {
             <section className="panel">
               <SectionTitle
                 eyebrow="创新专项"
-                title="录入专项申请与核销"
-                description="单独维护专项名称、申请金额、核销金额和处理状态。"
+                title="按年份、期数批量录入专项"
+                description="录入类别、题目、提报人、负责人、团建负责人、团建金额、备注、奖金分配提报人和大部门。"
+              />
+              <form
+                className="entry-form"
+                onSubmit={(event) =>
+                  handleSubmit(
+                    event,
+                    '/api/innovation-projects/import',
+                    innovationImportForm,
+                    () => setInnovationImportForm((current) => ({ ...current, content: '' })),
+                  )}
+              >
+                <div className="triple-grid">
+                  <select
+                    value={innovationImportForm.year}
+                    onChange={(event) =>
+                      setInnovationImportForm((current) => ({ ...current, year: event.target.value }))
+                    }
+                  >
+                    {innovationYearOptions.map((item) => (
+                      <option key={item} value={item}>
+                        {item}年
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    value={innovationImportForm.period}
+                    onChange={(event) =>
+                      setInnovationImportForm((current) => ({ ...current, period: event.target.value }))
+                    }
+                  >
+                    {innovationPeriodOptions.map((item) => (
+                      <option key={item.value} value={item.value}>
+                        {item.label}
+                      </option>
+                    ))}
+                  </select>
+                  <label className="upload-box">
+                    <span>上传批量表格</span>
+                    <input type="file" accept=".csv,.txt,.xls,.xlsx" onChange={handleInnovationImportFile} />
+                  </label>
+                </div>
+                <textarea
+                  rows="8"
+                  value={innovationImportForm.content}
+                  placeholder={
+                    '类别\t题目\t提报人\t负责人\t团建负责人\t团建金额\t备注\t奖金分配提报人\t大部门\n' +
+                    '创新案例\tAI 提效专项\t张三\t李四\t王五\t2000\t阶段推进\t赵六\t研发中心'
+                  }
+                  onChange={(event) =>
+                    setInnovationImportForm((current) => ({ ...current, content: event.target.value }))
+                  }
+                />
+                <p className="entry-help">
+                  支持粘贴 Excel 表格内容，或上传 CSV / TXT / XLS / XLSX；年度与期数按上方选择统一导入。
+                </p>
+                <button disabled={submitting}>批量录入专项</button>
+              </form>
+            </section>
+
+            <section className="panel">
+              <SectionTitle
+                eyebrow="创新专项"
+                title="单条录入专项"
+                description="适合补录或修改单条专项信息。"
               />
               <form
                 className="entry-form"
@@ -1233,11 +1351,13 @@ function App() {
                     () =>
                       setInnovationForm((current) => ({
                         ...current,
+                        category: '',
                         title: '',
-                        approvedAmount: '',
-                        reimbursedAmount: '',
-                        applyDate: '',
-                        reimburseDate: '',
+                        proposer: '',
+                        owner: '',
+                        teamBuildingOwner: '',
+                        teamBuildingAmount: '',
+                        rewardProposer: '',
                         note: '',
                       })),
                   )}
@@ -1263,7 +1383,7 @@ function App() {
                   >
                     {innovationYearOptions.map((item) => (
                       <option key={item} value={item}>
-                        {item}年
+                        {item}{'\u5e74'}
                       </option>
                     ))}
                   </select>
@@ -1280,69 +1400,72 @@ function App() {
                     ))}
                   </select>
                 </div>
-                <div className="inline-grid">
-                  <select
-                    value={innovationForm.status}
+                <div className="triple-grid">
+                  <input
+                    value={innovationForm.category}
+                    placeholder={'\u7c7b\u522b'}
                     onChange={(event) =>
-                      setInnovationForm((current) => ({ ...current, status: event.target.value }))
+                      setInnovationForm((current) => ({ ...current, category: event.target.value }))
                     }
-                  >
-                    <option value="进行中">进行中</option>
-                    <option value="已完成">已完成</option>
-                  </select>
+                  />
+                  <input
+                    value={innovationForm.title}
+                    placeholder={'\u9898\u76ee'}
+                    onChange={(event) =>
+                      setInnovationForm((current) => ({ ...current, title: event.target.value }))
+                    }
+                  />
+                  <input
+                    value={innovationForm.proposer}
+                    placeholder={'\u63d0\u62a5\u4eba'}
+                    onChange={(event) =>
+                      setInnovationForm((current) => ({ ...current, proposer: event.target.value }))
+                    }
+                  />
                 </div>
-                <input
-                  value={innovationForm.title}
-                  placeholder="专项名称"
-                  onChange={(event) =>
-                    setInnovationForm((current) => ({ ...current, title: event.target.value }))
-                  }
-                />
+                <div className="triple-grid">
+                  <input
+                    value={innovationForm.owner}
+                    placeholder={'\u8d1f\u8d23\u4eba'}
+                    onChange={(event) =>
+                      setInnovationForm((current) => ({ ...current, owner: event.target.value }))
+                    }
+                  />
+                  <input
+                    value={innovationForm.teamBuildingOwner}
+                    placeholder={'\u56e2\u5efa\u8d1f\u8d23\u4eba'}
+                    onChange={(event) =>
+                      setInnovationForm((current) => ({ ...current, teamBuildingOwner: event.target.value }))
+                    }
+                  />
+                  <input
+                    value={innovationForm.rewardProposer}
+                    placeholder={'\u5956\u91d1\u5206\u914d\u63d0\u62a5\u4eba'}
+                    onChange={(event) =>
+                      setInnovationForm((current) => ({ ...current, rewardProposer: event.target.value }))
+                    }
+                  />
+                </div>
                 <div className="inline-grid">
                   <input
                     type="number"
                     min="0"
-                    value={innovationForm.approvedAmount}
-                    placeholder="申请金额"
+                    value={innovationForm.teamBuildingAmount}
+                    placeholder={'\u56e2\u5efa\u91d1\u989d'}
                     onChange={(event) =>
-                      setInnovationForm((current) => ({ ...current, approvedAmount: event.target.value }))
-                    }
-                  />
-                  <input
-                    type="number"
-                    min="0"
-                    value={innovationForm.reimbursedAmount}
-                    placeholder="已核销金额"
-                    onChange={(event) =>
-                      setInnovationForm((current) => ({ ...current, reimbursedAmount: event.target.value }))
-                    }
-                  />
-                </div>
-                <div className="inline-grid">
-                  <input
-                    type="date"
-                    value={innovationForm.applyDate}
-                    onChange={(event) =>
-                      setInnovationForm((current) => ({ ...current, applyDate: event.target.value }))
-                    }
-                  />
-                  <input
-                    type="date"
-                    value={innovationForm.reimburseDate}
-                    onChange={(event) =>
-                      setInnovationForm((current) => ({ ...current, reimburseDate: event.target.value }))
+                      setInnovationForm((current) => ({ ...current, teamBuildingAmount: event.target.value }))
                     }
                   />
                 </div>
                 <textarea
                   rows="3"
                   value={innovationForm.note}
-                  placeholder="备注"
+                  placeholder={'\u5907\u6ce8'}
                   onChange={(event) =>
                     setInnovationForm((current) => ({ ...current, note: event.target.value }))
                   }
                 />
-                <button disabled={submitting}>录入专项</button>
+                <button disabled={submitting}>{'\u5f55\u5165\u4e13\u9879'}</button>
               </form>
             </section>
 

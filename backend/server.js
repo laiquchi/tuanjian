@@ -240,6 +240,61 @@ function parseImportContent(content) {
     })
 }
 
+function splitDelimitedLine(line) {
+  if (line.includes('\t')) {
+    return line.split('\t').map((item) => item.trim())
+  }
+
+  return line.split(/,|，/).map((item) => item.trim())
+}
+
+function parseInnovationImportContent(content) {
+  const requiredHeaders = ['类别', '题目', '提报人', '负责人', '团建负责人', '团建金额', '备注', '奖金分配提报人', '大部门']
+  const rows = normalizeText(content)
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map(splitDelimitedLine)
+
+  if (rows.length === 0) {
+    const error = new Error('请粘贴或上传批量导入内容')
+    error.statusCode = 400
+    throw error
+  }
+
+  const [firstRow, ...restRows] = rows
+  const hasHeader = requiredHeaders.every((header) => firstRow.includes(header))
+  const headerMap = hasHeader
+    ? Object.fromEntries(firstRow.map((header, index) => [header, index]))
+    : Object.fromEntries(requiredHeaders.map((header, index) => [header, index]))
+  const dataRows = hasHeader ? restRows : rows
+
+  return dataRows.map((row, index) => {
+    const lineNumber = index + (hasHeader ? 2 : 1)
+    const readCell = (header) => normalizeText(row[headerMap[header]] || '')
+
+    const item = {
+      category: readCell('类别'),
+      title: readCell('题目'),
+      proposer: readCell('提报人'),
+      owner: readCell('负责人'),
+      teamBuildingOwner: readCell('团建负责人'),
+      teamBuildingAmount: readCell('团建金额'),
+      note: readCell('备注'),
+      rewardProposer: readCell('奖金分配提报人'),
+      departmentName: readCell('大部门'),
+    }
+
+    if (!item.category || !item.title || !item.teamBuildingAmount || !item.departmentName) {
+      const error = new Error(`第 ${lineNumber} 行格式不完整，请检查类别、题目、团建金额和大部门`)
+      error.statusCode = 400
+      throw error
+    }
+
+    return item
+  })
+}
+
 function parseEmployeeNamesInput(value) {
   return Array.from(
     new Set(
@@ -578,17 +633,78 @@ app.post('/api/innovation-projects', (req, res, next) => {
       departmentId,
       year,
       period,
+      category,
       title,
-      approvedAmount,
-      reimbursedAmount,
-      status,
-      applyDate,
-      reimburseDate,
+      proposer,
+      owner,
+      teamBuildingOwner,
+      teamBuildingAmount,
+      rewardProposer,
       note,
     } = req.body
     const data = readStore()
 
     getDepartmentOrThrow(data, departmentId)
+
+    if (!isValidInnovationYear(year)) {
+      const error = new Error('\u8bf7\u9009\u62e9 4 \u4f4d\u5e74\u5ea6\uff0c\u4f8b\u5982 2026')
+      error.statusCode = 400
+      throw error
+    }
+
+    if (!isValidInnovationPeriod(period)) {
+      const error = new Error('\u671f\u6570\u4ec5\u652f\u6301\u7b2c1\u671f\u6216\u7b2c2\u671f')
+      error.statusCode = 400
+      throw error
+    }
+
+    if (!normalizeText(category)) {
+      const error = new Error('\u8bf7\u586b\u5199\u7c7b\u522b')
+      error.statusCode = 400
+      throw error
+    }
+
+    if (!normalizeText(title)) {
+      const error = new Error('\u8bf7\u586b\u5199\u9898\u76ee')
+      error.statusCode = 400
+      throw error
+    }
+
+    const amount = requirePositiveNumber(teamBuildingAmount, '\u56e2\u5efa\u91d1\u989d')
+    const today = new Date().toISOString().slice(0, 10)
+
+    data.innovationProjects.push({
+      id: createId('ip'),
+      departmentId,
+      year: String(year),
+      period: String(period),
+      category: normalizeText(category),
+      title: normalizeText(title),
+      proposer: normalizeText(proposer),
+      owner: normalizeText(owner),
+      teamBuildingOwner: normalizeText(teamBuildingOwner),
+      teamBuildingAmount: amount,
+      rewardProposer: normalizeText(rewardProposer),
+      approvedAmount: amount,
+      reimbursedAmount: amount,
+      status: '\u5df2\u5f55\u5165',
+      applyDate: today,
+      reimburseDate: today,
+      note: normalizeText(note),
+      createdAt: new Date().toISOString(),
+    })
+
+    writeStore(data)
+    res.status(201).json({ message: '\u521b\u65b0\u4e13\u9879\u8bb0\u5f55\u5df2\u5f55\u5165' })
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.post('/api/innovation-projects/import', (req, res, next) => {
+  try {
+    const { year, period, content } = req.body
+    const data = readStore()
 
     if (!isValidInnovationYear(year)) {
       const error = new Error('请选择 4 位年度，例如 2026')
@@ -602,35 +718,43 @@ app.post('/api/innovation-projects', (req, res, next) => {
       throw error
     }
 
-    if (!normalizeText(title)) {
-      const error = new Error('请填写创新专项名称')
+    if (!normalizeText(content)) {
+      const error = new Error('请粘贴或上传批量导入内容')
       error.statusCode = 400
       throw error
     }
 
-    if (!applyDate) {
-      const error = new Error('请填写申请日期')
-      error.statusCode = 400
-      throw error
-    }
+    const rows = parseInnovationImportContent(content)
+    const today = new Date().toISOString().slice(0, 10)
 
-    data.innovationProjects.push({
-      id: createId('ip'),
-      departmentId,
-      year: String(year),
-      period: String(period),
-      title: normalizeText(title),
-      approvedAmount: requirePositiveNumber(approvedAmount, '申请金额'),
-      reimbursedAmount: requirePositiveNumber(reimbursedAmount, '已核销金额'),
-      status: normalizeText(status) || '进行中',
-      applyDate,
-      reimburseDate: reimburseDate || '',
-      note: normalizeText(note),
-      createdAt: new Date().toISOString(),
+    rows.forEach((row) => {
+      const department = findOrCreateDepartment(data, row.departmentName)
+      const amount = requirePositiveNumber(row.teamBuildingAmount, '团建金额')
+
+      data.innovationProjects.push({
+        id: createId('ip'),
+        departmentId: department.id,
+        year: String(year),
+        period: String(period),
+        category: row.category,
+        title: row.title,
+        proposer: row.proposer,
+        owner: row.owner,
+        teamBuildingOwner: row.teamBuildingOwner,
+        teamBuildingAmount: amount,
+        rewardProposer: row.rewardProposer,
+        approvedAmount: amount,
+        reimbursedAmount: amount,
+        status: '已录入',
+        applyDate: today,
+        reimburseDate: today,
+        note: row.note,
+        createdAt: new Date().toISOString(),
+      })
     })
 
     writeStore(data)
-    res.status(201).json({ message: '创新专项记录已录入' })
+    res.status(201).json({ message: `已批量录入 ${rows.length} 条创新专项记录` })
   } catch (error) {
     next(error)
   }

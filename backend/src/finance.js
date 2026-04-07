@@ -439,6 +439,14 @@ function buildRecordList(data, filters) {
   const innovationItems = getInnovationProjects(data, departmentId, innovationYear, innovationPeriod)
     .map((item) => {
       const meta = getInnovationMeta(item)
+      const amount = Number(item.teamBuildingAmount || item.approvedAmount || 0)
+      const detailParts = [
+        item.proposer ? `\u63d0\u62a5\u4eba\uff1a${item.proposer}` : '',
+        item.owner ? `\u8d1f\u8d23\u4eba\uff1a${item.owner}` : '',
+        item.teamBuildingOwner ? `\u56e2\u5efa\u8d1f\u8d23\u4eba\uff1a${item.teamBuildingOwner}` : '',
+        item.rewardProposer ? `\u5956\u91d1\u5206\u914d\u63d0\u62a5\u4eba\uff1a${item.rewardProposer}` : '',
+        item.note ? `\u5907\u6ce8\uff1a${item.note}` : '',
+      ].filter(Boolean)
 
       return {
         id: item.id,
@@ -446,16 +454,16 @@ function buildRecordList(data, filters) {
           ? `${meta.year} / ${formatInnovationPeriodLabel(meta.period)}`
           : (item.quarter || '-'),
         departmentId: item.departmentId,
-        departmentName: departmentMap.get(item.departmentId)?.name || '未知部门',
+        departmentName: departmentMap.get(item.departmentId)?.name || '\u672a\u77e5\u90e8\u95e8',
         employeeName: '-',
         type: 'innovation',
-        typeLabel: '创新专项',
-        title: item.title,
-        status: item.status,
-        approvedAmount: Number(item.approvedAmount || 0),
-        reimbursedAmount: Number(item.reimbursedAmount || 0),
-        date: item.reimburseDate || item.applyDate,
-        note: item.note || '',
+        typeLabel: '\u521b\u65b0\u4e13\u9879',
+        title: item.category ? `[${item.category}] ${item.title}` : item.title,
+        status: item.status || '\u5df2\u5f55\u5165',
+        approvedAmount: amount,
+        reimbursedAmount: amount,
+        date: item.reimburseDate || item.applyDate || item.createdAt,
+        note: detailParts.join('\uff1b'),
       }
     })
 

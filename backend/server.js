@@ -164,7 +164,15 @@ function deleteQuarterlyMember(data, memberId) {
 }
 
 function requirePositiveNumber(value, fieldName) {
-  const numericValue = Number(value)
+  const normalizedValue = typeof value === 'number'
+    ? value
+    : normalizeText(value)
+      .replace(/[\uFF10-\uFF19]/g, (char) => String.fromCharCode(char.charCodeAt(0) - 65248))
+      .replace(/[,\uFF0C\u00A0\s]/g, '')
+      .replace(/[\uFFE5\u00A5]/g, '')
+      .replace(/\u5143/g, '')
+
+  const numericValue = Number(normalizedValue)
 
   if (!Number.isFinite(numericValue) || numericValue < 0) {
     const error = new Error(`${fieldName} 必须是大于等于 0 的数字`)
@@ -249,7 +257,17 @@ function splitDelimitedLine(line) {
 }
 
 function parseInnovationImportContent(content) {
-  const requiredHeaders = ['类别', '题目', '提报人', '负责人', '团建负责人', '团建金额', '备注', '奖金分配提报人', '大部门']
+  const columnDefinitions = [
+    { key: 'category', headers: ['类别'] },
+    { key: 'title', headers: ['题目'] },
+    { key: 'proposer', headers: ['提报人'] },
+    { key: 'owner', headers: ['负责人'] },
+    { key: 'teamBuildingOwner', headers: ['团建负责人'] },
+    { key: 'teamBuildingAmount', headers: ['团建金额', '团队金额', '金额'] },
+    { key: 'note', headers: ['备注'] },
+    { key: 'rewardProposer', headers: ['奖金分配提报人'] },
+    { key: 'departmentName', headers: ['大部门', '部门'] },
+  ]
   const rows = normalizeText(content)
     .split(/\r?\n/)
     .map((line) => line.trim())
@@ -263,26 +281,34 @@ function parseInnovationImportContent(content) {
   }
 
   const [firstRow, ...restRows] = rows
-  const hasHeader = requiredHeaders.every((header) => firstRow.includes(header))
-  const headerMap = hasHeader
-    ? Object.fromEntries(firstRow.map((header, index) => [header, index]))
-    : Object.fromEntries(requiredHeaders.map((header, index) => [header, index]))
+  const normalizedFirstRow = firstRow.map((cell) => normalizeText(cell))
+  const headerMap = Object.fromEntries(
+    columnDefinitions.map(({ key, headers }, index) => {
+      const matchedIndex = normalizedFirstRow.findIndex((cell) => headers.includes(cell))
+      return [key, matchedIndex >= 0 ? matchedIndex : index]
+    }),
+  )
+  const hasHeader = ['category', 'title', 'teamBuildingAmount', 'departmentName'].every((key) => {
+    const column = columnDefinitions.find((item) => item.key === key)
+    const headerValue = normalizedFirstRow[headerMap[key]] || ''
+    return column?.headers.includes(headerValue)
+  })
   const dataRows = hasHeader ? restRows : rows
 
   return dataRows.map((row, index) => {
     const lineNumber = index + (hasHeader ? 2 : 1)
-    const readCell = (header) => normalizeText(row[headerMap[header]] || '')
+    const readCell = (key) => normalizeText(row[headerMap[key]] || '')
 
     const item = {
-      category: readCell('类别'),
-      title: readCell('题目'),
-      proposer: readCell('提报人'),
-      owner: readCell('负责人'),
-      teamBuildingOwner: readCell('团建负责人'),
-      teamBuildingAmount: readCell('团建金额'),
-      note: readCell('备注'),
-      rewardProposer: readCell('奖金分配提报人'),
-      departmentName: readCell('大部门'),
+      category: readCell('category'),
+      title: readCell('title'),
+      proposer: readCell('proposer'),
+      owner: readCell('owner'),
+      teamBuildingOwner: readCell('teamBuildingOwner'),
+      teamBuildingAmount: readCell('teamBuildingAmount'),
+      note: readCell('note'),
+      rewardProposer: readCell('rewardProposer'),
+      departmentName: readCell('departmentName'),
     }
 
     if (!item.category || !item.title || !item.teamBuildingAmount || !item.departmentName) {

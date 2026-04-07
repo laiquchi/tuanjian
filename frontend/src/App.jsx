@@ -54,6 +54,11 @@ const initialQuarterlyPanelOpen = {
   expense: false,
 }
 
+const initialInnovationPanelOpen = {
+  import: false,
+  single: false,
+}
+
 const viewOptions = [
   {
     key: 'quarterly',
@@ -301,6 +306,7 @@ function App() {
   const [innovationForm, setInnovationForm] = useState(initialInnovationForm)
   const [memberBoardFilters, setMemberBoardFilters] = useState(initialMemberBoardFilters)
   const [quarterlyPanelOpen, setQuarterlyPanelOpen] = useState(initialQuarterlyPanelOpen)
+  const [innovationPanelOpen, setInnovationPanelOpen] = useState(initialInnovationPanelOpen)
   const { quarter, departmentId, type, innovationYear, innovationPeriod } = filters
 
   const loadDashboard = useCallback(async (nextFilters) => {
@@ -604,6 +610,13 @@ function App() {
 
   const handleQuarterlyPanelToggle = (panelKey) => {
     setQuarterlyPanelOpen((current) => ({
+      ...current,
+      [panelKey]: !current[panelKey],
+    }))
+  }
+
+  const handleInnovationPanelToggle = (panelKey) => {
+    setInnovationPanelOpen((current) => ({
       ...current,
       [panelKey]: !current[panelKey],
     }))
@@ -1283,204 +1296,226 @@ function App() {
               )}
             </section>
 
-            <section className="panel">
-              <SectionTitle
-                eyebrow="创新专项"
-                title="按年份、期数批量录入专项"
-                description="录入类别、题目、提报人、负责人、团建负责人、团建金额、备注、奖金分配提报人和大部门。"
-              />
-              <form
-                className="entry-form"
-                onSubmit={(event) =>
-                  handleSubmit(
-                    event,
-                    '/api/innovation-projects/import',
-                    innovationImportForm,
-                    () => setInnovationImportForm((current) => ({ ...current, content: '' })),
-                  )}
-              >
-                <div className="triple-grid">
-                  <input
-                    list="innovation-year-options"
-                    inputMode="numeric"
-                    maxLength="4"
-                    placeholder="例如 2024"
-                    value={innovationImportForm.year}
+            <section className={`panel collapsible-panel ${innovationPanelOpen.import ? 'expanded' : 'collapsed'}`}>
+              <div className="collapsible-head">
+                <SectionTitle
+                  eyebrow="创新专项"
+                  title="按年份、期数批量录入专项"
+                  description="录入类别、题目、提报人、负责人、团建负责人、团建金额、备注、奖金分配提报人和大部门。"
+                />
+                <button
+                  className="panel-toggle"
+                  type="button"
+                  onClick={() => handleInnovationPanelToggle('import')}
+                >
+                  {innovationPanelOpen.import ? '收起' : '展开'}
+                </button>
+              </div>
+              {innovationPanelOpen.import && (
+                <form
+                  className="entry-form"
+                  onSubmit={(event) =>
+                    handleSubmit(
+                      event,
+                      '/api/innovation-projects/import',
+                      innovationImportForm,
+                      () => setInnovationImportForm((current) => ({ ...current, content: '' })),
+                    )}
+                >
+                  <div className="triple-grid">
+                    <input
+                      list="innovation-year-options"
+                      inputMode="numeric"
+                      maxLength="4"
+                      placeholder="例如 2024"
+                      value={innovationImportForm.year}
+                      onChange={(event) =>
+                        setInnovationImportForm((current) => ({
+                          ...current,
+                          year: normalizeYearInput(event.target.value),
+                        }))
+                      }
+                    />
+                    <select
+                      value={innovationImportForm.period}
+                      onChange={(event) =>
+                        setInnovationImportForm((current) => ({ ...current, period: event.target.value }))
+                      }
+                    >
+                      {innovationPeriodOptions.map((item) => (
+                        <option key={item.value} value={item.value}>
+                          {item.label}
+                        </option>
+                      ))}
+                    </select>
+                    <label className="upload-box">
+                      <span>上传批量表格</span>
+                      <input type="file" accept=".csv,.txt,.xls,.xlsx" onChange={handleInnovationImportFile} />
+                    </label>
+                  </div>
+                  <textarea
+                    rows="8"
+                    value={innovationImportForm.content}
+                    placeholder={
+                      '类别\t题目\t提报人\t负责人\t团建负责人\t团建金额\t备注\t奖金分配提报人\t大部门\n' +
+                      '创新案例\tAI 提效专项\t张三\t李四\t王五\t2000\t阶段推进\t赵六\t研发中心'
+                    }
                     onChange={(event) =>
-                      setInnovationImportForm((current) => ({
-                        ...current,
-                        year: normalizeYearInput(event.target.value),
-                      }))
+                      setInnovationImportForm((current) => ({ ...current, content: event.target.value }))
                     }
                   />
-                  <select
-                    value={innovationImportForm.period}
-                    onChange={(event) =>
-                      setInnovationImportForm((current) => ({ ...current, period: event.target.value }))
-                    }
-                  >
-                    {innovationPeriodOptions.map((item) => (
-                      <option key={item.value} value={item.value}>
-                        {item.label}
-                      </option>
-                    ))}
-                  </select>
-                  <label className="upload-box">
-                    <span>上传批量表格</span>
-                    <input type="file" accept=".csv,.txt,.xls,.xlsx" onChange={handleInnovationImportFile} />
-                  </label>
-                </div>
-                <textarea
-                  rows="8"
-                  value={innovationImportForm.content}
-                  placeholder={
-                    '类别\t题目\t提报人\t负责人\t团建负责人\t团建金额\t备注\t奖金分配提报人\t大部门\n' +
-                    '创新案例\tAI 提效专项\t张三\t李四\t王五\t2000\t阶段推进\t赵六\t研发中心'
-                  }
-                  onChange={(event) =>
-                    setInnovationImportForm((current) => ({ ...current, content: event.target.value }))
-                  }
-                />
-                <p className="entry-help">
-                  支持粘贴 Excel 表格内容，或上传 CSV / TXT / XLS / XLSX；年度与期数按上方选择统一导入。
-                </p>
-                <button disabled={submitting}>批量录入专项</button>
-              </form>
+                  <p className="entry-help">
+                    支持粘贴 Excel 表格内容，或上传 CSV / TXT / XLS / XLSX；年度与期数按上方选择统一导入。
+                  </p>
+                  <button disabled={submitting}>批量录入专项</button>
+                </form>
+              )}
             </section>
 
-            <section className="panel">
-              <SectionTitle
-                eyebrow="创新专项"
-                title="单条录入专项"
-                description="适合补录或修改单条专项信息。"
-              />
-              <form
-                className="entry-form"
-                onSubmit={(event) =>
-                  handleSubmit(
-                    event,
-                    '/api/innovation-projects',
-                    innovationForm,
-                    () =>
-                      setInnovationForm((current) => ({
-                        ...current,
-                        category: '',
-                        title: '',
-                        proposer: '',
-                        owner: '',
-                        teamBuildingOwner: '',
-                        teamBuildingAmount: '',
-                        rewardProposer: '',
-                        note: '',
-                      })),
-                  )}
-              >
-                <div className="triple-grid">
-                  <select
-                    value={innovationForm.departmentId}
-                    onChange={(event) =>
-                      setInnovationForm((current) => ({ ...current, departmentId: event.target.value }))
-                    }
-                  >
-                    {departmentOptions.map((item) => (
-                      <option key={item.id} value={item.id}>
-                        {item.name}
-                      </option>
-                    ))}
-                  </select>
-                  <input
-                    list="innovation-year-options"
-                    inputMode="numeric"
-                    maxLength="4"
-                    placeholder="例如 2024"
-                    value={innovationForm.year}
-                    onChange={(event) =>
-                      setInnovationForm((current) => ({
-                        ...current,
-                        year: normalizeYearInput(event.target.value),
-                      }))
-                    }
-                  />
-                  <select
-                    value={innovationForm.period}
-                    onChange={(event) =>
-                      setInnovationForm((current) => ({ ...current, period: event.target.value }))
-                    }
-                  >
-                    {innovationPeriodOptions.map((item) => (
-                      <option key={item.value} value={item.value}>
-                        {item.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="triple-grid">
-                  <input
-                    value={innovationForm.category}
-                    placeholder={'\u7c7b\u522b'}
-                    onChange={(event) =>
-                      setInnovationForm((current) => ({ ...current, category: event.target.value }))
-                    }
-                  />
-                  <input
-                    value={innovationForm.title}
-                    placeholder={'\u9898\u76ee'}
-                    onChange={(event) =>
-                      setInnovationForm((current) => ({ ...current, title: event.target.value }))
-                    }
-                  />
-                  <input
-                    value={innovationForm.proposer}
-                    placeholder={'\u63d0\u62a5\u4eba'}
-                    onChange={(event) =>
-                      setInnovationForm((current) => ({ ...current, proposer: event.target.value }))
-                    }
-                  />
-                </div>
-                <div className="triple-grid">
-                  <input
-                    value={innovationForm.owner}
-                    placeholder={'\u8d1f\u8d23\u4eba'}
-                    onChange={(event) =>
-                      setInnovationForm((current) => ({ ...current, owner: event.target.value }))
-                    }
-                  />
-                  <input
-                    value={innovationForm.teamBuildingOwner}
-                    placeholder={'\u56e2\u5efa\u8d1f\u8d23\u4eba'}
-                    onChange={(event) =>
-                      setInnovationForm((current) => ({ ...current, teamBuildingOwner: event.target.value }))
-                    }
-                  />
-                  <input
-                    value={innovationForm.rewardProposer}
-                    placeholder={'\u5956\u91d1\u5206\u914d\u63d0\u62a5\u4eba'}
-                    onChange={(event) =>
-                      setInnovationForm((current) => ({ ...current, rewardProposer: event.target.value }))
-                    }
-                  />
-                </div>
-                <div className="inline-grid">
-                  <input
-                    type="number"
-                    min="0"
-                    value={innovationForm.teamBuildingAmount}
-                    placeholder={'\u56e2\u5efa\u91d1\u989d'}
-                    onChange={(event) =>
-                      setInnovationForm((current) => ({ ...current, teamBuildingAmount: event.target.value }))
-                    }
-                  />
-                </div>
-                <textarea
-                  rows="3"
-                  value={innovationForm.note}
-                  placeholder={'\u5907\u6ce8'}
-                  onChange={(event) =>
-                    setInnovationForm((current) => ({ ...current, note: event.target.value }))
-                  }
+            <section className={`panel collapsible-panel ${innovationPanelOpen.single ? 'expanded' : 'collapsed'}`}>
+              <div className="collapsible-head">
+                <SectionTitle
+                  eyebrow="创新专项"
+                  title="单条录入专项"
+                  description="适合补录或修改单条专项信息。"
                 />
-                <button disabled={submitting}>{'\u5f55\u5165\u4e13\u9879'}</button>
-              </form>
+                <button
+                  className="panel-toggle"
+                  type="button"
+                  onClick={() => handleInnovationPanelToggle('single')}
+                >
+                  {innovationPanelOpen.single ? '收起' : '展开'}
+                </button>
+              </div>
+              {innovationPanelOpen.single && (
+                <form
+                  className="entry-form"
+                  onSubmit={(event) =>
+                    handleSubmit(
+                      event,
+                      '/api/innovation-projects',
+                      innovationForm,
+                      () =>
+                        setInnovationForm((current) => ({
+                          ...current,
+                          category: '',
+                          title: '',
+                          proposer: '',
+                          owner: '',
+                          teamBuildingOwner: '',
+                          teamBuildingAmount: '',
+                          rewardProposer: '',
+                          note: '',
+                        })),
+                    )}
+                >
+                  <div className="triple-grid">
+                    <select
+                      value={innovationForm.departmentId}
+                      onChange={(event) =>
+                        setInnovationForm((current) => ({ ...current, departmentId: event.target.value }))
+                      }
+                    >
+                      {departmentOptions.map((item) => (
+                        <option key={item.id} value={item.id}>
+                          {item.name}
+                        </option>
+                      ))}
+                    </select>
+                    <input
+                      list="innovation-year-options"
+                      inputMode="numeric"
+                      maxLength="4"
+                      placeholder="例如 2024"
+                      value={innovationForm.year}
+                      onChange={(event) =>
+                        setInnovationForm((current) => ({
+                          ...current,
+                          year: normalizeYearInput(event.target.value),
+                        }))
+                      }
+                    />
+                    <select
+                      value={innovationForm.period}
+                      onChange={(event) =>
+                        setInnovationForm((current) => ({ ...current, period: event.target.value }))
+                      }
+                    >
+                      {innovationPeriodOptions.map((item) => (
+                        <option key={item.value} value={item.value}>
+                          {item.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="triple-grid">
+                    <input
+                      value={innovationForm.category}
+                      placeholder={'\u7c7b\u522b'}
+                      onChange={(event) =>
+                        setInnovationForm((current) => ({ ...current, category: event.target.value }))
+                      }
+                    />
+                    <input
+                      value={innovationForm.title}
+                      placeholder={'\u9898\u76ee'}
+                      onChange={(event) =>
+                        setInnovationForm((current) => ({ ...current, title: event.target.value }))
+                      }
+                    />
+                    <input
+                      value={innovationForm.proposer}
+                      placeholder={'\u63d0\u62a5\u4eba'}
+                      onChange={(event) =>
+                        setInnovationForm((current) => ({ ...current, proposer: event.target.value }))
+                      }
+                    />
+                  </div>
+                  <div className="triple-grid">
+                    <input
+                      value={innovationForm.owner}
+                      placeholder={'\u8d1f\u8d23\u4eba'}
+                      onChange={(event) =>
+                        setInnovationForm((current) => ({ ...current, owner: event.target.value }))
+                      }
+                    />
+                    <input
+                      value={innovationForm.teamBuildingOwner}
+                      placeholder={'\u56e2\u5efa\u8d1f\u8d23\u4eba'}
+                      onChange={(event) =>
+                        setInnovationForm((current) => ({ ...current, teamBuildingOwner: event.target.value }))
+                      }
+                    />
+                    <input
+                      value={innovationForm.rewardProposer}
+                      placeholder={'\u5956\u91d1\u5206\u914d\u63d0\u62a5\u4eba'}
+                      onChange={(event) =>
+                        setInnovationForm((current) => ({ ...current, rewardProposer: event.target.value }))
+                      }
+                    />
+                  </div>
+                  <div className="inline-grid">
+                    <input
+                      type="number"
+                      min="0"
+                      value={innovationForm.teamBuildingAmount}
+                      placeholder={'\u56e2\u5efa\u91d1\u989d'}
+                      onChange={(event) =>
+                        setInnovationForm((current) => ({ ...current, teamBuildingAmount: event.target.value }))
+                      }
+                    />
+                  </div>
+                  <textarea
+                    rows="3"
+                    value={innovationForm.note}
+                    placeholder={'\u5907\u6ce8'}
+                    onChange={(event) =>
+                      setInnovationForm((current) => ({ ...current, note: event.target.value }))
+                    }
+                  />
+                  <button disabled={submitting}>{'\u5f55\u5165\u4e13\u9879'}</button>
+                </form>
+              )}
             </section>
 
             <RecordsPanel

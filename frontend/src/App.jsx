@@ -159,6 +159,10 @@ function workbookToInnovationImportText(workbook) {
   return normalizedRows.map((row) => row.join('\t')).join('\n')
 }
 
+function normalizeYearInput(value) {
+  return String(value ?? '').replace(/\D/g, '').slice(0, 4)
+}
+
 function SectionTitle({ eyebrow, title, description }) {
   return (
     <div className="section-title">
@@ -849,13 +853,21 @@ function App() {
               <>
                 <label>
                   <span>年度</span>
-                  <select name="innovationYear" value={filters.innovationYear} onChange={handleFilterChange}>
-                    {innovationYearOptions.map((item) => (
-                      <option key={item} value={item}>
-                        {item}年
-                      </option>
-                    ))}
-                  </select>
+                  <input
+                    name="innovationYear"
+                    list="innovation-year-options"
+                    inputMode="numeric"
+                    maxLength="4"
+                    placeholder="例如 2024"
+                    value={filters.innovationYear}
+                    onChange={(event) =>
+                      handleFilterChange({
+                        target: {
+                          name: event.target.name,
+                          value: normalizeYearInput(event.target.value),
+                        },
+                      })}
+                  />
                 </label>
                 <label>
                   <span>期数</span>
@@ -1288,18 +1300,19 @@ function App() {
                   )}
               >
                 <div className="triple-grid">
-                  <select
+                  <input
+                    list="innovation-year-options"
+                    inputMode="numeric"
+                    maxLength="4"
+                    placeholder="例如 2024"
                     value={innovationImportForm.year}
                     onChange={(event) =>
-                      setInnovationImportForm((current) => ({ ...current, year: event.target.value }))
+                      setInnovationImportForm((current) => ({
+                        ...current,
+                        year: normalizeYearInput(event.target.value),
+                      }))
                     }
-                  >
-                    {innovationYearOptions.map((item) => (
-                      <option key={item} value={item}>
-                        {item}年
-                      </option>
-                    ))}
-                  </select>
+                  />
                   <select
                     value={innovationImportForm.period}
                     onChange={(event) =>
@@ -1375,18 +1388,19 @@ function App() {
                       </option>
                     ))}
                   </select>
-                  <select
+                  <input
+                    list="innovation-year-options"
+                    inputMode="numeric"
+                    maxLength="4"
+                    placeholder="例如 2024"
                     value={innovationForm.year}
                     onChange={(event) =>
-                      setInnovationForm((current) => ({ ...current, year: event.target.value }))
+                      setInnovationForm((current) => ({
+                        ...current,
+                        year: normalizeYearInput(event.target.value),
+                      }))
                     }
-                  >
-                    {innovationYearOptions.map((item) => (
-                      <option key={item} value={item}>
-                        {item}{'\u5e74'}
-                      </option>
-                    ))}
-                  </select>
+                  />
                   <select
                     value={innovationForm.period}
                     onChange={(event) =>
@@ -1482,6 +1496,11 @@ function App() {
           </div>
         )}
       </main>
+      <datalist id="innovation-year-options">
+        {innovationYearOptions.map((item) => (
+          <option key={item} value={item} />
+        ))}
+      </datalist>
     </div>
   )
 }

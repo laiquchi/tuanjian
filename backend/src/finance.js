@@ -54,7 +54,11 @@ function formatInnovationPeriodLabel(period) {
 
 function getInnovationYearOptions(data) {
   const currentYear = new Date().getFullYear()
-  const values = new Set([String(currentYear - 1), String(currentYear)])
+  const values = new Set()
+
+  for (let year = currentYear - 3; year <= currentYear + 1; year += 1) {
+    values.add(String(year))
+  }
 
   ;(data.innovationProjects || []).forEach((item) => {
     const meta = getInnovationMeta(item)
@@ -65,6 +69,10 @@ function getInnovationYearOptions(data) {
   })
 
   return Array.from(values).sort((a, b) => Number(b) - Number(a))
+}
+
+function isValidInnovationYear(value) {
+  return /^\d{4}$/.test(String(value || ''))
 }
 
 function getInnovationProjects(data, departmentId = 'all', innovationYear = '', innovationPeriod = 'all') {
@@ -307,16 +315,21 @@ function buildDashboard(
   const availableInnovationYears = getInnovationYearOptions(data)
   const currentQuarter = getQuarterFromDate()
   const currentYear = String(new Date().getFullYear())
+  const normalizedRequestedInnovationYear = String(requestedInnovationYear || '').trim()
   const selectedQuarter = availableQuarters.includes(requestedQuarter)
     ? requestedQuarter
     : (availableQuarters.includes(currentQuarter) ? currentQuarter : availableQuarters[0] || currentQuarter)
   const selectedDepartmentId = requestedDepartmentId || 'all'
-  const selectedInnovationYear = availableInnovationYears.includes(requestedInnovationYear)
-    ? requestedInnovationYear
+  const selectedInnovationYear = isValidInnovationYear(normalizedRequestedInnovationYear)
+    ? normalizedRequestedInnovationYear
     : (availableInnovationYears.includes(currentYear) ? currentYear : availableInnovationYears[0] || currentYear)
   const selectedInnovationPeriod = ['1', '2', 'all'].includes(requestedInnovationPeriod)
     ? requestedInnovationPeriod
     : 'all'
+  const innovationYearOptions = Array.from(new Set([
+    ...availableInnovationYears,
+    selectedInnovationYear,
+  ].filter(Boolean))).sort((a, b) => Number(b) - Number(a))
   const departmentStats = buildDepartmentStats(
     data,
     selectedQuarter,
@@ -390,7 +403,7 @@ function buildDashboard(
     })),
     options: {
       quarters: availableQuarters,
-      innovationYears: availableInnovationYears,
+      innovationYears: innovationYearOptions,
       innovationPeriods: [
         { value: '1', label: formatInnovationPeriodLabel('1') },
         { value: '2', label: formatInnovationPeriodLabel('2') },

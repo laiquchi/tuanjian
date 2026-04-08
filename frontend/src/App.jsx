@@ -44,6 +44,13 @@ const initialInnovationForm = {
   note: '',
 }
 
+const initialInnovationUsageForm = {
+  projectId: '',
+  amount: '',
+  usedDate: '',
+  note: '',
+}
+
 const initialMemberBoardFilters = {
   keyword: '',
   departmentId: '',
@@ -57,6 +64,7 @@ const initialQuarterlyPanelOpen = {
 const initialInnovationPanelOpen = {
   import: false,
   single: false,
+  usage: false,
 }
 
 const viewOptions = [
@@ -245,6 +253,8 @@ function RecordsPanel({
                   <th>负责人</th>
                   <th>团建负责人</th>
                   <th>团队金额</th>
+                  <th>已使用</th>
+                  <th>剩余</th>
                   <th>备注</th>
                   <th>大部门</th>
                 </>
@@ -284,6 +294,10 @@ function RecordsPanel({
                     <td>{item.owner || '-'}</td>
                     <td>{item.teamBuildingOwner || '-'}</td>
                     <td>{formatMoney(item.teamBuildingAmount ?? item.approvedAmount)}</td>
+                    <td>{formatMoney(item.reimbursedAmount ?? 0)}</td>
+                    <td className={(item.remainingAmount ?? 0) > 0 ? 'positive-text' : 'danger-text'}>
+                      {formatMoney(item.remainingAmount ?? 0)}
+                    </td>
                     <td>{item.note || '-'}</td>
                     <td>{item.departmentName || '-'}</td>
                   </>
@@ -336,6 +350,7 @@ function App() {
   const [quarterlyForm, setQuarterlyForm] = useState(initialQuarterlyForm)
   const [innovationImportForm, setInnovationImportForm] = useState(initialInnovationImportForm)
   const [innovationForm, setInnovationForm] = useState(initialInnovationForm)
+  const [innovationUsageForm, setInnovationUsageForm] = useState(initialInnovationUsageForm)
   const [memberBoardFilters, setMemberBoardFilters] = useState(initialMemberBoardFilters)
   const [quarterlyPanelOpen, setQuarterlyPanelOpen] = useState(initialQuarterlyPanelOpen)
   const [innovationPanelOpen, setInnovationPanelOpen] = useState(initialInnovationPanelOpen)
@@ -431,6 +446,10 @@ function App() {
         year: current.year || dashboardData.filters.selectedInnovationYear || '',
         period: current.period || dashboardData.filters.selectedInnovationPeriod || '1',
       }))
+      setInnovationUsageForm((current) => ({
+        ...current,
+        projectId: current.projectId || dashboardData.innovationProjectStats?.[0]?.id || '',
+      }))
     } catch (requestError) {
       setError(requestError.message)
     } finally {
@@ -453,6 +472,9 @@ function App() {
   const innovationPeriodOptions = dashboard?.options?.innovationPeriods || []
   const quarterlySummary = dashboard?.typeSummary?.find((item) => item.key === 'quarterly')
   const innovationSummary = dashboard?.typeSummary?.find((item) => item.key === 'innovation')
+  const innovationProjectStats = dashboard?.innovationProjectStats || []
+  const innovationUsageRecords = dashboard?.innovationUsageRecords || []
+  const selectedInnovationProject = innovationProjectStats.find((item) => item.id === innovationUsageForm.projectId) || null
   const quarterlyMemberStats = useMemo(() => dashboard?.quarterlyMemberStats || [], [dashboard])
   const visibleDepartmentStats = useMemo(
     () => (dashboard?.departmentStats || []).filter((item) => Number(item.headcount || 0) > 0),
@@ -517,9 +539,19 @@ function App() {
 
     return [
       {
-        label: '创新专项金额',
+        label: '创新专项总额度',
         value: formatMoney(dashboard.overview.innovationApproved),
         help: `${dashboard.overview.innovationProjectCount} 个专项`,
+      },
+      {
+        label: '已使用金额',
+        value: formatMoney(dashboard.overview.innovationReimbursed),
+        help: '按每次使用登记累计',
+      },
+      {
+        label: '剩余可用金额',
+        value: formatMoney(dashboard.overview.innovationRemaining),
+        help: '可继续结余并分次使用',
       },
       {
         label: '创新专项数量',
@@ -652,6 +684,42 @@ function App() {
       ...current,
       [panelKey]: !current[panelKey],
     }))
+  }
+
+  const handleInnovationUsageSubmit = async (event) => {
+    event.preventDefault()
+
+    if (!innovationUsageForm.projectId) {
+      setError('请选择要登记使用的专项')
+      return
+    }
+
+    setSubmitting(true)
+    setMessage('')
+    setError('')
+
+    try {
+      const result = await fetchJson(`/api/innovation-projects/${innovationUsageForm.projectId}/usages`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(innovationUsageForm),
+      })
+
+      setMessage(result.message)
+      setInnovationUsageForm((current) => ({
+        ...current,
+        amount: '',
+        usedDate: '',
+        note: '',
+      }))
+      await refresh(filters)
+    } catch (requestError) {
+      setError(requestError.message)
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   const handleQuarterlyMembersBatchDelete = async () => {
@@ -1324,8 +1392,128 @@ function App() {
               </div>
               {innovationSummary && (
                 <div className="summary-band innovation-band">
-                  <span>{'\u4e13\u9879\u6570\u91cf'} {innovationSummary.count}</span>
-                  <span>{'\u4e13\u9879\u91d1\u989d'} {formatMoney(innovationSummary.approved)}</span>
+                  <span>专项数量 {innovationSummary.count}</span>
+                  <span>总额度 {formatMoney(innovationSummary.approved)}</span>
+                  <span>已使用 {formatMoney(innovationSummary.reimbursed)}</span>
+                  <span>剩余 {formatMoney(innovationSummary.remaining || 0)}</span>
+                </div>
+              )}
+            </section>
+
+            <section className={`panel collapsible-panel ${innovationPanelOpen.usage ? 'expanded' : 'collapsed'}`}>
+              <div className="collapsible-head">
+                <SectionTitle
+                  eyebrow="创新专项"
+                  title="登记专项使用"
+                  description="每次实际使用时登记一笔金额，系统会自动累计已使用金额并计算剩余可用额度。"
+                />
+                <button
+                  className="panel-toggle"
+                  type="button"
+                  onClick={() => handleInnovationPanelToggle('usage')}
+                >
+                  {innovationPanelOpen.usage ? '收起' : '展开'}
+                </button>
+              </div>
+              {innovationPanelOpen.usage && (
+                <form className="entry-form" onSubmit={handleInnovationUsageSubmit}>
+                  <div className="inline-grid">
+                    <select
+                      value={innovationUsageForm.projectId}
+                      onChange={(event) =>
+                        setInnovationUsageForm((current) => ({ ...current, projectId: event.target.value }))
+                      }
+                    >
+                      <option value="">请选择专项</option>
+                      {innovationProjectStats.map((item) => (
+                        <option key={item.id} value={item.id}>
+                          {`${item.category || '未分类'} / ${item.title} / ${item.departmentName}`}
+                        </option>
+                      ))}
+                    </select>
+                    <input
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      value={innovationUsageForm.amount}
+                      placeholder="本次使用金额"
+                      onChange={(event) =>
+                        setInnovationUsageForm((current) => ({ ...current, amount: event.target.value }))
+                      }
+                    />
+                  </div>
+                  <div className="inline-grid">
+                    <input
+                      type="date"
+                      value={innovationUsageForm.usedDate}
+                      onChange={(event) =>
+                        setInnovationUsageForm((current) => ({ ...current, usedDate: event.target.value }))
+                      }
+                    />
+                    <input
+                      value={innovationUsageForm.note}
+                      placeholder="本次使用备注"
+                      onChange={(event) =>
+                        setInnovationUsageForm((current) => ({ ...current, note: event.target.value }))
+                      }
+                    />
+                  </div>
+                  {selectedInnovationProject && (
+                    <div className="innovation-usage-summary">
+                      <span>专项总额度 {formatMoney(selectedInnovationProject.budget)}</span>
+                      <span>已使用 {formatMoney(selectedInnovationProject.used)}</span>
+                      <span>剩余可用 {formatMoney(selectedInnovationProject.remaining)}</span>
+                      <span>已登记 {selectedInnovationProject.usageCount} 次</span>
+                    </div>
+                  )}
+                  <button disabled={submitting || innovationProjectStats.length === 0 || !innovationUsageForm.projectId}>
+                    登记本次使用
+                  </button>
+                </form>
+              )}
+            </section>
+
+            <section className="panel">
+              <SectionTitle
+                eyebrow="创新专项"
+                title="使用明细"
+                description="每次登记使用后，这里都会新增一条明细记录，便于追踪历史使用情况。"
+              />
+              {innovationUsageRecords.length === 0 ? (
+                <div className="hint-box member-board-empty">
+                  <span>暂无使用记录</span>
+                  <strong>当前筛选条件下还没有登记过专项使用</strong>
+                </div>
+              ) : (
+                <div className="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>使用日期</th>
+                        <th>类别</th>
+                        <th>题目</th>
+                        <th>大部门</th>
+                        <th>本次使用</th>
+                        <th>使用后剩余</th>
+                        <th>备注</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {innovationUsageRecords.map((item) => (
+                        <tr key={item.id}>
+                          <td>{item.usedDate || '-'}</td>
+                          <td>{item.category || '-'}</td>
+                          <td>{item.projectTitle || '-'}</td>
+                          <td>{item.departmentName || '-'}</td>
+                          <td>{formatMoney(item.amount)}</td>
+                          <td className={item.remainingAfter > 0 ? 'positive-text' : 'danger-text'}>
+                            {formatMoney(item.remainingAfter)}
+                          </td>
+                          <td>{item.note || '-'}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               )}
             </section>

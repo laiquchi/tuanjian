@@ -191,6 +191,47 @@ function isValidInnovationPeriod(value) {
   return ['1', '2'].includes(String(value || ''))
 }
 
+function getInnovationBudget(project) {
+  return Number(project.teamBuildingAmount ?? project.approvedAmount ?? 0) || 0
+}
+
+function getInnovationUsageRecords(project) {
+  return Array.isArray(project.usageRecords) ? project.usageRecords : []
+}
+
+function getInnovationUsed(project) {
+  const usageRecords = getInnovationUsageRecords(project)
+
+  if (usageRecords.length > 0) {
+    return usageRecords.reduce((sum, record) => sum + (Number(record.amount || 0) || 0), 0)
+  }
+
+  const explicitUsed = Number(project.reimbursedAmount || 0) || 0
+  const normalizedStatus = String(project.status || '')
+
+  if (project.usageTrackingEnabled || normalizedStatus === '已用完' || normalizedStatus === '已完成') {
+    return explicitUsed
+  }
+
+  return 0
+}
+
+function getInnovationRemaining(project) {
+  return Math.max(getInnovationBudget(project) - getInnovationUsed(project), 0)
+}
+
+function getInnovationProjectOrThrow(data, projectId) {
+  const project = (data.innovationProjects || []).find((item) => item.id === projectId)
+
+  if (!project) {
+    const error = new Error('创新专项记录不存在')
+    error.statusCode = 404
+    throw error
+  }
+
+  return project
+}
+
 function findOrCreateDepartment(data, departmentName) {
   const normalizedName = normalizeText(departmentName)
 
@@ -712,8 +753,10 @@ app.post('/api/innovation-projects', (req, res, next) => {
       teamBuildingAmount: amount,
       rewardProposer: normalizeText(rewardProposer),
       approvedAmount: amount,
-      reimbursedAmount: amount,
-      status: '\u5df2\u5f55\u5165',
+      reimbursedAmount: 0,
+      usageRecords: [],
+      usageTrackingEnabled: true,
+      status: '未使用',
       applyDate: today,
       reimburseDate: today,
       note: normalizeText(note),
@@ -770,8 +813,10 @@ app.post('/api/innovation-projects/import', (req, res, next) => {
         teamBuildingAmount: amount,
         rewardProposer: row.rewardProposer,
         approvedAmount: amount,
-        reimbursedAmount: amount,
-        status: '已录入',
+        reimbursedAmount: 0,
+        usageRecords: [],
+        usageTrackingEnabled: true,
+        status: '未使用',
         applyDate: today,
         reimburseDate: today,
         note: row.note,
@@ -781,6 +826,59 @@ app.post('/api/innovation-projects/import', (req, res, next) => {
 
     writeStore(data)
     res.status(201).json({ message: `已批量录入 ${rows.length} 条创新专项记录` })
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.post('/api/innovation-projects/:projectId/usages', (req, res, next) => {
+  try {
+    const { projectId } = req.params
+    const { amount, usedDate, note } = req.body
+    const data = readStore()
+    const project = getInnovationProjectOrThrow(data, projectId)
+    const usageAmount = requirePositiveNumber(amount, '使用金额')
+
+    if (usageAmount <= 0) {
+      const error = new Error('使用金额必须大于 0')
+      error.statusCode = 400
+      throw error
+    }
+
+    const remaining = getInnovationRemaining(project)
+
+    if (usageAmount > remaining) {
+      const error = new Error(`本次使用金额不能超过剩余可用金额 ${remaining}`)
+      error.statusCode = 400
+      throw error
+    }
+
+    const effectiveDate = normalizeText(usedDate) || new Date().toISOString().slice(0, 10)
+    const currentUsageRecords = getInnovationUsageRecords(project)
+    const nextUsageRecords = [
+      ...currentUsageRecords,
+      {
+        id: createId('iu'),
+        usedDate: effectiveDate,
+        amount: usageAmount,
+        note: normalizeText(note),
+        createdAt: new Date().toISOString(),
+      },
+    ]
+    const totalUsed = nextUsageRecords.reduce((sum, record) => sum + (Number(record.amount || 0) || 0), 0)
+    const budget = getInnovationBudget(project)
+    const nextRemaining = Math.max(budget - totalUsed, 0)
+
+    project.usageRecords = nextUsageRecords
+    project.usageTrackingEnabled = true
+    project.reimbursedAmount = totalUsed
+    project.reimburseDate = effectiveDate
+    project.status = totalUsed === 0 ? '未使用' : (nextRemaining > 0 ? '部分使用' : '已用完')
+
+    writeStore(data)
+    res.json({
+      message: `已登记 1 条使用记录，当前剩余 ${nextRemaining}`,
+    })
   } catch (error) {
     next(error)
   }

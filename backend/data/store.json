@@ -405,12 +405,22 @@
       "teamBuildingAmount": 2000,
       "rewardProposer": "周梦欢",
       "approvedAmount": 2000,
-      "reimbursedAmount": 2000,
-      "status": "已录入",
+      "reimbursedAmount": 1000,
+      "status": "部分使用",
       "applyDate": "2026-04-07",
       "reimburseDate": "2026-04-07",
       "note": "",
-      "createdAt": "2026-04-07T12:06:55.864Z"
+      "createdAt": "2026-04-07T12:06:55.864Z",
+      "usageRecords": [
+        {
+          "id": "iu-cc9b696c",
+          "usedDate": "2026-04-07",
+          "amount": 1000,
+          "note": "11",
+          "createdAt": "2026-04-07T12:56:07.302Z"
+        }
+      ],
+      "usageTrackingEnabled": true
     },
     {
       "id": "ip-80959593",

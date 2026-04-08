@@ -242,7 +242,7 @@
 }
 
 .innovation-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .data-card {
@@ -282,6 +282,22 @@
 .innovation-band span {
   color: #0f5a56;
   background: rgba(71, 153, 149, 0.16);
+}
+
+.innovation-usage-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.innovation-usage-summary span {
+  display: inline-flex;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(71, 153, 149, 0.12);
+  color: #0f5a56;
+  font-size: 13px;
+  font-weight: 700;
 }
 
 .entry-form {

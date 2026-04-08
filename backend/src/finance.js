@@ -87,6 +87,113 @@ function getInnovationProjects(data, departmentId = 'all', innovationYear = '', 
     })
 }
 
+function getInnovationBudget(item) {
+  return Number(item.teamBuildingAmount ?? item.approvedAmount ?? 0) || 0
+}
+
+function getInnovationUsageRecords(item) {
+  return Array.isArray(item.usageRecords) ? item.usageRecords : []
+}
+
+function getInnovationUsed(item) {
+  const usageRecords = getInnovationUsageRecords(item)
+
+  if (usageRecords.length > 0) {
+    return usageRecords.reduce((sum, record) => sum + (Number(record.amount || 0) || 0), 0)
+  }
+
+  const explicitUsed = Number(item.reimbursedAmount || 0) || 0
+  const normalizedStatus = String(item.status || '')
+
+  if (item.usageTrackingEnabled || normalizedStatus === '已用完' || normalizedStatus === '已完成') {
+    return explicitUsed
+  }
+
+  return 0
+}
+
+function getInnovationRemaining(item) {
+  return Math.max(getInnovationBudget(item) - getInnovationUsed(item), 0)
+}
+
+function buildInnovationProjectStats(data, departmentId = 'all', innovationYear = '', innovationPeriod = 'all') {
+  const departmentMap = getDepartmentMap(data)
+
+  return getInnovationProjects(data, departmentId, innovationYear, innovationPeriod)
+    .map((item) => {
+      const meta = getInnovationMeta(item)
+      const budget = getInnovationBudget(item)
+      const used = getInnovationUsed(item)
+      const remaining = Math.max(budget - used, 0)
+      const usageRecords = getInnovationUsageRecords(item)
+
+      return {
+        id: item.id,
+        category: item.category || '',
+        title: item.title || '',
+        proposer: item.proposer || '',
+        owner: item.owner || '',
+        teamBuildingOwner: item.teamBuildingOwner || '',
+        rewardProposer: item.rewardProposer || '',
+        note: item.note || '',
+        year: meta.year || String(item.year || ''),
+        period: meta.period || String(item.period || ''),
+        periodLabel: meta.period ? formatInnovationPeriodLabel(meta.period) : '-',
+        departmentId: item.departmentId,
+        departmentName: departmentMap.get(item.departmentId)?.name || '未知部门',
+        budget,
+        used,
+        remaining,
+        usageCount: usageRecords.length,
+        status: item.status || (used > 0 ? (remaining > 0 ? '部分使用' : '已用完') : '未使用'),
+      }
+    })
+    .sort((left, right) => {
+      if (left.year !== right.year) {
+        return String(right.year).localeCompare(String(left.year), 'zh-CN')
+      }
+
+      if (left.period !== right.period) {
+        return String(right.period).localeCompare(String(left.period), 'zh-CN')
+      }
+
+      return left.title.localeCompare(right.title, 'zh-CN')
+    })
+}
+
+function buildInnovationUsageRecords(data, departmentId = 'all', innovationYear = '', innovationPeriod = 'all') {
+  const departmentMap = getDepartmentMap(data)
+
+  return getInnovationProjects(data, departmentId, innovationYear, innovationPeriod)
+    .flatMap((item) => {
+      const meta = getInnovationMeta(item)
+      const usageRecords = getInnovationUsageRecords(item)
+      let runningUsed = 0
+
+      return usageRecords.map((record) => {
+        const amount = Number(record.amount || 0) || 0
+        runningUsed += amount
+
+        return {
+          id: record.id,
+          projectId: item.id,
+          projectTitle: item.title || '-',
+          category: item.category || '',
+          departmentId: item.departmentId,
+          departmentName: departmentMap.get(item.departmentId)?.name || '未知部门',
+          year: meta.year || String(item.year || ''),
+          period: meta.period || String(item.period || ''),
+          periodLabel: meta.period ? formatInnovationPeriodLabel(meta.period) : '-',
+          usedDate: record.usedDate || record.date || item.reimburseDate || item.applyDate || item.createdAt,
+          amount,
+          note: record.note || '',
+          remainingAfter: Math.max(getInnovationBudget(item) - runningUsed, 0),
+        }
+      })
+    })
+    .sort((left, right) => new Date(right.usedDate) - new Date(left.usedDate))
+}
+
 function getAvailableQuarters(data) {
   const values = new Set()
 
@@ -261,14 +368,9 @@ function buildDepartmentStats(
       innovationYear,
       innovationPeriod,
     )
-    const innovationApproved = innovationProjects.reduce(
-      (sum, item) => sum + Number(item.approvedAmount || 0),
-      0,
-    )
-    const innovationReimbursed = innovationProjects.reduce(
-      (sum, item) => sum + Number(item.reimbursedAmount || 0),
-      0,
-    )
+    const innovationApproved = innovationProjects.reduce((sum, item) => sum + getInnovationBudget(item), 0)
+    const innovationReimbursed = innovationProjects.reduce((sum, item) => sum + getInnovationUsed(item), 0)
+    const innovationRemaining = innovationProjects.reduce((sum, item) => sum + getInnovationRemaining(item), 0)
 
     return {
       departmentId: department.id,
@@ -282,6 +384,7 @@ function buildDepartmentStats(
       unusedMemberCount,
       innovationApproved,
       innovationReimbursed,
+      innovationRemaining,
       quarterlyExpenseCount: quarterlyExpenses.length,
       innovationProjectCount: innovationProjects.length,
     }
@@ -339,6 +442,18 @@ function buildDashboard(
   )
   const quarterlyMemberStats = buildQuarterlyMemberStats(data, selectedQuarter, selectedDepartmentId)
   const quarterlyMemberSummary = buildQuarterlyMemberSummary(quarterlyMemberStats)
+  const innovationProjectStats = buildInnovationProjectStats(
+    data,
+    selectedDepartmentId,
+    selectedInnovationYear,
+    selectedInnovationPeriod,
+  )
+  const innovationUsageRecords = buildInnovationUsageRecords(
+    data,
+    selectedDepartmentId,
+    selectedInnovationYear,
+    selectedInnovationPeriod,
+  )
 
   const overview = departmentStats.reduce(
     (sum, item) => ({
@@ -349,6 +464,7 @@ function buildDashboard(
       quarterlyRemaining: sum.quarterlyRemaining + item.quarterlyRemaining,
       innovationApproved: sum.innovationApproved + item.innovationApproved,
       innovationReimbursed: sum.innovationReimbursed + item.innovationReimbursed,
+      innovationRemaining: sum.innovationRemaining + item.innovationRemaining,
       quarterlyExpenseCount: sum.quarterlyExpenseCount + item.quarterlyExpenseCount,
       innovationProjectCount: sum.innovationProjectCount + item.innovationProjectCount,
     }),
@@ -360,6 +476,7 @@ function buildDashboard(
       quarterlyRemaining: 0,
       innovationApproved: 0,
       innovationReimbursed: 0,
+      innovationRemaining: 0,
       quarterlyExpenseCount: 0,
       innovationProjectCount: 0,
     },
@@ -388,12 +505,15 @@ function buildDashboard(
         label: '创新专项',
         approved: overview.innovationApproved,
         reimbursed: overview.innovationReimbursed,
+        remaining: overview.innovationRemaining,
         count: overview.innovationProjectCount,
       },
     ],
     departmentStats,
     quarterlyMemberStats,
     quarterlyMemberSummary,
+    innovationProjectStats,
+    innovationUsageRecords,
     quarterlyEmployeeOptions: quarterlyMemberStats.map((item) => ({
       id: item.employeeId,
       name: item.employeeName,
@@ -452,7 +572,8 @@ function buildRecordList(data, filters) {
   const innovationItems = getInnovationProjects(data, departmentId, innovationYear, innovationPeriod)
     .map((item) => {
       const meta = getInnovationMeta(item)
-      const amount = Number(item.teamBuildingAmount || item.approvedAmount || 0)
+      const amount = getInnovationBudget(item)
+      const usedAmount = getInnovationUsed(item)
       const detailParts = [
         item.proposer ? `\u63d0\u62a5\u4eba\uff1a${item.proposer}` : '',
         item.owner ? `\u8d1f\u8d23\u4eba\uff1a${item.owner}` : '',
@@ -479,9 +600,10 @@ function buildRecordList(data, filters) {
         teamBuildingOwner: item.teamBuildingOwner || '',
         teamBuildingAmount: amount,
         rewardProposer: item.rewardProposer || '',
-        status: item.status || '\u5df2\u5f55\u5165',
+        status: item.status || (usedAmount > 0 ? (Math.max(amount - usedAmount, 0) > 0 ? '部分使用' : '已用完') : '未使用'),
         approvedAmount: amount,
-        reimbursedAmount: amount,
+        reimbursedAmount: usedAmount,
+        remainingAmount: Math.max(amount - usedAmount, 0),
         date: item.reimburseDate || item.applyDate || item.createdAt,
         note: item.note || '',
         detailNote: detailParts.join('\uff1b'),
